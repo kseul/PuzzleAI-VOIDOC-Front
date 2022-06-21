@@ -1,7 +1,12 @@
 import React from 'react';
+import {Text, View} from 'react-native';
 
 const DitList = () => {
-  return <div></div>;
+  return (
+    <View>
+      <Text>DitList</Text>
+    </View>
+  );
 };
 
 export default DitList;
