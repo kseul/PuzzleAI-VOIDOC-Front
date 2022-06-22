@@ -9,9 +9,10 @@ import SignIn from '@screens/SignIn/SignIn';
 import SignUp from '@screens/SignUp/SignUp';
 import Main from '@screens/Main/Main';
 import RsrvtList from '@screens/Main/RsrvtList';
-import RsrvtDetail from '@screens/RsrvtDetail/RsrvtDetail';
+import DocList from '@screens/DocList/DocList';
 import RsrvtCalendar from '@screens/RsrvtCalendar/RsrvtCalendar';
 import RsrvtSubmit from '@screens/RsrvtSubmit/RsrvtSubmit';
+import RsrvtDetail from '@screens/RsrvtDetail/RsrvtDetail';
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,7 @@ function App() {
             component={Entry}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="Entry" component={Entry} />
+
           <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen
@@ -39,9 +40,10 @@ function App() {
             options={{headerShown: false}}
           />
           <Stack.Screen name="RsrvtList" component={RsrvtList} />
-          <Stack.Screen name="RsrvtDetail" component={RsrvtDetail} />
+          <Stack.Screen name="DocList" component={DocList} />
           <Stack.Screen name="RsrvtCalendar" component={RsrvtCalendar} />
           <Stack.Screen name="RsrvtSubmit" component={RsrvtSubmit} />
+          <Stack.Screen name="RsrvtDetail" component={RsrvtDetail} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
