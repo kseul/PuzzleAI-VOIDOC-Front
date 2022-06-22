@@ -48,11 +48,11 @@ const colors = {
   CalendarTimeDsblBorderGray: '#D1D1D1',
 
   // Reservation
-  RsrvtTimeBgGray: '#E6E6E6',
-  RsrvtTimeTextGray: '#989898',
-  RsrvtInputBgGray: '#F4F4F4',
-  RsrvtInputTextGray: '#777777',
-  RsrvtGreen: '#065E85',
+  AppointmentTimeBgGray: '#E6E6E6',
+  AppointmentTimeTextGray: '#989898',
+  AppointmentInputBgGray: '#F4F4F4',
+  AppointmentInputTextGray: '#777777',
+  AppointmentGreen: '#065E85',
   RstvtDsblBtn: '#A3A3A3',
   RstvtInnerTitle: '#616161',
   RstvtInnerLightGray: '#A3A3A3',

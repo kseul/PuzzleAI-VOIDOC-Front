@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-const RsrvtSubmit = () => {
+const AppointmentSubmit = () => {
   return (
     <View>
-      <Text>RsrvtSubmit</Text>
+      <Text>AppointmentSubmit</Text>
     </View>
   );
 };
 
-export default RsrvtSubmit;
+export default AppointmentSubmit;
