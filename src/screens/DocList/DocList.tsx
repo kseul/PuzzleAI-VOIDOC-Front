@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-const DitList = () => {
+const DocList = () => {
   return (
     <View>
-      <Text>DitList</Text>
+      <Text>DocList</Text>
     </View>
   );
 };
 
-export default DitList;
+export default DocList;

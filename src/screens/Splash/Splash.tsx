@@ -1,7 +1,12 @@
 import React from 'react';
+import {Text, View} from 'react-native';
 
 const Splash = () => {
-  return <div>Splash</div>;
+  return (
+    <View>
+      <Text>Splash</Text>
+    </View>
+  );
 };
 
 export default Splash;
