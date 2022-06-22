@@ -8,10 +8,10 @@ const flex = {
 };
 
 const fontSizes = {
-  fontLarge: '22px',
-  fontMedium: '18px',
-  fontRegular: '15px',
-  fontSmall: '12px',
+  fontLarge: '22',
+  fontMedium: '18',
+  fontRegular: '15',
+  fontSmall: '12',
 
   weightBold: 700,
   weightRegular: 400,
