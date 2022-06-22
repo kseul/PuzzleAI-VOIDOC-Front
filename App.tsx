@@ -3,15 +3,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import Splash from './src/screens/Splash/Splash';
-import Entry from './src/screens/Entry/Entry';
-import SignIn from './src/screens/SignIn/SignIn';
-import SignUp from './src/screens/SignUp/SignUp';
-import Main from './src/screens/Main/Main';
-import RsrvtList from './src/screens/Main/RsrvtList';
-import RsrvtDetail from './src/screens/RsrvtDetail/RsrvtDetail';
-import RsrvtCalendar from './src/screens/RsrvtCalendar/RsrvtCalendar';
-import RsrvtSubmit from './src/screens/RsrvtSubmit/RsrvtSubmit';
+import Splash from '@screens/Splash/Splash';
+import Entry from '@screens/Entry/Entry';
+import SignIn from '@screens/SignIn/SignIn';
+import SignUp from '@screens/SignUp/SignUp';
+import Main from '@screens/Main/Main';
+import RsrvtList from '@screens/Main/RsrvtList';
+import RsrvtDetail from '@screens/RsrvtDetail/RsrvtDetail';
+import RsrvtCalendar from '@screens/RsrvtCalendar/RsrvtCalendar';
+import RsrvtSubmit from '@screens/RsrvtSubmit/RsrvtSubmit';
 
 const Stack = createStackNavigator();
 
