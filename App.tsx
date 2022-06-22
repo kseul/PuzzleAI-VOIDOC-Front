@@ -8,11 +8,11 @@ import Entry from '@screens/Entry/Entry';
 import SignIn from '@screens/SignIn/SignIn';
 import SignUp from '@screens/SignUp/SignUp';
 import Main from '@screens/Main/Main';
-import RsrvtList from '@screens/Main/RsrvtList';
+import AppointmentList from '@screens/Main/AppointmentList';
 import DocList from '@screens/DocList/DocList';
-import RsrvtCalendar from '@screens/RsrvtCalendar/RsrvtCalendar';
-import RsrvtSubmit from '@screens/RsrvtSubmit/RsrvtSubmit';
-import RsrvtDetail from '@screens/RsrvtDetail/RsrvtDetail';
+import AppointmentCalendar from '@screens/AppointmentCalendar/AppointmentCalendar';
+import AppointmentSubmit from '@screens/AppointmentSubmit/AppointmentSubmit';
+import AppointmentDetail from '@screens/AppointmentDetail/AppointmentDetail';
 
 const Stack = createStackNavigator();
 
@@ -39,11 +39,20 @@ function App() {
             component={Main}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="RsrvtList" component={RsrvtList} />
+          <Stack.Screen name="AppointmentList" component={AppointmentList} />
           <Stack.Screen name="DocList" component={DocList} />
-          <Stack.Screen name="RsrvtCalendar" component={RsrvtCalendar} />
-          <Stack.Screen name="RsrvtSubmit" component={RsrvtSubmit} />
-          <Stack.Screen name="RsrvtDetail" component={RsrvtDetail} />
+          <Stack.Screen
+            name="AppointmentCalendar"
+            component={AppointmentCalendar}
+          />
+          <Stack.Screen
+            name="AppointmentSubmit"
+            component={AppointmentSubmit}
+          />
+          <Stack.Screen
+            name="AppointmentDetail"
+            component={AppointmentDetail}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
