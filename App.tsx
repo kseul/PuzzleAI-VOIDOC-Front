@@ -3,16 +3,16 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import Splash from '@screens/Splash/Splash';
-import Entry from '@screens/Entry/Entry';
-import SignIn from '@screens/SignIn/SignIn';
-import SignUp from '@screens/SignUp/SignUp';
-import Main from '@screens/Main/Main';
-import AppointmentList from '@screens/Main/AppointmentList';
-import DocList from '@screens/DocList/DocList';
-import AppointmentCalendar from '@screens/AppointmentCalendar/AppointmentCalendar';
-import AppointmentSubmit from '@screens/AppointmentSubmit/AppointmentSubmit';
-import AppointmentDetail from '@screens/AppointmentDetail/AppointmentDetail';
+import Splash from 'src/screens/Splash';
+import Entry from 'src/screens/Entry';
+import SignIn from 'src/screens/SignIn';
+import SignUp from 'src/screens/SignUp';
+import MainHome from 'src/screens/Main/MainHome';
+import MainList from 'src/screens/Main/MainList';
+import DocList from 'src/screens/DocList';
+import AppointmentCalendar from 'src/screens/AppointmentCalendar';
+import AppointmentSubmit from 'src/screens/AppointmentSubmit';
+import AppointmentDetail from 'src/screens/AppointmentDetail';
 
 const Stack = createStackNavigator();
 
@@ -35,11 +35,11 @@ function App() {
           <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen
-            name="Main"
-            component={Main}
+            name="MainHome"
+            component={MainHome}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="AppointmentList" component={AppointmentList} />
+          <Stack.Screen name="MainList" component={MainList} />
           <Stack.Screen name="DocList" component={DocList} />
           <Stack.Screen
             name="AppointmentCalendar"
