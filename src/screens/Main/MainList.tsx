@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-const AppointmentList = () => {
+const MainList = () => {
   return (
     <View>
-      <Text>AppointmentList</Text>
+      <Text>MainList</Text>
     </View>
   );
 };
 
-export default AppointmentList;
+export default MainList;
