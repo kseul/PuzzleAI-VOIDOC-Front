@@ -3,16 +3,16 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import Splash from 'src/screens/Splash';
-import Entry from 'src/screens/Entry';
-import SignIn from 'src/screens/SignIn';
-import SignUp from 'src/screens/SignUp';
-import MainHome from 'src/screens/Main/MainHome';
-import MainList from 'src/screens/Main/MainList';
-import DocList from 'src/screens/DocList';
-import AppointmentCalendar from 'src/screens/AppointmentCalendar';
-import AppointmentSubmit from 'src/screens/AppointmentSubmit';
-import AppointmentDetail from 'src/screens/AppointmentDetail';
+import Splash from '@screens/Splash';
+import Entry from '@screens/Entry';
+import SignIn from '@screens/SignIn';
+import SignUp from '@screens/SignUp';
+import MainHome from '@screens/Main/MainHome';
+import MainList from '@screens/Main/MainList';
+import DocList from '@screens/DocList';
+import AppointmentCalendar from '@screens/AppointmentCalendar';
+import AppointmentSubmit from '@screens/AppointmentSubmit';
+import AppointmentDetail from '@screens/AppointmentDetail';
 
 const Stack = createStackNavigator();
 
