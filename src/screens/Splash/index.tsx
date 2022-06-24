@@ -1,11 +1,14 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Splash = () => {
   return (
-    <View>
-      <Text>Splash</Text>
-    </View>
+    <SafeAreaView>
+      <View>
+        <Text>Splash</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
