@@ -1,15 +1,22 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { StyleSheet, Image, Text, View } from 'react-native';
 
-const Splash = () => {
-  return (
-    <SafeAreaView>
-      <View>
-        <Text>Splash</Text>
-      </View>
-    </SafeAreaView>
-  );
-};
+const Splash = () => (
+  <View style={styles.container}>
+    <Image
+        // style={styles.tinyLogo}
+        source={require('@assets/images/logo_white.png')}
+      />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent :'center',
+    backgroundColor: '#065E85',
+  },
+})
 
 export default Splash;
