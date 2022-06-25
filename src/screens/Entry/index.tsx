@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 
 const Entry = () => {
   return (
@@ -9,4 +9,12 @@ const Entry = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent :'center',
+    backgroundColor: '#065E85',
+  },
+})
 export default Entry;
