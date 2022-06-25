@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,11 +6,16 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Pressable,
+  Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const SignUp = ({navigation}) => {
+  const [hiddenPw, setHiddenPw] = useState(true);
+  const [hiddenPwCheck, setHiddenPwCheck] = useState(true);
+
   return (
     <KeyboardAvoidingView
       style={styles.fullscreen}
@@ -23,42 +28,70 @@ const SignUp = ({navigation}) => {
                 <Text style={styles.text}>성</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="성을 입력해주세요"></TextInput>
+                  placeholder="성을 입력해주세요"
+                />
               </View>
               <View style={styles.firstName}>
                 <Text style={styles.text}>이름</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="이름을 입력해주세요"></TextInput>
+                  placeholder="이름을 입력해주세요"
+                />
               </View>
             </View>
             <View>
               <Text style={styles.text}>이메일</Text>
               <TextInput
                 style={styles.input}
-                placeholder="이메일을 입력해주세요"></TextInput>
+                placeholder="이메일을 입력해주세요"
+              />
             </View>
             <View>
               <Text style={styles.text}>비밀번호</Text>
               <TextInput
                 style={styles.input}
-                placeholder="비밀번호를 입력해주세요"></TextInput>
+                placeholder="비밀번호를 입력해주세요"
+                secureTextEntry={hiddenPw}
+              />
+              <TouchableWithoutFeedback onPress={() => setHiddenPw(!hiddenPw)}>
+                <Image
+                  style={styles.iconEye}
+                  source={
+                    hiddenPw
+                      ? require('@assets/images/Icon_feather_eye_off.png')
+                      : require('@assets/images/Icon_feather_eye_on.png')
+                  }
+                />
+              </TouchableWithoutFeedback>
             </View>
             <View>
               <Text style={styles.text}>비밀번호 확인</Text>
               <TextInput
                 style={styles.input}
-                placeholder="비밀번호를 다시 입력해주세요"></TextInput>
+                placeholder="비밀번호를 다시 입력해주세요"
+                secureTextEntry={hiddenPwCheck}
+              />
+              <TouchableWithoutFeedback
+                onPress={() => setHiddenPwCheck(!hiddenPwCheck)}>
+                <Image
+                  style={styles.iconEye}
+                  source={
+                    hiddenPwCheck
+                      ? require('@assets/images/Icon_feather_eye_off.png')
+                      : require('@assets/images/Icon_feather_eye_on.png')
+                  }
+                />
+              </TouchableWithoutFeedback>
             </View>
           </View>
-          <View style={styles.flex}>
-            <Pressable
-              style={styles.btn}
-              onPress={() => navigation.navigate('SignIn')}>
-              <Text style={styles.btnText}>가입완료</Text>
-            </Pressable>
-          </View>
         </ScrollView>
+        <View style={styles.flex}>
+          <Pressable
+            style={styles.btn}
+            onPress={() => navigation.navigate('SignIn')}>
+            <Text style={styles.btnText}>가입완료</Text>
+          </Pressable>
+        </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -120,6 +153,12 @@ const styles = StyleSheet.create({
   btnText: {
     color: 'white',
     fontSize: 18,
+  },
+
+  iconEye: {
+    position: 'absolute',
+    right: 10,
+    bottom: 43,
   },
 });
 
