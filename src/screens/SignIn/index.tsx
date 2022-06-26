@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, TextInput ,Text, View} from 'react-native';
+import {StyleSheet, Pressable, TextInput ,Text, View} from 'react-native';
 import SignInHeader from '@components/SignInHeader'
 
 
@@ -26,12 +26,12 @@ const SignIn = () => {
         </View>
 
         <View style={styles.btnContainer}>
-          <TouchableOpacity
+          <Pressable
             style={styles.signInScreenButton}
             // onPress={() => navigation.navigate('SignIn')}
             >
             <Text style={styles.signInText}>로그인</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
   );

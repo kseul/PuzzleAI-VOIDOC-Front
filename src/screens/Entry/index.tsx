@@ -1,24 +1,26 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Pressable } from 'react-native';
 import SignInHeader from '@components/SignInHeader'
+
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 const Entry = ({ navigation } ) => {
   return (
     <View style={styles.container}>
       <SignInHeader />
       <View style={styles.btnContainer}>
-        <TouchableOpacity
+        <Pressable
             style={styles.signInScreenButton}
             onPress={() => navigation.navigate('SignIn')}
             >
             <Text style={styles.signInText}>로그인</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </Pressable>
+        <Pressable
             style={[styles.signInScreenButton, styles.signInScreenButtonUp]}
             onPress={() => navigation.navigate('SignUp')}
             >
             <Text style={[styles.signInText, styles.signUpText]}>회원가입</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
@@ -29,6 +31,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent :'center',
+    backgroundColor: '#fff',
+    marginHorizontal: 20,
   },
 
   btnContainer : {
@@ -37,8 +41,8 @@ const styles = StyleSheet.create({
   },
   
   signInScreenButton:{
-    width: 300,
-    height: 52,
+    flex : 1,
+    width: SCREEN_WIDTH,
     marginBottom: 15.5,
     backgroundColor:'#065E85',
     borderRadius: 8,
