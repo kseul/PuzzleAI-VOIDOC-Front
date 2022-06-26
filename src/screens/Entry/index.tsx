@@ -1,15 +1,12 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, Button, Text, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, Text, View} from 'react-native';
+import SignInHeader from '@components/SignInHeader'
 
 const Entry = ({ navigation } ) => {
   
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.header}
-        source={require('@assets/images/logo_color.png')}
-      />
-
+      <SignInHeader />
       <View style={styles.btnContainer}>
         <TouchableOpacity
             style={styles.signInScreenButton}
@@ -33,11 +30,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent :'center',
-  },
-
-  header: {
-    position: 'absolute',
-    top: 100,
   },
   
   btnContainer : {
@@ -71,4 +63,5 @@ const styles = StyleSheet.create({
     color:'#065E85',
   }
 })
+
 export default Entry;
