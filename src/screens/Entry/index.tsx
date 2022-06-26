@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, Text, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import SignInHeader from '@components/SignInHeader'
 
 const Entry = ({ navigation } ) => {
-  
   return (
     <View style={styles.container}>
       <SignInHeader />
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent :'center',
   },
-  
+
   btnContainer : {
     position: 'absolute',
     bottom: 60,
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     height: 52,
     marginBottom: 15.5,
     backgroundColor:'#065E85',
-    borderRadius:10,
+    borderRadius: 8,
   },
   
   signInScreenButtonUp: {

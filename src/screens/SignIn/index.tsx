@@ -20,6 +20,7 @@ const SignIn = () => {
           <Text style={styles.label}>비밀번호</Text>
           <TextInput
             style={styles.input}
+            secureTextEntry
             placeholder="비밀번호를 입력해주세요" 
           />
         </View>
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    width: '100%',
   },
 
   inputMargin: {
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     height: 48,
     padding: 10,
     borderWidth: 1,
-    borderRadius:10,
+    borderRadius:8,
     borderColor: '#C4C4C4',
   },
 
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
     height: 52,
     marginBottom: 15.5,
     backgroundColor:'#065E85',
-    borderRadius:10,
+    borderRadius: 8,
   },
 
   signInText:{
