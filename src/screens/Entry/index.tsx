@@ -2,10 +2,11 @@ import React from 'react';
 import { View, Text, Dimensions, StyleSheet, Pressable } from 'react-native';
 import SignInHeader from '@components/SignInHeader'
 import { theme } from '~/src/styles/theme'
+import { EntryScreenProps } from '~/src/types/type';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-const Entry = ({ navigation } ) => {
+const Entry = ({navigation}: EntryScreenProps) => {
   return (
     <View style={styles.container}>
       <SignInHeader />
