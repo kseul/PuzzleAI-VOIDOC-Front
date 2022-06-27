@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Pressable, TextInput ,Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Pressable, TextInput ,Text, View} from 'react-native';
 import SignInHeader from '@components/SignInHeader'
 
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 const SignIn = () => {
   return (
@@ -11,6 +12,7 @@ const SignIn = () => {
         <View style={styles.inputMargin}>
           <Text style={styles.label}>이메일</Text>
           <TextInput 
+            keyboardType='email-address'
             style={styles.input}
             placeholder="이메일을 입력해주세요" 
           />
@@ -30,7 +32,7 @@ const SignIn = () => {
             style={styles.signInScreenButton}
             // onPress={() => navigation.navigate('SignIn')}
             >
-            <Text style={styles.signInText}>로그인</Text>
+            <Text style={styles.signInBtnText}>로그인</Text>
           </Pressable>
         </View>
       </View>
@@ -42,14 +44,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
+    backgroundColor: '#fff',
   },
 
-  inputMargin: {
-    marginBottom: 50,
+  label: {
+    marginBottom: 7.5,
   },
 
   input: {
-    width: 300,
+    width: SCREEN_WIDTH - 66,
     height: 48,
     padding: 10,
     borderWidth: 1,
@@ -57,8 +60,8 @@ const styles = StyleSheet.create({
     borderColor: '#C4C4C4',
   },
 
-  label: {
-    marginBottom: 7.5,
+  inputMargin: {
+    marginBottom: 50,
   },
 
   btnContainer: {
@@ -70,14 +73,12 @@ const styles = StyleSheet.create({
   signInScreenButton:{
     position: 'absolute',
     bottom: 60,
-    width: 300,
-    height: 52,
-    marginBottom: 15.5,
+    width: SCREEN_WIDTH - 66,
     backgroundColor:'#065E85',
     borderRadius: 8,
   },
 
-  signInText:{
+  signInBtnText:{
     color:'#fff',
     textAlign:'center',
     lineHeight: 52,

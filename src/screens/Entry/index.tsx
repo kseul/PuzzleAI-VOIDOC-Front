@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, Dimensions, StyleSheet, Pressable } from 'react-native';
 import SignInHeader from '@components/SignInHeader'
+import { theme } from '~/src/styles/theme'
 
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const Entry = ({ navigation } ) => {
   return (
@@ -32,26 +33,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent :'center',
     backgroundColor: '#fff',
-    marginHorizontal: 20,
   },
-
+  
   btnContainer : {
     position: 'absolute',
     bottom: 60,
+    width: SCREEN_WIDTH - 66,
   },
   
   signInScreenButton:{
     flex : 1,
-    width: SCREEN_WIDTH,
     marginBottom: 15.5,
-    backgroundColor:'#065E85',
+    backgroundColor: theme.colors.puzzleGreen,
     borderRadius: 8,
   },
   
   signInScreenButtonUp: {
     backgroundColor:'#fff',
     borderWidth: 1,
-    borderColor: '#065E85',
+    borderColor: theme.colors.puzzleGreen,
   },
   
   signInText:{
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   
   signUpText:{
-    color:'#065E85',
+    color: theme.colors.puzzleGreen,
   }
 })
 
