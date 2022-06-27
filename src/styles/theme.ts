@@ -1,12 +1,3 @@
-const flex = {
-  flexBox: (direction = 'row', align = 'center', justify = 'center') => `
-    display: flex;
-    flex-direction: ${direction};
-    align-items: ${align};
-    justify-content: ${justify};
-  `,
-};
-
 const fontSizes = {
   fontLarge: 22,
   fontMedium: 18,
@@ -62,7 +53,6 @@ const colors = {
 };
 
 export const theme = {
-  flex,
   fontSizes,
   colors,
 };

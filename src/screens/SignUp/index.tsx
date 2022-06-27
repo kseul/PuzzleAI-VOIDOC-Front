@@ -12,9 +12,11 @@ import {
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
+import {commonStyle} from '~/src/styles/commonStyle';
+import {SignUpScreenProps} from '~/src/types/type';
 import {theme} from '~/src/styles/theme';
 
-const SignUp = ({navigation}) => {
+const SignUp = ({navigation}: SignUpScreenProps) => {
   const [hiddenPw, setHiddenPw] = useState(true);
   const [hiddenPwCheck, setHiddenPwCheck] = useState(true);
 
@@ -26,17 +28,17 @@ const SignUp = ({navigation}) => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.fullscreen}
+      style={commonStyle.fullscreen}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <SafeAreaView style={styles.innerFlex}>
-        <ScrollView contentContainerStyle={styles.scroll}>
+        <ScrollView>
           <View style={styles.nameWrapper}>
             <View style={styles.lastName}>
-              <Text style={styles.text}>성</Text>
+              <Text style={styles.inputText}>성</Text>
               <TextInput style={styles.input} placeholder="성을 입력해주세요" />
             </View>
             <View style={styles.firstName}>
-              <Text style={styles.text}>이름</Text>
+              <Text style={styles.inputText}>이름</Text>
               <TextInput
                 style={styles.input}
                 placeholder="이름을 입력해주세요"
@@ -44,14 +46,14 @@ const SignUp = ({navigation}) => {
             </View>
           </View>
           <View>
-            <Text style={styles.text}>이메일</Text>
+            <Text style={styles.inputText}>이메일</Text>
             <TextInput
               style={styles.input}
               placeholder="이메일을 입력해주세요"
             />
           </View>
           <View>
-            <Text style={styles.text}>비밀번호</Text>
+            <Text style={styles.inputText}>비밀번호</Text>
             <TextInput
               style={styles.input}
               placeholder="비밀번호를 입력해주세요"
@@ -66,7 +68,7 @@ const SignUp = ({navigation}) => {
             </Pressable>
           </View>
           <View>
-            <Text style={styles.text}>비밀번호 확인</Text>
+            <Text style={styles.inputText}>비밀번호 확인</Text>
             <TextInput
               style={styles.input}
               placeholder="비밀번호를 다시 입력해주세요"
@@ -83,9 +85,9 @@ const SignUp = ({navigation}) => {
         </ScrollView>
         <View style={styles.innerFlex}>
           <Pressable
-            style={styles.btn}
+            style={commonStyle.btn}
             onPress={() => navigation.navigate('SignIn')}>
-            <Text style={styles.btnText}>가입완료</Text>
+            <Text style={commonStyle.btnText}>가입완료</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -94,18 +96,7 @@ const SignUp = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  fullscreen: {
-    flex: 1,
-    width: '100%',
-    paddingTop: 20,
-    paddingRight: 27,
-    paddingBottom: 60,
-    paddingLeft: 33,
-    backgroundColor: 'white',
-  },
-
   innerFlex: {flex: 1},
-  scroll: {flexGrow: 1},
 
   nameWrapper: {
     flexDirection: 'row',
@@ -129,25 +120,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: theme.colors.userGray,
-    fontSize: 12,
+    fontSize: theme.fontSizes.fontSmall,
   },
 
-  text: {
+  inputText: {
     marginBottom: 7.5,
-    fontSize: 12,
-  },
-
-  btn: {
-    height: 52,
-    borderRadius: 8,
-    backgroundColor: theme.colors.userGray,
-  },
-
-  btnText: {
-    textAlign: 'center',
-    lineHeight: 52,
-    fontSize: 18,
-    color: 'white',
+    fontSize: theme.fontSizes.fontSmall,
   },
 
   iconEye: {
