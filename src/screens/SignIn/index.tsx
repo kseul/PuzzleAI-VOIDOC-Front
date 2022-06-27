@@ -1,44 +1,45 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Pressable, TextInput ,Image ,Text, View} from 'react-native';
-
-
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+import { StyleSheet, Pressable, TextInput ,Image ,Text, View, KeyboardAvoidingView, KeyboardAvoidingViewBase} from 'react-native';
+import { theme } from '~/src/styles/theme'
+import { commonStyle } from "~/src/styles/commonStyle";
 
 const SignIn = () => {
   return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={commonStyle.fullscreen}>
         <View style={styles.container}>
           <Image
               source={require('@assets/images/logo_color.png')}
             />
         </View>
-        <View style={styles.inputMargin}>
-          <Text style={styles.label}>이메일</Text>
-          <TextInput 
-            keyboardType='email-address'
-            style={styles.input}
-            placeholder="이메일을 입력해주세요" 
-          />
+
+        <View style={styles.inputContainer}>
+          <View style={styles.inputMargin}>
+            <Text style={styles.label}>이메일</Text>
+            <TextInput 
+              style={styles.input}
+              keyboardType='email-address'
+              placeholder="이메일을 입력해주세요" 
+            />
+          </View>
+
+          <View>
+            <Text style={styles.label}>비밀번호</Text>
+            <TextInput
+              style={styles.input}
+              secureTextEntry
+              placeholder="비밀번호를 입력해주세요" 
+            />
+          </View>
         </View>
 
         <View>
-          <Text style={styles.label}>비밀번호</Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            placeholder="비밀번호를 입력해주세요" 
-          />
-        </View>
-
-        <View style={styles.btnContainer}>
           <Pressable
-            style={styles.signInScreenButton}
-            // onPress={() => navigation.navigate('SignIn')}
+            style={commonStyle.ativeBtn}
             >
-            <Text style={styles.signInBtnText}>로그인</Text>
+            <Text style={commonStyle.btnText}>로그인</Text>
           </Pressable>
         </View>
-      </View>
+      </KeyboardAvoidingView>
   );
 };
 
@@ -46,25 +47,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    width: '100%',
-    backgroundColor: '#fff',
+    marginTop: 20,
   },
 
-  label: {
-    marginBottom: 7.5,
-  },
-
-  input: {
-    width: SCREEN_WIDTH - 66,
-    height: 48,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius:8,
-    borderColor: '#C4C4C4',
-  },
-
-  inputMargin: {
-    marginBottom: 50,
+  inputContainer: {
+    flex: 3,
   },
 
   btnContainer: {
@@ -72,21 +59,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent :'center',
   },
-
-  signInScreenButton:{
-    position: 'absolute',
-    bottom: 60,
-    width: SCREEN_WIDTH - 66,
-    backgroundColor:'#065E85',
-    borderRadius: 8,
+  label: {
+    marginBottom: 7.5,
   },
 
-  signInBtnText:{
-    color:'#fff',
-    textAlign:'center',
-    lineHeight: 52,
-    fontSize: 18,
-    fontWeight: '400',
+  input: {
+    height: 48,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius:8,
+    borderColor: theme.colors.userGray,
+  },
+
+  inputMargin: {
+    marginBottom: 50,
   },
 })
 

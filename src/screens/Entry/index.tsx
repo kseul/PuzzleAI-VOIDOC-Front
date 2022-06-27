@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Dimensions, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { EntryScreenProps } from '~/src/types/type';
 import { theme } from '~/src/styles/theme'
 import { commonStyle } from "~/src/styles/commonStyle";
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 110,
   },
 
   marginBottom:{
