@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,22 +9,21 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
 import {commonStyle} from '~/src/styles/commonStyle';
 import {SignUpScreenProps} from '~/src/types/type';
 import {theme} from '~/src/styles/theme';
+import eyeOff from 'assets/images/Icon_feather_eye_off.png';
+import eyeOn from 'assets/images/Icon_feather_eye_on.png';
 
 const SignUp = ({navigation}: SignUpScreenProps) => {
   const [hiddenPw, setHiddenPw] = useState(true);
   const [hiddenPwCheck, setHiddenPwCheck] = useState(true);
 
-  const hiddenPwHandler = useCallback(isHidden => {
-    return isHidden
-      ? require('@assets/images/Icon_feather_eye_off.png')
-      : require('@assets/images/Icon_feather_eye_on.png');
-  }, []);
+  const hiddenPwHandler = isHidden => {
+    return isHidden ? eyeOff : eyeOn;
+  };
 
   return (
     <KeyboardAvoidingView
@@ -33,11 +32,11 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
       <SafeAreaView style={styles.innerFlex}>
         <ScrollView>
           <View style={styles.nameWrapper}>
-            <View style={styles.lastName}>
+            <View style={[styles.name, styles.lastName]}>
               <Text style={styles.inputText}>성</Text>
               <TextInput style={styles.input} placeholder="성을 입력해주세요" />
             </View>
-            <View style={styles.firstName}>
+            <View style={[styles.name, styles.firstName]}>
               <Text style={styles.inputText}>이름</Text>
               <TextInput
                 style={styles.input}
@@ -103,14 +102,16 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  lastName: {
+  name: {
     width: '50%',
-    paddingRight: 5,
   },
 
   firstName: {
-    width: '50%',
     paddingLeft: 5,
+  },
+
+  lastName: {
+    paddingRight: 5,
   },
 
   input: {
