@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Pressable, TextInput ,Image ,Text, View, KeyboardAvoidingView, KeyboardAvoidingViewBase} from 'react-native';
+import { StyleSheet, Pressable, TextInput ,Image ,Text, View, KeyboardAvoidingView, ScrollView} from 'react-native';
 import { theme } from '~/src/styles/theme'
 import { commonStyle } from "~/src/styles/commonStyle";
 
 const SignIn = () => {
   return (
-      <KeyboardAvoidingView style={commonStyle.fullscreen}>
-        <View style={styles.container}>
+    <View style={ commonStyle.fullscreen }>
+        <View style={styles.logoContainer}>
           <Image
               source={require('@assets/images/logo_color.png')}
             />
@@ -32,19 +32,19 @@ const SignIn = () => {
           </View>
         </View>
 
-        <View>
+        <View style={styles.btnContainer}>
           <Pressable
             style={commonStyle.ativeBtn}
             >
             <Text style={commonStyle.btnText}>로그인</Text>
           </Pressable>
         </View>
-      </KeyboardAvoidingView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  logoContainer: {
     flex: 1,
     alignItems: 'center',
     marginTop: 20,
@@ -56,9 +56,8 @@ const styles = StyleSheet.create({
 
   btnContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent :'center',
   },
+
   label: {
     marginBottom: 7.5,
   },

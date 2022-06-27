@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Image, View } from 'react-native';
+import { theme } from '~/src/styles/theme'
 
 const Splash = () => (
   <View style={styles.container}>
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent :'center',
-    backgroundColor: '#065E85',
+    backgroundColor: theme.colors.puzzleGreen,
   },
 })
 
