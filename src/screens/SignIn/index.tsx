@@ -1,14 +1,17 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Pressable, TextInput ,Text, View} from 'react-native';
-import SignInHeader from '@components/SignInHeader'
+import {Dimensions, StyleSheet, Pressable, TextInput ,Image ,Text, View} from 'react-native';
+
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 const SignIn = () => {
   return (
       <View style={styles.container}>
-        <SignInHeader />
-
+        <View style={styles.container}>
+          <Image
+              source={require('@assets/images/logo_color.png')}
+            />
+        </View>
         <View style={styles.inputMargin}>
           <Text style={styles.label}>이메일</Text>
           <TextInput 

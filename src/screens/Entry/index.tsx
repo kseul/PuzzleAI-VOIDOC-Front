@@ -1,18 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import SignInHeader from '@components/SignInHeader'
+import { View, Text, Image, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { EntryScreenProps } from '~/src/types/type';
 import { theme } from '~/src/styles/theme'
 import { commonStyle } from "~/src/styles/commonStyle";
 
-
 const Entry = ({navigation}: EntryScreenProps) => {
   return (
     <View style={commonStyle.fullscreen}>
-      <SignInHeader />
+      <View style={styles.container}>
+        <Image
+            source={require('@assets/images/logo_color.png')}
+          />
+      </View>
       <View>
         <Pressable
-            style={[commonStyle.ativeBtn, styles.margin]}
+            style={[commonStyle.ativeBtn, styles.marginBottom]}
             onPress={() => navigation.navigate('SignIn')}
             >
             <Text style={commonStyle.btnText}>로그인</Text>
@@ -29,7 +31,13 @@ const Entry = ({navigation}: EntryScreenProps) => {
 };
 
 const styles = StyleSheet.create({
-  margin:{
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 50,
+  },
+
+  marginBottom:{
     marginBottom: 15.5,
   },
 
