@@ -9,8 +9,10 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {TextInput} from 'react-native-gesture-handler';
+import {theme} from '~/src/styles/theme';
 
 const SignUp = ({navigation}) => {
   const [hiddenPw, setHiddenPw] = useState(true);
@@ -26,65 +28,60 @@ const SignUp = ({navigation}) => {
     <KeyboardAvoidingView
       style={styles.fullscreen}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <SafeAreaView style={styles.flex}>
+      <SafeAreaView style={styles.innerFlex}>
         <ScrollView contentContainerStyle={styles.scroll}>
-          <View style={styles.inputWrapper}>
-            <View style={styles.nameWrapper}>
-              <View style={styles.lastName}>
-                <Text style={styles.text}>성</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="성을 입력해주세요"
-                />
-              </View>
-              <View style={styles.firstName}>
-                <Text style={styles.text}>이름</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="이름을 입력해주세요"
-                />
-              </View>
+          <View style={styles.nameWrapper}>
+            <View style={styles.lastName}>
+              <Text style={styles.text}>성</Text>
+              <TextInput style={styles.input} placeholder="성을 입력해주세요" />
             </View>
-            <View>
-              <Text style={styles.text}>이메일</Text>
+            <View style={styles.firstName}>
+              <Text style={styles.text}>이름</Text>
               <TextInput
                 style={styles.input}
-                placeholder="이메일을 입력해주세요"
+                placeholder="이름을 입력해주세요"
               />
-            </View>
-            <View>
-              <Text style={styles.text}>비밀번호</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="비밀번호를 입력해주세요"
-                secureTextEntry={hiddenPw}
-                textContentType="oneTimeCode"
-              />
-              <Pressable onPress={() => setHiddenPw(!hiddenPw)}>
-                <Image
-                  style={styles.iconEye}
-                  source={hiddenPwHandler(hiddenPw)}
-                />
-              </Pressable>
-            </View>
-            <View>
-              <Text style={styles.text}>비밀번호 확인</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="비밀번호를 다시 입력해주세요"
-                secureTextEntry={hiddenPwCheck}
-                textContentType="oneTimeCode"
-              />
-              <Pressable onPress={() => setHiddenPwCheck(!hiddenPwCheck)}>
-                <Image
-                  style={styles.iconEye}
-                  source={hiddenPwHandler(hiddenPwCheck)}
-                />
-              </Pressable>
             </View>
           </View>
+          <View>
+            <Text style={styles.text}>이메일</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="이메일을 입력해주세요"
+            />
+          </View>
+          <View>
+            <Text style={styles.text}>비밀번호</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="비밀번호를 입력해주세요"
+              secureTextEntry={hiddenPw}
+              textContentType="oneTimeCode"
+            />
+            <Pressable onPress={() => setHiddenPw(!hiddenPw)}>
+              <Image
+                style={styles.iconEye}
+                source={hiddenPwHandler(hiddenPw)}
+              />
+            </Pressable>
+          </View>
+          <View>
+            <Text style={styles.text}>비밀번호 확인</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="비밀번호를 다시 입력해주세요"
+              secureTextEntry={hiddenPwCheck}
+              textContentType="oneTimeCode"
+            />
+            <Pressable onPress={() => setHiddenPwCheck(!hiddenPwCheck)}>
+              <Image
+                style={styles.iconEye}
+                source={hiddenPwHandler(hiddenPwCheck)}
+              />
+            </Pressable>
+          </View>
         </ScrollView>
-        <View style={styles.flex}>
+        <View style={styles.innerFlex}>
           <Pressable
             style={styles.btn}
             onPress={() => navigation.navigate('SignIn')}>
@@ -100,16 +97,15 @@ const styles = StyleSheet.create({
   fullscreen: {
     flex: 1,
     width: '100%',
-    paddingTop: 40,
+    paddingTop: 20,
     paddingRight: 27,
     paddingBottom: 60,
     paddingLeft: 33,
     backgroundColor: 'white',
   },
 
-  flex: {flex: 1},
+  innerFlex: {flex: 1},
   scroll: {flexGrow: 1},
-  inputWrapper: {flex: 2},
 
   nameWrapper: {
     flexDirection: 'row',
@@ -131,8 +127,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 27.5,
     borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#C4C4C4',
+    borderRadius: 8,
+    borderColor: theme.colors.userGray,
     fontSize: 12,
   },
 
@@ -142,16 +138,16 @@ const styles = StyleSheet.create({
   },
 
   btn: {
-    alignItems: 'center',
-    justifyContent: 'center',
     height: 52,
-    borderRadius: 5,
-    backgroundColor: '#C4C4C4',
+    borderRadius: 8,
+    backgroundColor: theme.colors.userGray,
   },
 
   btnText: {
-    color: 'white',
+    textAlign: 'center',
+    lineHeight: 52,
     fontSize: 18,
+    color: 'white',
   },
 
   iconEye: {

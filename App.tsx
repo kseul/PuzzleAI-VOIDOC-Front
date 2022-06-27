@@ -33,7 +33,14 @@ function App() {
           />
 
           <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen
+            name="회원가입"
+            component={SignUp}
+            options={{
+              headerTitleAlign: 'center',
+              headerStyle: {shadowColor: 'white'},
+            }}
+          />
           <Stack.Screen
             name="MainHome"
             component={MainHome}
