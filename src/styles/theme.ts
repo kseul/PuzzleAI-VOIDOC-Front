@@ -61,10 +61,8 @@ const colors = {
   RstvtDetailGray: '#777777',
 };
 
-const theme = {
+export const theme = {
   flex,
   fontSizes,
   colors,
 };
-
-export default theme;
