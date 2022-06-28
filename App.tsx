@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Image} from 'react-native';
 
 import Splash from '@screens/Splash';
 import Entry from '@screens/Entry';
@@ -13,10 +14,21 @@ import DocList from '@screens/DocList';
 import AppointmentCalendar from '@screens/AppointmentCalendar';
 import AppointmentSubmit from '@screens/AppointmentSubmit';
 import AppointmentDetail from '@screens/AppointmentDetail';
+import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
+
 
 const Stack = createStackNavigator();
 
 function App() {
+  function BackBtn() {
+    return (
+      <Image
+        source={arrowLeft}
+        style={{marginLeft: 21}}
+      />
+    );
+  }
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -25,14 +37,22 @@ function App() {
             name="Splash"
             component={Splash}
             options={{headerShown: false}}
-          />
+          /> 
           <Stack.Screen
             name="Entry"
             component={Entry}
             options={{headerShown: false}}
           />
-
-          <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen 
+            name="SignIn"
+            component={SignIn} 
+            options={{ 
+              title : '',  
+              headerBackTitleVisible: false,
+              headerStyle: {shadowColor: 'white'},
+              headerBackImage: ()=>(<BackBtn />),
+            }}
+          />
           <Stack.Screen
             name="회원가입"
             component={SignUp}

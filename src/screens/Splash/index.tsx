@@ -1,15 +1,23 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { StyleSheet, Image, View } from 'react-native';
+import { theme } from '~/src/styles/theme'
+import logoWhite from 'assets/images/logo_white.png';
 
-const Splash = () => {
-  return (
-    <SafeAreaView>
-      <View>
-        <Text>Splash</Text>
-      </View>
-    </SafeAreaView>
-  );
-};
+const Splash = () => (
+  <View style={styles.container}>
+    <Image
+        source={logoWhite}
+      />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent :'center',
+    backgroundColor: theme.colors.puzzleGreen,
+  },
+})
 
 export default Splash;

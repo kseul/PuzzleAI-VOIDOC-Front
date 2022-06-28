@@ -1,7 +1,12 @@
 import React from 'react';
+import {Text, View} from 'react-native';
 
 const Sample = () => {
-  return <div>Sample</div>;
+  return (
+    <View>
+      <Text>Sample</Text>
+    </View>
+  );
 };
 
 export default Sample;
