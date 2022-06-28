@@ -20,14 +20,6 @@ import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
 const Stack = createStackNavigator();
 
 function App() {
-  const [ready, setReady] = useState(true);
-
-  useEffect(()=>{
-    setTimeout(() => {
-      setReady(false)
-    }, 1000)
-  },[])
-
   function BackBtn() {
     return (
       <Image
@@ -41,16 +33,16 @@ function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          {ready ? <Stack.Screen
+          <Stack.Screen
             name="Splash"
             component={Splash}
             options={{headerShown: false}}
-          /> : <Stack.Screen
+          /> 
+          <Stack.Screen
             name="Entry"
             component={Entry}
             options={{headerShown: false}}
-          />}
-          
+          />
           <Stack.Screen 
             name="SignIn"
             component={SignIn} 
@@ -61,7 +53,6 @@ function App() {
               headerBackImage: ()=>(<BackBtn />),
             }}
           />
-
           <Stack.Screen
             name="회원가입"
             component={SignUp}
