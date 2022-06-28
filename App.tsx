@@ -14,6 +14,8 @@ import DocList from '@screens/DocList';
 import AppointmentCalendar from '@screens/AppointmentCalendar';
 import AppointmentSubmit from '@screens/AppointmentSubmit';
 import AppointmentDetail from '@screens/AppointmentDetail';
+import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
+
 
 const Stack = createStackNavigator();
 
@@ -29,7 +31,7 @@ function App() {
   function BackBtn() {
     return (
       <Image
-        source={require('@assets/images/icon_feather_arrow_left.png')}
+        source={arrowLeft}
         style={{marginLeft: 21}}
       />
     );

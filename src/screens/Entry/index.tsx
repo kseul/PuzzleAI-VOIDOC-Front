@@ -4,13 +4,14 @@ import { EntryScreenProps } from '~/src/types/type';
 import { theme } from '~/src/styles/theme'
 import { commonStyle } from "~/src/styles/commonStyle";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import logoColor from 'assets/images/logo_color.png';
 
 const Entry = ({navigation}: EntryScreenProps) => {
   return (
     <SafeAreaView style={commonStyle.fullscreen}>
         <View style={styles.container}>
           <Image
-              source={require('@assets/images/logo_color.png')}
+              source={logoColor}
             />
         </View>
         <Pressable
