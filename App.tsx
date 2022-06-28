@@ -59,11 +59,7 @@ function App() {
               headerBackImage: ()=>(<BackBtn />),
             }}
           />
-<<<<<<< HEAD
-          <Stack.Screen name="SignUp" component={SignUp} />
-=======
 
-          <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen
             name="회원가입"
             component={SignUp}
@@ -72,7 +68,6 @@ function App() {
               headerStyle: {shadowColor: 'white'},
             }}
           />
->>>>>>> main
           <Stack.Screen
             name="MainHome"
             component={MainHome}
