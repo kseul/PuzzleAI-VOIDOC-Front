@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -18,12 +18,19 @@ import AppointmentDetail from '@screens/AppointmentDetail';
 const Stack = createStackNavigator();
 
 function App() {
+  const [ready, setReady] = useState(true);
+
+  useEffect(()=>{
+    setTimeout(() => {
+      setReady(false)
+    }, 1000)
+  },[])
 
   function BackBtn() {
     return (
       <Image
         source={require('@assets/images/icon_feather_arrow_left.png')}
-        style={{marginLeft: 20}}
+        style={{marginLeft: 21}}
       />
     );
   }
@@ -32,23 +39,23 @@ function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
+          {ready ? <Stack.Screen
             name="Splash"
             component={Splash}
             options={{headerShown: false}}
-          />
-          <Stack.Screen
+          /> : <Stack.Screen
             name="Entry"
             component={Entry}
             options={{headerShown: false}}
-          />
-
+          />}
+          
           <Stack.Screen 
-            name="SignIn" 
+            name="SignIn"
             component={SignIn} 
             options={{ 
               title : '',  
               headerBackTitleVisible: false,
+              headerStyle: {shadowColor: 'white'},
               headerBackImage: ()=>(<BackBtn />),
             }}
           />

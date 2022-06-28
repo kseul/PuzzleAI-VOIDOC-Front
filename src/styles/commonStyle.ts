@@ -6,7 +6,6 @@ export const commonStyle = StyleSheet.create({
     fullscreen: {
         flex: 1,
         width: '100%',
-        paddingTop: 20,
         paddingRight: 27,
         paddingBottom: 60,
         paddingLeft: 33,

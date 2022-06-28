@@ -3,16 +3,16 @@ import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { EntryScreenProps } from '~/src/types/type';
 import { theme } from '~/src/styles/theme'
 import { commonStyle } from "~/src/styles/commonStyle";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Entry = ({navigation}: EntryScreenProps) => {
   return (
-    <View style={commonStyle.fullscreen}>
-      <View style={styles.container}>
-        <Image
-            source={require('@assets/images/logo_color.png')}
-          />
-      </View>
-      <View>
+    <SafeAreaView style={commonStyle.fullscreen}>
+        <View style={styles.container}>
+          <Image
+              source={require('@assets/images/logo_color.png')}
+            />
+        </View>
         <Pressable
             style={[commonStyle.ativeBtn, styles.marginBottom]}
             onPress={() => navigation.navigate('SignIn')}
@@ -25,8 +25,7 @@ const Entry = ({navigation}: EntryScreenProps) => {
             >
             <Text style={[commonStyle.btnText, styles.signUpText]}>회원가입</Text>
         </Pressable>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 110,
+    marginTop: 76,
   },
 
   marginBottom:{
