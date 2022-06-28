@@ -32,7 +32,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="SignUp">
           <Stack.Screen
             name="Splash"
             component={Splash}
@@ -54,9 +54,10 @@ function App() {
             }}
           />
           <Stack.Screen
-            name="회원가입"
+            name="SignUp"
             component={SignUp}
             options={{
+              title: '회원가입',
               headerTitleAlign: 'center',
               headerStyle: {shadowColor: 'white'},
             }}
