@@ -10,9 +10,7 @@ const Entry = ({navigation}: EntryScreenProps) => {
   return (
     <SafeAreaView style={commonStyle.fullscreen}>
         <View style={styles.container}>
-          <Image
-              source={logoColor}
-            />
+          <Image source={logoColor} />
         </View>
         <Pressable
             style={[commonStyle.ativeBtn, styles.marginBottom]}

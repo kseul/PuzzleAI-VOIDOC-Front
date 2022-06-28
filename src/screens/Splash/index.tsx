@@ -5,9 +5,7 @@ import logoWhite from 'assets/images/logo_white.png';
 
 const Splash = () => (
   <View style={styles.container}>
-    <Image
-        source={logoWhite}
-      />
+    <Image source={logoWhite} />
   </View>
 );
 
