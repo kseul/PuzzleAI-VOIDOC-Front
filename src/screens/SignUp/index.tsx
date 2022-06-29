@@ -8,6 +8,7 @@ import {
   ScrollView,
   Pressable,
   Image,
+  Alert,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
@@ -28,7 +29,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
     password: '',
     passwordCheck: '',
   });
-  const [uniqueEmailCheck, setUniqueEmailCheck] = useState(false);
+  const [uniqueEmailCheck, setUniqueEmailCheck] = useState(true);
 
   const {lastName, firstName, email, password, passwordCheck} = inputValue;
 
@@ -81,7 +82,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
     return password === passwordCheck;
   }, [password, passwordCheck]);
 
-  const allVaildCheck = useMemo(() => {
+  const allValidCheck = useMemo(() => {
     return (
       validEmail && uniqueEmailCheck && validPassword && validPasswordCheck
     );
@@ -99,7 +100,9 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
     })
       .then(res => res.json())
       .then(
-        data => data.message === 'SUCCESS' && navigation.navigate('SignIn'),
+        data =>
+          data.message === 'SUCCESS' &&
+          (Alert.alert('회원가입 되었습니다.'), navigation.navigate('SignIn')),
       );
   };
 
@@ -110,7 +113,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
       <SafeAreaView style={styles.innerFlex}>
         <ScrollView>
           <View style={styles.nameWrapper}>
-            <View style={[styles.name, styles.lastName]}>
+            <View style={[styles.name, styles.lastName, styles.inputBox]}>
               <Text style={styles.inputText}>성</Text>
               <TextInput
                 style={styles.input}
@@ -131,7 +134,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
               />
             </View>
           </View>
-          <View>
+          <View style={styles.inputBox}>
             <Text style={styles.inputText}>이메일</Text>
             <TextInput
               style={styles.input}
@@ -140,49 +143,70 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
               autoCapitalize="none"
               onChangeText={text => handleInputValue({name: 'email', text})}
             />
+            {!uniqueEmailCheck && (
+              <Text style={[styles.inputText, styles.textAlert]}>
+                존재하는 이메일 주소입니다.
+              </Text>
+            )}
           </View>
-          <View>
+          <View style={styles.inputBox}>
             <Text style={styles.inputText}>비밀번호</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="비밀번호를 입력해주세요"
-              secureTextEntry={hiddenPw}
-              textContentType="oneTimeCode"
-              value={inputValue.password}
-              onChangeText={text => handleInputValue({name: 'password', text})}
-            />
-            <Pressable onPress={() => setHiddenPw(!hiddenPw)}>
-              <Image
-                style={styles.iconEye}
-                source={hiddenPwHandler(hiddenPw)}
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="비밀번호를 입력해주세요"
+                secureTextEntry={hiddenPw}
+                textContentType="oneTimeCode"
+                value={inputValue.password}
+                onChangeText={text =>
+                  handleInputValue({name: 'password', text})
+                }
               />
-            </Pressable>
+              <Pressable onPress={() => setHiddenPw(!hiddenPw)}>
+                <Image
+                  style={styles.iconEye}
+                  source={hiddenPwHandler(hiddenPw)}
+                />
+              </Pressable>
+            </View>
+            {!!password && !validPassword && (
+              <Text style={[styles.inputText, styles.textAlert]}>
+                숫자와 영문자 조합 8자를 입력해주세요.
+              </Text>
+            )}
           </View>
           <View>
             <Text style={styles.inputText}>비밀번호 확인</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="비밀번호를 다시 입력해주세요"
-              secureTextEntry={hiddenPwCheck}
-              textContentType="oneTimeCode"
-              value={inputValue.passwordCheck}
-              onChangeText={text =>
-                handleInputValue({name: 'passwordCheck', text})
-              }
-            />
-            <Pressable onPress={() => setHiddenPwCheck(!hiddenPwCheck)}>
-              <Image
-                style={styles.iconEye}
-                source={hiddenPwHandler(hiddenPwCheck)}
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="비밀번호를 다시 입력해주세요"
+                secureTextEntry={hiddenPwCheck}
+                textContentType="oneTimeCode"
+                value={inputValue.passwordCheck}
+                onChangeText={text =>
+                  handleInputValue({name: 'passwordCheck', text})
+                }
               />
-            </Pressable>
+              <Pressable onPress={() => setHiddenPwCheck(!hiddenPwCheck)}>
+                <Image
+                  style={styles.iconEye}
+                  source={hiddenPwHandler(hiddenPwCheck)}
+                />
+              </Pressable>
+            </View>
+            {!validPasswordCheck && (
+              <Text style={[styles.inputText, styles.textAlert]}>
+                비밀번호가 일치하지 않습니다.
+              </Text>
+            )}
           </View>
         </ScrollView>
         <View style={styles.innerFlex}>
           <Pressable
-            style={commonStyle.btn}
+            style={allValidCheck ? commonStyle.ativeBtn : commonStyle.btn}
             onPress={onSubmit}
-            disabled={!allVaildCheck}>
+            disabled={!allValidCheck}>
             <Text style={commonStyle.btnText}>가입완료</Text>
           </Pressable>
         </View>
@@ -211,10 +235,12 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
 
+  inputBox: {marginBottom: 29},
+
   input: {
     height: 48,
-    padding: 10,
-    marginBottom: 27.5,
+    padding: 15,
+    marginBottom: 9,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: theme.colors.userGray,
@@ -226,10 +252,15 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.fontSmall,
   },
 
+  textAlert: {
+    marginLeft: 15,
+    color: theme.colors.userRed,
+  },
+
   iconEye: {
     position: 'absolute',
     right: 10,
-    bottom: 43,
+    bottom: 26,
   },
 });
 
