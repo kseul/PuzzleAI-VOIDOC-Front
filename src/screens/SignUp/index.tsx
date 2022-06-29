@@ -33,7 +33,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
 
   const {lastName, firstName, email, password, passwordCheck} = inputValue;
 
-  const handleInputValue = ({name, text}) => {
+  const handleInputValue = (name: string, text: string) => {
     setInputValue({...inputValue, [name]: text});
   };
 
@@ -118,9 +118,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
               <TextInput
                 style={styles.input}
                 placeholder="성을 입력해주세요"
-                onChangeText={text =>
-                  handleInputValue({name: 'lastName', text})
-                }
+                onChangeText={text => handleInputValue('lastName', text)}
               />
             </View>
             <View style={[styles.name, styles.firstName]}>
@@ -128,9 +126,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
               <TextInput
                 style={styles.input}
                 placeholder="이름을 입력해주세요"
-                onChangeText={text =>
-                  handleInputValue({name: 'firstName', text})
-                }
+                onChangeText={text => handleInputValue('firstName', text)}
               />
             </View>
           </View>
@@ -141,7 +137,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
               placeholder="이메일을 입력해주세요"
               value={inputValue.email}
               autoCapitalize="none"
-              onChangeText={text => handleInputValue({name: 'email', text})}
+              onChangeText={text => handleInputValue('email', text)}
             />
             {!uniqueEmailCheck && (
               <Text style={[styles.inputText, styles.textAlert]}>
@@ -158,9 +154,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
                 secureTextEntry={hiddenPw}
                 textContentType="oneTimeCode"
                 value={inputValue.password}
-                onChangeText={text =>
-                  handleInputValue({name: 'password', text})
-                }
+                onChangeText={text => handleInputValue('password', text)}
               />
               <Pressable onPress={() => setHiddenPw(!hiddenPw)}>
                 <Image
@@ -184,9 +178,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
                 secureTextEntry={hiddenPwCheck}
                 textContentType="oneTimeCode"
                 value={inputValue.passwordCheck}
-                onChangeText={text =>
-                  handleInputValue({name: 'passwordCheck', text})
-                }
+                onChangeText={text => handleInputValue('passwordCheck', text)}
               />
               <Pressable onPress={() => setHiddenPwCheck(!hiddenPwCheck)}>
                 <Image
