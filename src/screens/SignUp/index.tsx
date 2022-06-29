@@ -14,8 +14,8 @@ import {TextInput} from 'react-native-gesture-handler';
 import {commonStyle} from '~/src/styles/commonStyle';
 import {SignUpScreenProps} from '~/src/types/type';
 import {theme} from '~/src/styles/theme';
-import eyeOff from 'assets/images/Icon_feather_eye_off.png';
-import eyeOn from 'assets/images/Icon_feather_eye_on.png';
+import eyeOff from '@assets/images/Icon_feather_eye_off.png';
+import eyeOn from '@assets/images/Icon_feather_eye_on.png';
 
 const SignUp = ({navigation}: SignUpScreenProps) => {
   const [hiddenPw, setHiddenPw] = useState(true);
