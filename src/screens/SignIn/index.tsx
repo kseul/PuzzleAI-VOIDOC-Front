@@ -17,17 +17,16 @@ import logoColor from 'assets/images/logo_color.png';
 import eyeOff from 'assets/images/Icon_feather_eye_off.png';
 import eyeOn from 'assets/images/Icon_feather_eye_on.png';
 
-
 const SignIn = ({navigation}:SignInScreenProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hiddenPw, setHiddenPw] = useState(true);
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
-  
-  const RegularExpression = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
   const onSubmit = useCallback( () => {
+    const regEx = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
     if(!email){
       return Alert.alert('알림', '이메일을 입력해주세요.')
     }
@@ -36,7 +35,7 @@ const SignIn = ({navigation}:SignInScreenProps) => {
       return Alert.alert('알림', '비밀번호를 입력해주세요.')
     }
 
-    if(!RegularExpression.test(email)){
+    if(!regEx.test(email)){
       return Alert.alert('알림', '이메일 형식에 맞게 입력해주세요.')
     }
 
