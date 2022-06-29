@@ -24,12 +24,12 @@ const SignIn = ({navigation}:SignInScreenProps) => {
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
-  const onSubmit = useCallback( () => {
-    const regEx = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-
+  const onSubmit = () => {
     if(!email){
       return Alert.alert('알림', '이메일을 입력해주세요.')
     }
+    
+    const regEx = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
     if(!password){
       return Alert.alert('알림', '비밀번호를 입력해주세요.')
@@ -59,21 +59,19 @@ const SignIn = ({navigation}:SignInScreenProps) => {
         }
       }
     );
-  }, [email, password])
+  }
 
-  const onChangeEmail = useCallback((text)=>{
+  const onChangeEmail = (text :string) => {
     setEmail(text.trim())
-  },[])
+  }
 
-  const onChangePassword = useCallback((text)=>{
+  const onChangePassword = (text :string)=>{
     setPassword(text.trim())
-  },[])
+  }
 
   const hiddenPwIconClick = () => {
     setHiddenPw(!hiddenPw);
   }
-
-  const canGoMainPage = !email || !password
   
   return (
     <View style={[commonStyle.fullscreen, styles.container]}>
