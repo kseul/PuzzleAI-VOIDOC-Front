@@ -74,7 +74,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
   }, [email, validEmail]);
 
   const validPassword = useMemo(() => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$/;
     return passwordRegex.test(password);
   }, [password]);
 
