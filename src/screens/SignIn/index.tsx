@@ -50,13 +50,12 @@ const SignIn = ({navigation}:SignInScreenProps) => {
         password: password,
       }),
     }).then((response) => response.json()).then((data) => 
-      { if(data.message === 'SUCCESS_PATIENT_LOGIN'){
+      { 
+        if(data.message === 'SUCCESS_PATIENT_LOGIN'){
           navigation.navigate('MainHome')
-        } 
-        if(data.message === 'Email or password is incorrect!'){
+        } else if(data.message === 'WRONG_EMAIL_OR_PASSWORD'){
           return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!')
-        } 
-        if(data.message === 'DOCTOR_CAN_NOT_LOGIN_ON_APP') {
+        } else if(data.message === 'DOCTOR_CAN_NOT_LOGIN_ON_APP') {
           return Alert.alert('알림', '의사는 로그인할 수 없습니다.')
         }
       }
