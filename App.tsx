@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -32,7 +32,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="SignUp">
+        <Stack.Navigator initialRouteName="Entry">
           <Stack.Screen
             name="Splash"
             component={Splash}
