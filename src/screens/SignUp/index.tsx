@@ -94,7 +94,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
         name: lastName + firstName,
         email,
         password,
-        is_doctor: 'False',
+        is_doctor: false,
       }),
     });
     const res = await postUserData.json();
