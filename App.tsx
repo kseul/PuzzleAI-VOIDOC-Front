@@ -32,7 +32,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="SignUp">
+        <Stack.Navigator initialRouteName="Entry">
           <Stack.Screen
             name="Splash"
             component={Splash}

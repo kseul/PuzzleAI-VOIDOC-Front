@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   StyleSheet,
   Image,
@@ -9,10 +9,10 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import { SignInScreenProps } from '~/src/types/type';
-import API from '~/src/config'
-import { theme } from '~/src/styles/theme'
-import { commonStyle } from "~/src/styles/commonStyle";
+import { SignInScreenProps } from 'types/type';
+import API from 'config'
+import { theme } from 'styles/theme'
+import { commonStyle } from "styles/commonStyle";
 import logoColor from 'assets/images/logo_color.png';
 import eyeOff from 'assets/images/Icon_feather_eye_off.png';
 import eyeOn from 'assets/images/Icon_feather_eye_on.png';
