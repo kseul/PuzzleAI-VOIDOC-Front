@@ -14,13 +14,10 @@ import API from 'config'
 import { theme } from 'styles/theme'
 import { commonStyle } from "styles/commonStyle";
 import logoColor from 'assets/images/logo_color.png';
-import eyeOff from 'assets/images/Icon_feather_eye_off.png';
-import eyeOn from 'assets/images/Icon_feather_eye_on.png';
 
 const SignIn = ({navigation}:SignInScreenProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [hiddenPw, setHiddenPw] = useState(true);
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
@@ -69,10 +66,6 @@ const SignIn = ({navigation}:SignInScreenProps) => {
     setPassword(text.trim())
   }
 
-  const hiddenPwIconClick = () => {
-    setHiddenPw(!hiddenPw);
-  }
-  
   return (
     <View style={[commonStyle.fullscreen, styles.container]}>
       <View style={styles.logo}> 
@@ -100,23 +93,16 @@ const SignIn = ({navigation}:SignInScreenProps) => {
         />
         
         <Text style={styles.label}>비밀번호</Text>
-        <View>
-          <TextInput
-            style={styles.input}
-            placeholder="비밀번호를 입력해주세요" 
-            value={password}
-            secureTextEntry={hiddenPw && true}
-            onChangeText={onChangePassword}
-            onSubmitEditing={onSubmit}
-            ref={passwordRef}
-          />
-          <Pressable 
-            style={styles.eyeIcon}
-            onPress={hiddenPwIconClick}
-          >
-            <Image source={hiddenPw ? eyeOff : eyeOn} />
-          </Pressable>
-        </View>
+        
+        <TextInput
+          style={styles.input}
+          placeholder="비밀번호를 입력해주세요" 
+          value={password}
+          secureTextEntry
+          onChangeText={onChangePassword}
+          onSubmitEditing={onSubmit}
+          ref={passwordRef}
+        />
       </ScrollView>
 
       <Pressable 
@@ -162,11 +148,6 @@ const styles = StyleSheet.create({
     marginBottom: 27.5,
   },
 
-  eyeIcon: {
-    position: 'absolute',
-    top: 16,
-    right: 15,
-  }
 })
 
 export default SignIn;
