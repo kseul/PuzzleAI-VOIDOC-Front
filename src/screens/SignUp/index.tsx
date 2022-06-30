@@ -48,21 +48,20 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
 
   useEffect(() => {
     if (!!validEmail) {
-      const validUniqueEmail = () => {
-        fetch(`${API.emailCheck}`, {
+      const validUniqueEmail = async () => {
+        const postEmail = await fetch(`${API.emailCheck}`, {
           method: 'POST',
           body: JSON.stringify({
             email,
           }),
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.message === 'EMAIL_IS_ALREADY_REGISTERED') {
-              setUniqueEmailCheck(false);
-            } else {
-              setUniqueEmailCheck(true);
-            }
-          });
+        });
+        const res = await postEmail.json();
+        const message = res.message;
+        if (message === 'EMAIL_IS_ALREADY_REGISTERED') {
+          setUniqueEmailCheck(false);
+        } else {
+          setUniqueEmailCheck(true);
+        }
       };
 
       const timer = setTimeout(() => {
@@ -88,8 +87,8 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
     );
   }, [validEmail, uniqueEmailCheck, validPassword, validPasswordCheck]);
 
-  const onSubmit = () => {
-    fetch(`${API.signUp}`, {
+  const onSubmit = async () => {
+    const postUserData = await fetch(`${API.signUp}`, {
       method: 'POST',
       body: JSON.stringify({
         name: lastName + firstName,
@@ -97,13 +96,12 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
         password,
         is_doctor: 'False',
       }),
-    })
-      .then(res => res.json())
-      .then(
-        data =>
-          data.message === 'SUCCESS' &&
-          (Alert.alert('회원가입 되었습니다.'), navigation.navigate('SignIn')),
-      );
+    });
+    const res = await postUserData.json();
+    const message = res.message;
+    if (message === 'SUCCESS') {
+      Alert.alert('회원가입 되었습니다.'), navigation.navigate('SignIn');
+    }
   };
 
   return (
