@@ -4,16 +4,16 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Image} from 'react-native';
 
-import Splash from '@screens/Splash';
-import Entry from '@screens/Entry';
-import SignIn from '@screens/SignIn';
-import SignUp from '@screens/SignUp';
-import MainHome from '@screens/Main/MainHome';
-import MainList from '@screens/Main/MainList';
-import DocList from '@screens/DocList';
-import AppointmentCalendar from '@screens/AppointmentCalendar';
-import AppointmentSubmit from '@screens/AppointmentSubmit';
-import AppointmentDetail from '@screens/AppointmentDetail';
+import Splash from 'screens/Splash';
+import Entry from 'screens/Entry';
+import SignIn from 'screens/SignIn';
+import SignUp from 'screens/SignUp';
+import MainHome from 'screens/Main/MainHome';
+import MainList from 'screens/Main/MainList';
+import DocList from 'screens/DocList';
+import AppointmentCalendar from 'screens/AppointmentCalendar';
+import AppointmentSubmit from 'screens/AppointmentSubmit';
+import AppointmentDetail from 'screens/AppointmentDetail';
 import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
 
 
