@@ -21,7 +21,7 @@ const SignIn = ({navigation}:SignInScreenProps) => {
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if(!email){
       return Alert.alert('알림', '이메일을 입력해주세요.')
     }
@@ -36,7 +36,7 @@ const SignIn = ({navigation}:SignInScreenProps) => {
       return Alert.alert('알림', '이메일 형식에 맞게 입력해주세요.')
     }
 
-    fetch(`${API.signIn}`, {
+    const postSingIn = await fetch(`${API.signIn}`, {
       method: 'POST',
       headers: {
         "Type-Of-Application": "app",
@@ -45,17 +45,19 @@ const SignIn = ({navigation}:SignInScreenProps) => {
         email: email,
         password: password,
       }),
-    }).then((response) => response.json()).then((data) => 
-      { 
-        if(data.message === 'SUCCESS_PATIENT_LOGIN'){
-          navigation.navigate('MainHome')
-        } else if(data.message === 'WRONG_EMAIL_OR_PASSWORD'){
-          return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!')
-        } else if(data.message === 'DOCTOR_CAN_NOT_LOGIN_ON_APP') {
-          return Alert.alert('알림', '의사는 로그인할 수 없습니다.')
-        }
-      }
-    );
+    })
+
+    const res = await postSingIn.json();
+    const message = await res.message;
+    
+    if(postSingIn.status === 200){
+        navigation.navigate('MainHome')
+    } else if (message  === 'WRONG_EMAIL_OR_PASSWORD' ) {
+      return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!')
+    } else if(message === 'DOCTOR_CAN_NOT_LOGIN_ON_APP') {
+      return Alert.alert('알림', '의사는 로그인할 수 없습니다.')
+    }
+    
   }
 
   const onChangeEmail = (text :string) => {
