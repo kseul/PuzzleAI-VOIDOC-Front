@@ -9,6 +9,7 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { SignInScreenProps } from 'types/type';
 import API from 'config'
 import { theme } from 'styles/theme'
@@ -69,7 +70,7 @@ const SignIn = ({navigation}:SignInScreenProps) => {
   }
 
   return (
-    <View style={[commonStyle.fullscreen, styles.container]}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={[commonStyle.fullscreen, styles.container]}>
       <View style={styles.logo}> 
         <Image
             source={logoColor}
@@ -113,7 +114,7 @@ const SignIn = ({navigation}:SignInScreenProps) => {
       >
         <Text style={commonStyle.btnText}>로그인</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
     
   );
 };

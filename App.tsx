@@ -72,6 +72,13 @@ function App() {
           <Stack.Screen
             name="AppointmentCalendar"
             component={AppointmentCalendar}
+            options={{
+              title: "홍정의 선생님",
+              headerBackTitleVisible: false,
+              headerTitleAlign: 'center',
+              headerStyle: {shadowColor: 'white'},
+              headerBackImage: ()=>(<BackBtn />),
+            }}
           />
           <Stack.Screen
             name="AppointmentSubmit"

@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
-import { EntryScreenProps } from '~/src/types/type';
-import { theme } from '~/src/styles/theme'
-import { commonStyle } from "~/src/styles/commonStyle";
+import { EntryScreenProps } from 'types/type';
+import { theme } from 'styles/theme'
+import { commonStyle } from "styles/commonStyle";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import logoColor from 'assets/images/logo_color.png';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {theme} from '~/src/styles/theme';
+import {theme} from 'styles/theme';
 
 export const commonStyle = StyleSheet.create({
     fullscreen: {
