@@ -8,7 +8,7 @@ import Splash from 'screens/Splash';
 import Entry from 'screens/Entry';
 import SignIn from 'screens/SignIn';
 import SignUp from 'screens/SignUp';
-import MainHome from 'screens/Main/MainHome';
+import Main from 'screens/Main/Main';
 import MainList from 'screens/Main/MainList';
 import DocList from 'screens/DocList';
 import AppointmentCalendar from 'screens/AppointmentCalendar';
@@ -16,41 +16,35 @@ import AppointmentSubmit from 'screens/AppointmentSubmit';
 import AppointmentDetail from 'screens/AppointmentDetail';
 import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
 
-
 const Stack = createStackNavigator();
 
 function App() {
   function BackBtn() {
-    return (
-      <Image
-        source={arrowLeft}
-        style={{marginLeft: 21}}
-      />
-    );
+    return <Image source={arrowLeft} style={{marginLeft: 21}} />;
   }
 
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Entry">
-          <Stack.Screen
+        <Stack.Navigator initialRouteName="Main">
+          {/* <Stack.Screen
             name="Splash"
             component={Splash}
             options={{headerShown: false}}
-          /> 
+          /> */}
           <Stack.Screen
             name="Entry"
             component={Entry}
             options={{headerShown: false}}
           />
-          <Stack.Screen 
+          <Stack.Screen
             name="SignIn"
-            component={SignIn} 
-            options={{ 
-              title : '',  
+            component={SignIn}
+            options={{
+              title: '',
               headerBackTitleVisible: false,
               headerStyle: {shadowColor: 'white'},
-              headerBackImage: ()=>(<BackBtn />),
+              headerBackImage: () => <BackBtn />,
             }}
           />
           <Stack.Screen
@@ -62,13 +56,15 @@ function App() {
               headerStyle: {shadowColor: 'white'},
             }}
           />
+
           <Stack.Screen
-            name="MainHome"
-            component={MainHome}
+            name="Main"
+            component={Main}
             options={{headerShown: false}}
           />
           <Stack.Screen name="MainList" component={MainList} />
           <Stack.Screen name="DocList" component={DocList} />
+
           <Stack.Screen
             name="AppointmentCalendar"
             component={AppointmentCalendar}
