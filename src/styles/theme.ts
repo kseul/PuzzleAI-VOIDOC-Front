@@ -4,8 +4,8 @@ const fontSizes = {
   fontRegular: 15,
   fontSmall: 12,
 
-  weightBold: 700,
-  weightRegular: 400,
+  weightBold: '700',
+  weightRegular: '400',
 };
 
 const colors = {
