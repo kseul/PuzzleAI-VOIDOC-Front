@@ -24,7 +24,7 @@ const colors = {
 
   // DocList
   docGray: '#717171',
-  docHospGray: ' #ACACAC',
+  docHospGray: '#ACACAC',
 
   // Calendar
   CalendarTextGray: '#616161',
