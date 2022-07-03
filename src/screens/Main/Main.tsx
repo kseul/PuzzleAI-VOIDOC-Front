@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import MainHome from 'screens/Main/MainHome';
 import MainList from 'screens/Main/MainList';
 import homeIcon from 'assets/images/home_icon.png';
@@ -29,9 +29,9 @@ const Main = () => {
           tabBarLabel: '',
           tabBarIcon: ({focused}) =>
             focused ? (
-              <Image source={homeIconActive} style={{width: 27, height: 25}} />
+              <Image source={homeIconActive} style={styles.homeIcon} />
             ) : (
-              <Image source={homeIcon} style={{width: 27, height: 25}} />
+              <Image source={homeIcon} style={styles.homeIcon} />
             ),
         }}
       />
@@ -44,14 +44,20 @@ const Main = () => {
           tabBarLabel: '',
           tabBarIcon: ({focused}) =>
             focused ? (
-              <Image source={listIconActive} style={{width: 20, height: 25}} />
+              <Image source={listIconActive} style={styles.listIcon} />
             ) : (
-              <Image source={listIcon} style={{width: 20, height: 25}} />
+              <Image source={listIcon} style={styles.listIcon} />
             ),
         }}
       />
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  homeIcon: {width: 27, height: 25},
+
+  listIcon: {width: 20, height: 25},
+});
 
 export default Main;
