@@ -25,7 +25,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Entry">
           {/* <Stack.Screen
             name="Splash"
             component={Splash}
@@ -52,7 +52,9 @@ function App() {
             options={{
               title: '회원가입',
               headerTitleAlign: 'center',
+              headerBackTitleVisible: false,
               headerStyle: {shadowColor: 'white'},
+              headerBackImage: () => <BackBtn />,
             }}
           />
 
@@ -61,7 +63,15 @@ function App() {
             component={Main}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="DocList" component={DocList} />
+          <Stack.Screen
+            name="DocList"
+            component={DocList}
+            options={{
+              headerBackTitleVisible: false,
+              headerStyle: {shadowColor: 'white'},
+              headerBackImage: () => <BackBtn />,
+            }}
+          />
 
           <Stack.Screen
             name="AppointmentCalendar"

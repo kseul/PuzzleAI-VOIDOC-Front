@@ -2,11 +2,12 @@ import React from 'react';
 import {Text, View, Image, Pressable, FlatList, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native';
+import {useWindowDimensions} from 'react-native';
+import {MainHomeScreenProps} from 'types/type';
 import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
-import {useWindowDimensions} from 'react-native';
 
-const MainHome = () => {
+const MainHome = ({navigation}: MainHomeScreenProps) => {
   const {width} = useWindowDimensions();
 
   return (
@@ -42,7 +43,10 @@ const MainHome = () => {
                 style={[
                   styles.alignStyle,
                   {width: width / 5, height: width / 5},
-                ]}>
+                ]}
+                onPress={() => {
+                  navigation.navigate('DocList', item);
+                }}>
                 <Image
                   source={{
                     uri: item.thumbnails,
