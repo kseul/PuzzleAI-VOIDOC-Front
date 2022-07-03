@@ -3,7 +3,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Image} from 'react-native';
-
 import Splash from 'screens/Splash';
 import Entry from 'screens/Entry';
 import SignIn from 'screens/SignIn';
@@ -13,9 +12,10 @@ import DocList from 'screens/DocList';
 import AppointmentCalendar from 'screens/AppointmentCalendar';
 import AppointmentSubmit from 'screens/AppointmentSubmit';
 import AppointmentDetail from 'screens/AppointmentDetail';
+import {RootStackParamList} from 'types/type';
 import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 function App() {
   function BackBtn() {
