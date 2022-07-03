@@ -9,7 +9,6 @@ import Entry from 'screens/Entry';
 import SignIn from 'screens/SignIn';
 import SignUp from 'screens/SignUp';
 import Main from 'screens/Main/Main';
-import MainList from 'screens/Main/MainList';
 import DocList from 'screens/DocList';
 import AppointmentCalendar from 'screens/AppointmentCalendar';
 import AppointmentSubmit from 'screens/AppointmentSubmit';
@@ -62,7 +61,6 @@ function App() {
             component={Main}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="MainList" component={MainList} />
           <Stack.Screen name="DocList" component={DocList} />
 
           <Stack.Screen
