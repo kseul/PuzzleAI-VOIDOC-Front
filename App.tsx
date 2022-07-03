@@ -14,43 +14,38 @@ import DocList from 'screens/DocList';
 import AppointmentCalendar from 'screens/AppointmentCalendar';
 import AppointmentSubmit from 'screens/AppointmentSubmit';
 import AppointmentDetail from 'screens/AppointmentDetail';
+import {RootStackParamList} from 'types/type';
 import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
 
-
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 function App() {
   function BackBtn() {
-    return (
-      <Image
-        source={arrowLeft}
-        style={{marginLeft: 21}}
-      />
-    );
+    return <Image source={arrowLeft} style={{marginLeft: 21}} />;
   }
 
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Entry">
+        <Stack.Navigator initialRouteName="AppointmentCalendar">
           <Stack.Screen
             name="Splash"
             component={Splash}
             options={{headerShown: false}}
-          /> 
+          />
           <Stack.Screen
             name="Entry"
             component={Entry}
             options={{headerShown: false}}
           />
-          <Stack.Screen 
+          <Stack.Screen
             name="SignIn"
-            component={SignIn} 
-            options={{ 
-              title : '',  
+            component={SignIn}
+            options={{
+              title: '',
               headerBackTitleVisible: false,
               headerStyle: {shadowColor: 'white'},
-              headerBackImage: ()=>(<BackBtn />),
+              headerBackImage: () => <BackBtn />,
             }}
           />
           <Stack.Screen
@@ -73,11 +68,11 @@ function App() {
             name="AppointmentCalendar"
             component={AppointmentCalendar}
             options={{
-              title: "홍정의 선생님",
+              title: '테스트 선생님',
               headerBackTitleVisible: false,
               headerTitleAlign: 'center',
               headerStyle: {shadowColor: 'white'},
-              headerBackImage: ()=>(<BackBtn />),
+              headerBackImage: () => <BackBtn />,
             }}
           />
           <Stack.Screen
