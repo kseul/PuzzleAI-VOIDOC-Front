@@ -3,12 +3,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image, StyleSheet} from 'react-native';
 import MainHome from 'screens/Main/MainHome';
 import MainList from 'screens/Main/MainList';
+import {RootStackParamList} from 'types/type';
 import homeIcon from 'assets/images/home_icon.png';
 import homeIconActive from 'assets/images/home_icon_active.png';
 import listIcon from 'assets/images/list_icon.png';
 import listIconActive from 'assets/images/list_icon_active.png';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
 const Main = () => {
   return (
