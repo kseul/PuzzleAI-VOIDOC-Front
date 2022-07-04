@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, Pressable, FlatList, ScrollView} from 'react-native';
+import {Text, View, Image, Pressable, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native';
 import {useWindowDimensions} from 'react-native';
@@ -12,57 +12,57 @@ const MainHome = ({navigation}: MainHomeScreenProps) => {
 
   return (
     <SafeAreaView style={[commonStyle.fullscreen, styles.safeArea]}>
-      <ScrollView>
-        <View style={styles.headerContainer}>
-          <View style={[styles.headerText, styles.flexStyle]}>
-            <Text style={[styles.nameStyle, styles.textSpace, styles.textColr]}>
-              테스트
-            </Text>
-            <Text style={styles.nameText}>님 반갑습니다.</Text>
-          </View>
-          <View
-            style={[styles.headerText, styles.flexStyle, styles.alignStyle]}>
-            <Text style={[styles.comment, styles.textSpace, styles.textColr]}>
-              어디가
-            </Text>
-            <Text style={[styles.nameStyle, styles.textColr]}>
-              불편하신가요?
-            </Text>
-          </View>
+      <View style={styles.headerContainer}>
+        <View style={[styles.headerText, styles.flexStyle]}>
+          <Text style={[styles.nameStyle, styles.textSpace, styles.textColr]}>
+            TEST
+            {/* TODO */}
+            {/* 기능 브랜치 생성 - useFetch 데이터 작성 후 -> fetch result.name 으로 받기 */}
+          </Text>
+          <Text style={styles.nameText}>님 반갑습니다.</Text>
         </View>
+        <View style={[styles.headerText, styles.flexStyle, styles.alignStyle]}>
+          <Text style={[styles.comment, styles.textSpace, styles.textColr]}>
+            어디가
+          </Text>
+          <Text style={[styles.nameStyle, styles.textColr]}>불편하신가요?</Text>
+        </View>
+      </View>
 
-        <View>
-          <FlatList
-            data={dataTest}
-            columnWrapperStyle={{
-              justifyContent: 'space-between',
-              marginBottom: 55,
-            }}
-            renderItem={({item}) => (
-              <Pressable
-                style={[
-                  styles.alignStyle,
-                  {width: width / 5, height: width / 5},
-                ]}
-                onPress={() => {
-                  navigation.navigate('DocList', item);
-                }}>
-                <Image
-                  source={{
-                    uri: item.thumbnails,
-                  }}
-                  style={styles.iconImg}
-                />
-                <Text style={[styles.iconTitle, styles.nameText]}>
-                  {item.name}
-                </Text>
-              </Pressable>
-            )}
-            keyExtractor={item => item.id.toString()}
-            numColumns={3}
-          />
-        </View>
-      </ScrollView>
+      <View>
+        <FlatList
+          // TODO
+          // 기능 브랜치 생성 - useFetch 데이터 작성 후 -> fetch result 데이터 받기
+          data={dataTest}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            marginBottom: 55,
+          }}
+          renderItem={({item}) => (
+            <Pressable
+              style={[
+                styles.alignStyle,
+                styles.iconBox,
+                {width: width / 5, height: width / 5},
+              ]}
+              onPress={() => {
+                navigation.navigate('DocList', item);
+              }}>
+              <Image
+                source={{
+                  uri: item.thumbnails,
+                }}
+                style={styles.iconImg}
+              />
+              <Text style={[styles.iconTitle, styles.nameText]}>
+                {item.name.replace(' ', `${'\n'}`)}
+              </Text>
+            </Pressable>
+          )}
+          keyExtractor={item => item.id.toString()}
+          numColumns={3}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 
   nameStyle: {
     fontSize: theme.fontSizes.fontLarge,
-    fontWeight: theme.fontSizes.weightBold,
+    fontWeight: '700',
   },
 
   textSpace: {
@@ -109,6 +109,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  iconBox: {
+    marginBottom: 10,
+  },
+
   comment: {
     fontSize: theme.fontSizes.fontLarge,
   },
@@ -119,7 +123,9 @@ const styles = StyleSheet.create({
   },
 
   iconTitle: {
-    marginTop: 9,
+    marginTop: 6,
+    lineHeight: 18,
+    textAlign: 'center',
   },
 });
 
@@ -138,37 +144,37 @@ const dataTest = [
   },
   {
     id: 3,
-    name: 'COVID-19',
+    name: '감염내과',
     thumbnails: 'https://reactjs.org/logo-og.png',
   },
   {
     id: 4,
-    name: '가정의학과',
+    name: '류마티스 내과',
     thumbnails: 'https://reactjs.org/logo-og.png',
   },
   {
     id: 5,
-    name: 'COVID-19',
+    name: '산부인과',
     thumbnails: 'https://reactjs.org/logo-og.png',
   },
   {
     id: 6,
-    name: '가정의학과',
+    name: '소아 청소년과',
     thumbnails: 'https://reactjs.org/logo-og.png',
   },
   {
     id: 7,
-    name: 'COVID-19',
+    name: '소화기내과',
     thumbnails: 'https://reactjs.org/logo-og.png',
   },
   {
     id: 8,
-    name: '가정의학과',
+    name: '정신건강 의학과',
     thumbnails: 'https://reactjs.org/logo-og.png',
   },
   {
     id: 9,
-    name: '가정의학과',
+    name: '피부과',
     thumbnails: 'https://reactjs.org/logo-og.png',
   },
 ];
