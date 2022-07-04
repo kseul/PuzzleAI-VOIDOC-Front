@@ -180,7 +180,12 @@ const AppointmentCalendar = () => {
       </View>
 
       <View style={styles.marginTopMibble}>
-        <FlatList data={dates} numColumns={7} renderItem={renderDate} />
+        <FlatList
+          data={dates}
+          numColumns={7}
+          renderItem={renderDate}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </SafeAreaView>
   );
@@ -339,5 +344,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
 });
+
+let generateRandomNum = () => Math.floor(Math.random() * 1001);
 
 export default AppointmentCalendar;
