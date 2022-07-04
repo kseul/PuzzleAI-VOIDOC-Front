@@ -52,7 +52,9 @@ const SignIn = ({navigation}: SignInScreenProps) => {
     const message = await res.message;
 
     if (postSingIn.status === 200) {
-      AsyncStorage.setItem('access_token', res.access_token);
+      AsyncStorage.setItem('access_token', res.access_token, () => {
+        console.log('토큰 저장');
+      });
       navigation.navigate('MainHome');
     } else if (message === 'WRONG_EMAIL_OR_PASSWORD') {
       return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!');

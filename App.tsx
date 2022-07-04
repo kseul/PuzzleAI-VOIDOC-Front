@@ -16,6 +16,7 @@ import AppointmentSubmit from 'screens/AppointmentSubmit';
 import AppointmentDetail from 'screens/AppointmentDetail';
 import {RootStackParamList} from 'types/type';
 import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -27,7 +28,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="AppointmentCalendar">
+        <Stack.Navigator initialRouteName="Entry">
           <Stack.Screen
             name="Splash"
             component={Splash}
