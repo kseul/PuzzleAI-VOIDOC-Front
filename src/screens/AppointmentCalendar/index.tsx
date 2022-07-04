@@ -84,14 +84,24 @@ const AppointmentCalendar = () => {
   const firstDateIndex = dates.indexOf(1);
   const lastDateIndex = dates.lastIndexOf(todayLastDate);
 
+  const [dayActive, setDayActive] = useState(false);
+  const [dayNumber, setDayNumber] = useState();
+
   const renderDate = ({item, index}: any) => {
-    const isToday =
-      now.isSame(`${year}-${selectedMonth}-${item}`, 'day') &&
-      index < lastDateIndex;
     const disabled = index < firstDateIndex || index > lastDateIndex;
+    const isToday =
+      now.isSame(`${year}-${selectedMonth}-${item}`, 'day') && !disabled;
+
+    const buttonActive = () => {
+      setDayActive(true);
+      setDayNumber(item);
+    };
+
+    const selectedDay =
+      dayActive && dayNumber === item && selectedMonth === month && !disabled;
 
     return (
-      <Pressable style={[styles.flexBetween]}>
+      <Pressable style={[styles.flexBetween]} onPress={() => buttonActive()}>
         <Text
           style={
             disabled
@@ -102,7 +112,8 @@ const AppointmentCalendar = () => {
           }>
           {item}
         </Text>
-        <View style={isToday && styles.color}></View>
+        <View style={isToday && styles.today}></View>
+        <View style={selectedDay && styles.selectDay}></View>
       </Pressable>
     );
   };
@@ -114,8 +125,8 @@ const AppointmentCalendar = () => {
       <View style={[styles.flexDirectionRow, styles.border, styles.marginTop]}>
         {/* TODO : 데이터 통신 후 <Image> 로 바꿀 예정 */}
         {/* <Image source={} /> */}
-        <Text style={[styles.image, styles.marginRight]}>profile image</Text>
-        <View style={styles.marginBottom}>
+        <Text style={[styles.image, styles.marginRight]}>테스트 이미지</Text>
+        <View>
           <Text
             style={[
               styles.profileTitleFontSize,
@@ -181,7 +192,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  color: {
+  today: {
     position: 'absolute',
     top: -1,
     left: 6,
@@ -191,6 +202,17 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderRadius: 18,
     borderWidth: 1,
+  },
+
+  selectDay: {
+    position: 'absolute',
+    top: -1,
+    left: 6,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#D4F3F7',
+    zIndex: -1,
   },
 
   opacity: {
@@ -231,9 +253,8 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    backgroundColor: 'yellow',
-    borderColor: 'red',
-    borderWidth: 1,
+    backgroundColor: 'gold',
+    marginBottom: 26,
   },
 
   marginTopLarge: {
