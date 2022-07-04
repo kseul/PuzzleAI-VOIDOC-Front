@@ -53,7 +53,8 @@ const SignIn = ({navigation}: SignInScreenProps) => {
 
     if (postSingIn.status === 200) {
       AsyncStorage.setItem('access_token', res.access_token, () => {
-        console.log('토큰 저장');
+        // console.log('토큰 저장');
+        // console.log(res.access_token);
       });
       navigation.navigate('MainHome');
     } else if (message === 'WRONG_EMAIL_OR_PASSWORD') {
