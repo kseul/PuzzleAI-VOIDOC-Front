@@ -15,7 +15,6 @@ type AuthContextProviderProps = {
 const defaultValue = {
   userState: {loggedIn: false, isLoading: true},
   login: () => {},
-  checkToken: () => {},
 };
 
 export const AuthContext = createContext<AuthContextType>(defaultValue);
@@ -66,7 +65,7 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
       const res = await response.json();
       const message = await res.message;
       if (response.status === 200) {
-        storeToken('access_token', res.access_token);
+        setToken('access_token', res.access_token);
         dispatch({type: 'LOGGED_IN'});
       } else if (message === 'WRONG_EMAIL_OR_PASSWORD') {
         return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!');
@@ -77,7 +76,7 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
     userState,
   };
 
-  const storeToken = async (key: string, value: string) => {
+  const setToken = async (key: string, value: string) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (error) {
