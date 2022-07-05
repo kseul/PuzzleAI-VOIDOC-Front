@@ -8,6 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import {theme} from 'styles/theme';
+import DoctorDataCard from 'components/DoctorDataCard';
 import calendarImg from 'assets/images/calendar_icon_active.png';
 
 const MainList = () => {
@@ -32,22 +33,7 @@ const MainList = () => {
                 {item.state_name}
               </Text>
             </View>
-
-            <View style={[styles.listContents, styles.flexStyle]}>
-              <Image
-                source={{uri: item.doctor_profile_img}}
-                style={styles.doctorImg}
-              />
-              <View>
-                <Text style={styles.doctorName}>{item.doctor_name} 선생님</Text>
-                <View style={styles.flexStyle}>
-                  <Text style={styles.departments}>
-                    {item.doctor_department} 전문의
-                  </Text>
-                  <Text style={styles.hospital}>{item.doctor_hospital}</Text>
-                </View>
-              </View>
-            </View>
+            <DoctorDataCard item={item} />
           </View>
         )}
         keyExtractor={item => item.appointment_id.toString()}
