@@ -9,6 +9,7 @@ import homeIconActive from 'assets/images/home_icon_active.png';
 import listIcon from 'assets/images/list_icon.png';
 import listIconActive from 'assets/images/list_icon_active.png';
 import {theme} from 'styles/theme';
+import {Platform} from 'react-native';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -18,8 +19,8 @@ const Main = () => {
       initialRouteName="MainHome"
       screenOptions={() => ({
         tabBarStyle: {
-          height: 105,
-          paddingTop: 15,
+          height: Platform.OS === 'ios' ? 105 : 85,
+          paddingTop: Platform.OS === 'ios' ? 10 : 0,
         },
         headerStyle: {shadowColor: 'white'},
       })}>
