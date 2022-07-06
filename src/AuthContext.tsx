@@ -87,6 +87,10 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
 };
 
 export const getToken = async () => {
-  const token = await AsyncStorage.getItem('access_token');
-  return String(token);
+  try {
+    const token = await AsyncStorage.getItem('access_token');
+    return String(token);
+  } catch (error) {
+    throw new Error('token 저장 실패');
+  }
 };
