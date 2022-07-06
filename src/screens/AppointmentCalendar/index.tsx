@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
@@ -14,14 +14,14 @@ import prevBtnM from 'assets/images/cal_prev_m.png';
 import prevBtnY from 'assets/images/cal_prev_y.png';
 
 const AppointmentCalendar = () => {
-  dayjs.locale('ko');
   const now = dayjs();
   const year = now.get('y');
-  const month = now.get('M') + 1; // 오늘날짜 기준 현재 달
-  const week = ['일', '월', '화', '수', '목', '금', '토'];
+  const month = now.get('M') + 1;
 
   const [selectedYear, setSelectedYear] = useState(year);
   const [selectedMonth, setSelectedMonth] = useState(month);
+  const [selectedDayNumber, setSelectedDayNumber] = useState(0);
+  const [selectedDayActive, setSelectedDayActive] = useState(false);
 
   const prevMonth = () => {
     if (selectedMonth === 1) {
@@ -41,67 +41,57 @@ const AppointmentCalendar = () => {
     }
   };
 
-  const returnWeek = useCallback(() => {
-    const weekArr: any[] = [];
-    week.forEach((item: string) => {
-      weekArr.push(
-        <Text
-          style={
-            item === '일' || item === '목' || item === '토'
-              ? [styles.flexBetween, styles.calendarDisabledDate]
-              : [styles.flexBetween, styles.calendarDate]
-          }>
-          {item}
-        </Text>,
-      );
-    });
+  useEffect(() => {
+    dayjs.locale('ko');
+  }, [prevMonth, nextMonth]);
 
-    return weekArr;
-  }, []);
+  const prevMonthLast = new Date(selectedYear, selectedMonth - 1, 0);
+  const prevMonthLastDay = prevMonthLast.getDay();
+  const prevMonthLastDate = prevMonthLast.getDate();
 
-  const prevLast = new Date(selectedYear, selectedMonth - 1, 0);
-  const prevLastDay = prevLast.getDay();
-  const prevLastDate = prevLast.getDate();
+  const thisMonthLastDay = new Date(selectedYear, selectedMonth, 0).getDay();
+  const thisMonthLastDate = new Date(selectedYear, selectedMonth, 0).getDate();
 
-  const todayLastDay = new Date(selectedYear, selectedMonth, 0).getDay();
-  const todayLastDate = new Date(selectedYear, selectedMonth, 0).getDate();
+  const thisMonthDates = [...Array(thisMonthLastDate + 1).keys()].slice(1);
+  const prevMonthDates = [];
+  const nextMonthDates = [];
 
-  const thisDates = [...Array(todayLastDate + 1).keys()].slice(1);
-  const prevDates = [];
-  const nextDates = [];
-
-  if (prevLastDay !== 6) {
-    for (let i = 0; i < prevLastDay + 1; i++) {
-      prevDates.unshift(prevLastDate - i);
+  if (prevMonthLastDay !== 6) {
+    for (let i = 0; i < prevMonthLastDay + 1; i++) {
+      prevMonthDates.unshift(prevMonthLastDate - i);
     }
   }
 
-  for (let i = 1; i < 7 - todayLastDay; i++) {
-    nextDates.push(i);
+  for (let i = 1; i < 7 - thisMonthLastDay; i++) {
+    nextMonthDates.push(i);
   }
 
-  const dates = prevDates.concat(thisDates, nextDates);
-  const firstDateIndex = dates.indexOf(1);
-  const lastDateIndex = dates.lastIndexOf(todayLastDate);
-
-  const [dayActive, setDayActive] = useState(false);
-  const [dayNumber, setDayNumber] = useState();
+  const dates = prevMonthDates.concat(thisMonthDates, nextMonthDates);
+  const thisMonthFirstDateIndex = dates.indexOf(1);
+  const thisMonthlastDateIndex = dates.lastIndexOf(thisMonthLastDate);
 
   const renderDate = ({item, index}: any) => {
-    const disabled = index < firstDateIndex || index > lastDateIndex;
+    const disabled =
+      index < thisMonthFirstDateIndex || index > thisMonthlastDateIndex;
     const isToday =
       now.isSame(`${year}-${selectedMonth}-${item}`, 'day') && !disabled;
 
     const buttonActive = () => {
-      setDayActive(true);
-      setDayNumber(item);
+      setSelectedDayNumber(item);
+      setSelectedDayActive(true);
     };
 
     const selectedDay =
-      dayActive && dayNumber === item && selectedMonth === month && !disabled;
+      selectedDayActive &&
+      selectedDayNumber === item &&
+      selectedMonth === month &&
+      !disabled;
 
     return (
-      <Pressable style={[styles.flexBetween]} onPress={() => buttonActive()}>
+      <Pressable
+        style={[styles.flexBetween]}
+        onPress={() => buttonActive()}
+        disabled={disabled && true}>
         <Text
           style={
             disabled
@@ -176,7 +166,11 @@ const AppointmentCalendar = () => {
         </Pressable>
       </View>
       <View style={[styles.flexWarp, styles.flexCenter, styles.marginTopLarge]}>
-        {returnWeek()}
+        {WEEK.map((item, index) => (
+          <Text key={index} style={[styles.flexBetween, styles.calendarDate]}>
+            {item}
+          </Text>
+        ))}
       </View>
 
       <View style={styles.marginTopMibble}>
@@ -345,6 +339,8 @@ const styles = StyleSheet.create({
   },
 });
 
-let generateRandomNum = () => Math.floor(Math.random() * 1001);
+// let generateRandomNum = () => Math.floor(Math.random() * 1001);
+
+const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default AppointmentCalendar;
