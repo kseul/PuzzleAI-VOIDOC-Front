@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {getToken} from 'AuthContext';
 
-const useFetch = url => {
+const useFetch = (url: string) => {
   const [fetchData, setFetchDate] = useState([]);
   useEffect(() => {
-    const getFatchData = async url => {
+    const getFatchData = async (url: string) => {
       const token = await getToken();
       const getData = await fetch(url, {
         method: 'GET',
