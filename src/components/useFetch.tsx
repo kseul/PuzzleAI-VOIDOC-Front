@@ -1,18 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AuthContext} from 'AuthContext';
+import React, {useEffect, useState} from 'react';
+import {getToken} from 'AuthContext';
 
 const useFetch = url => {
-  const {getToken} = useContext(AuthContext);
   const [fetchData, setFetchDate] = useState([]);
-  console.log(getToken);
-
   useEffect(() => {
     const getFatchData = async url => {
+      const token = await getToken();
       const getData = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: getToken,
+          Authorization: token,
         },
       });
       const res = await getData.json();

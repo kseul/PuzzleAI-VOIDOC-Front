@@ -88,3 +88,8 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
     <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>
   );
 };
+
+export const getToken = async () => {
+  const token = await AsyncStorage.getItem('access_token');
+  return token;
+};
