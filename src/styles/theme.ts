@@ -4,8 +4,8 @@ const fontSizes = {
   fontRegular: 15,
   fontSmall: 12,
 
-  weightBold: 700,
-  weightRegular: 400,
+  weightBold: '700',
+  weightRegular: '400',
 };
 
 const colors = {
@@ -24,7 +24,7 @@ const colors = {
 
   // DocList
   docGray: '#717171',
-  docHospGray: ' #ACACAC',
+  docHospGray: '#ACACAC',
 
   // Calendar
   CalendarTextGray: '#616161',
