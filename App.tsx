@@ -3,13 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Image} from 'react-native';
-
 import Splash from 'screens/Splash';
 import Entry from 'screens/Entry';
 import SignIn from 'screens/SignIn';
 import SignUp from 'screens/SignUp';
-import MainHome from 'screens/Main/MainHome';
-import MainList from 'screens/Main/MainList';
+import Main from 'screens/Main/Main';
 import DocList from 'screens/DocList';
 import AppointmentCalendar from 'screens/AppointmentCalendar';
 import AppointmentSubmit from 'screens/AppointmentSubmit';
@@ -27,7 +25,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="AppointmentCalendar">
+        <Stack.Navigator initialRouteName="Entry">
           <Stack.Screen
             name="Splash"
             component={Splash}
@@ -54,16 +52,27 @@ function App() {
             options={{
               title: '회원가입',
               headerTitleAlign: 'center',
+              headerBackTitleVisible: false,
               headerStyle: {shadowColor: 'white'},
+              headerBackImage: () => <BackBtn />,
             }}
           />
+
           <Stack.Screen
-            name="MainHome"
-            component={MainHome}
+            name="Main"
+            component={Main}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="MainList" component={MainList} />
-          <Stack.Screen name="DocList" component={DocList} />
+          <Stack.Screen
+            name="DocList"
+            component={DocList}
+            options={{
+              headerBackTitleVisible: false,
+              headerStyle: {shadowColor: 'white'},
+              headerBackImage: () => <BackBtn />,
+            }}
+          />
+
           <Stack.Screen
             name="AppointmentCalendar"
             component={AppointmentCalendar}

@@ -6,14 +6,20 @@ export type RootStackParamList = {
   AppointmentCalendar: undefined;
   AppointmentDetail: undefined;
   AppointmentSubmit: undefined;
-  DocList: undefined;
+  DocList: {
+    id: number;
+    name: string;
+    thumbnails: string;
+  };
   Entry: undefined;
+  Main: undefined;
   MainHome: undefined;
   MainList: undefined;
   Splash: undefined;
 };
 
 export type SignUpScreenProps = StackScreenProps<RootStackParamList, 'SignUp'>;
+
 export type SignInScreenProps = StackScreenProps<RootStackParamList, 'SignIn'>;
 export type AppointmentCalendarScreenProps = StackScreenProps<
   RootStackParamList,
@@ -31,7 +37,9 @@ export type DocListScreenProps = StackScreenProps<
   RootStackParamList,
   'DocList'
 >;
+
 export type EntryScreenProps = StackScreenProps<RootStackParamList, 'Entry'>;
+
 export type MainHomeScreenProps = StackScreenProps<
   RootStackParamList,
   'MainHome'
