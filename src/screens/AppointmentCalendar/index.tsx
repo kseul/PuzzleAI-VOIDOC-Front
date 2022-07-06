@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, ReactElement} from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
@@ -43,14 +43,14 @@ const AppointmentCalendar = () => {
 
   useEffect(() => {
     dayjs.locale('ko');
-  }, [prevMonth, nextMonth]);
+  }, [setSelectedDayNumber]);
 
   const prevMonthLast = new Date(selectedYear, selectedMonth - 1, 0);
   const prevMonthLastDay = prevMonthLast.getDay();
   const prevMonthLastDate = prevMonthLast.getDate();
 
-  const thisMonthLastDay = new Date(selectedYear, selectedMonth, 0).getDay();
-  const thisMonthLastDate = new Date(selectedYear, selectedMonth, 0).getDate();
+  const thisMonthLastDay = now.endOf('month').day();
+  const thisMonthLastDate = now.endOf('month').date();
 
   const thisMonthDates = [...Array(thisMonthLastDate + 1).keys()].slice(1);
   const prevMonthDates = [];
@@ -70,7 +70,7 @@ const AppointmentCalendar = () => {
   const thisMonthFirstDateIndex = dates.indexOf(1);
   const thisMonthlastDateIndex = dates.lastIndexOf(thisMonthLastDate);
 
-  const renderDate = ({item, index}: any) => {
+  const renderDate = ({item, index}: any): ReactElement => {
     const disabled =
       index < thisMonthFirstDateIndex || index > thisMonthlastDateIndex;
     const isToday =
@@ -338,8 +338,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
 });
-
-// let generateRandomNum = () => Math.floor(Math.random() * 1001);
 
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
