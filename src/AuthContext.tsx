@@ -2,10 +2,11 @@ import React, {createContext, useReducer} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from 'config';
 import {Alert} from 'react-native';
+import SignIn from 'screens/SignIn';
 
 type AuthContextType = {
-  userState: {loggedIn: boolean; isLoading: boolean};
-  login: (email: string, password: string) => void;
+  userState: {loggedIn: boolean};
+  signIn: (email: string, password: string) => void;
 };
 
 type AuthContextProviderProps = {
@@ -13,13 +14,13 @@ type AuthContextProviderProps = {
 };
 
 const defaultValue = {
-  userState: {loggedIn: false, isLoading: true},
-  login: () => {},
+  userState: {loggedIn: false},
+  signIn: () => {},
 };
 
 export const AuthContext = createContext<AuthContextType>(defaultValue);
 
-type State = {loggedIn: boolean; isLoading: boolean};
+type State = {loggedIn: boolean};
 type Action = {type: 'LOGGED_IN' | 'LOADING_DONE' | 'LOADING'};
 
 function reducer(state: State, action: Action): State {
@@ -28,18 +29,15 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         loggedIn: false,
-        isLoading: true,
       };
     case 'LOADING_DONE':
       return {
         ...state,
-        isLoading: false,
       };
     case 'LOGGED_IN':
       return {
         ...state,
         loggedIn: true,
-        isLoading: false,
       };
   }
 }
@@ -47,11 +45,10 @@ function reducer(state: State, action: Action): State {
 export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
   const [userState, dispatch] = useReducer(reducer, {
     loggedIn: false,
-    isLoading: true,
   });
 
   const authContext = {
-    login: async (email: string, password: string) => {
+    signIn: async (email: string, password: string) => {
       const response = await fetch(`${API.signIn}`, {
         method: 'POST',
         headers: {

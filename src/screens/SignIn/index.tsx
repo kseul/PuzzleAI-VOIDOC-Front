@@ -19,7 +19,7 @@ const SignIn = () => {
     email: '',
     password: '',
   });
-  const {login} = useContext(AuthContext);
+  const {signIn} = useContext(AuthContext);
   const {email, password} = userInput;
 
   const emailRef = useRef<TextInput | null>(null);
@@ -44,7 +44,7 @@ const SignIn = () => {
       return Alert.alert('알림', '이메일 형식에 맞게 입력해주세요.');
     }
     try {
-      login(email, password);
+      signIn(email, password);
     } catch (error) {
       throw new Error('API fetch error');
     }
