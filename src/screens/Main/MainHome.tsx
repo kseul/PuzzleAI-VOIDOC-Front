@@ -6,9 +6,18 @@ import {useWindowDimensions} from 'react-native';
 import {MainHomeScreenProps} from 'types/type';
 import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
+import API from 'config';
 
 const MainHome = ({navigation}: MainHomeScreenProps) => {
   const {width} = useWindowDimensions();
+
+  // const signInUrl = `${API.signIn}`;
+  // const userData = useFetch(signInUrl); // import해오기
+  // console.log('userData => ', userData.result[0].name);
+
+  // const departmentListUrl = `${API.departmentList}`;
+  // const dePartmentListData = useFetch(departmentListUrl); // import해오기
+  // console.log('dePartmentListData => ', dePartmentListData);
 
   return (
     <SafeAreaView style={[commonStyle.fullscreen, styles.safeArea]}>
