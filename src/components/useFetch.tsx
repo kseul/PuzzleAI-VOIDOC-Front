@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {getToken} from 'AuthContext';
 
 const useFetch = (url: string) => {
-  const [fetchData, setFetchDate] = useState([]);
+  const [fetchData, setFetchData] = useState({});
+
   useEffect(() => {
     const getFatchData = async (url: string) => {
       const token = await getToken();
@@ -13,8 +14,7 @@ const useFetch = (url: string) => {
         },
       });
       const res = await getData.json();
-      const data = res;
-      setFetchDate(data);
+      setFetchData(res);
     };
 
     getFatchData(url);
