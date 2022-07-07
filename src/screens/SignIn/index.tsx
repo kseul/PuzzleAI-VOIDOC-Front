@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {
   StyleSheet,
   Image,
@@ -9,18 +9,25 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {SignInScreenProps} from 'types/type';
-import API from 'config';
 import {theme} from 'styles/theme';
 import {commonStyle} from 'styles/commonStyle';
 import logoColor from 'assets/images/logo_color.png';
+import {AuthContext} from 'AuthContext';
 
-const SignIn = ({navigation}: SignInScreenProps) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const SignIn = () => {
+  const [userInput, setUserInput] = useState({
+    email: '',
+    password: '',
+  });
+  const {signIn} = useContext(AuthContext);
+  const {email, password} = userInput;
+
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
+
+  const hadleUserInput = (text: string, key: string) => {
+    setUserInput({...userInput, [key]: text.trim()});
+  };
 
   const onSubmit = async () => {
     if (!email) {
@@ -36,42 +43,15 @@ const SignIn = ({navigation}: SignInScreenProps) => {
     if (!regEx.test(email)) {
       return Alert.alert('알림', '이메일 형식에 맞게 입력해주세요.');
     }
-
-    const postSingIn = await fetch(`${API.signIn}`, {
-      method: 'POST',
-      headers: {
-        'Type-Of-Application': 'app',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-
-    const res = await postSingIn.json();
-    const message = await res.message;
-
-    if (postSingIn.status === 200) {
-      navigation.navigate('MainHome');
-    } else if (message === 'WRONG_EMAIL_OR_PASSWORD') {
-      return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!');
-    } else if (message === 'DOCTOR_CAN_NOT_LOGIN_ON_APP') {
-      return Alert.alert('알림', '의사는 로그인할 수 없습니다.');
+    try {
+      signIn(email, password);
+    } catch (error) {
+      throw new Error('API fetch error');
     }
   };
 
-  const onChangeEmail = (text: string) => {
-    setEmail(text.trim());
-  };
-
-  const onChangePassword = (text: string) => {
-    setPassword(text.trim());
-  };
-
   return (
-    <SafeAreaView
-      edges={['bottom', 'left', 'right']}
-      style={[commonStyle.fullscreen, styles.container]}>
+    <View style={[commonStyle.fullscreen, styles.container]}>
       <View style={styles.logo}>
         <Image source={logoColor} />
       </View>
@@ -82,8 +62,8 @@ const SignIn = ({navigation}: SignInScreenProps) => {
           style={[styles.input, styles.inputMargin]}
           placeholder="이메일을 입력해주세요"
           keyboardType="email-address"
-          value={email}
-          onChangeText={onChangeEmail}
+          value={userInput.email}
+          onChangeText={(text: string) => hadleUserInput(text, 'email')}
           autoCapitalize="none"
           returnKeyType="next"
           onSubmitEditing={() => {
@@ -99,9 +79,9 @@ const SignIn = ({navigation}: SignInScreenProps) => {
         <TextInput
           style={styles.input}
           placeholder="비밀번호를 입력해주세요"
-          value={password}
+          value={userInput.password}
           secureTextEntry
-          onChangeText={onChangePassword}
+          onChangeText={(text: string) => hadleUserInput(text, 'password')}
           onSubmitEditing={onSubmit}
           ref={passwordRef}
         />
@@ -110,7 +90,7 @@ const SignIn = ({navigation}: SignInScreenProps) => {
       <Pressable style={commonStyle.ativeBtn} onPress={onSubmit}>
         <Text style={commonStyle.btnText}>로그인</Text>
       </Pressable>
-    </SafeAreaView>
+    </View>
   );
 };
 
