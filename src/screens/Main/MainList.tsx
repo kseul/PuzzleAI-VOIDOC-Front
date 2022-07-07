@@ -11,21 +11,22 @@ import {theme} from 'styles/theme';
 import DoctorDataCard from 'components/DoctorDataCard';
 import calendarImg from 'assets/images/calendar_icon_active.png';
 import API from 'config';
+import {getToken} from 'AuthContext';
 
 const MainList = () => {
   const [appointmentsData, setAppointmentsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const 임시토큰 = '';
-
   const dataListFatch = async () => {
+    const token = await getToken();
     const mainData = await fetch(`${API.appointments}?page=${currentPage}`, {
       method: 'GET',
       headers: {
-        Authorization: 임시토큰,
+        Authorization: token,
       },
     });
     const res = await mainData.json();
+    console.log(res);
     const data = res.result;
     setAppointmentsData([...appointmentsData, ...data]);
   };
