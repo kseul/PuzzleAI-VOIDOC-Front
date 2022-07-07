@@ -97,6 +97,7 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
       const message = await res.message;
       if (response.status === 200) {
         setToken('access_token', res.access_token);
+        AsyncStorage.setItem('user_name', res.user_name);
         dispatch({type: 'LOGGED_IN'});
       } else if (message === 'WRONG_EMAIL_OR_PASSWORD') {
         return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!');
