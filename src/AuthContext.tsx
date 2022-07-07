@@ -2,11 +2,16 @@ import React, {createContext, useReducer} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from 'config';
 import {Alert} from 'react-native';
-import SignIn from 'screens/SignIn';
 
 type AuthContextType = {
-  userState: {loggedIn: boolean};
+  userState: {loggedIn: boolean; registered: boolean};
   signIn: (email: string, password: string) => void;
+  signUp: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ) => void;
 };
 
 type AuthContextProviderProps = {
@@ -14,14 +19,15 @@ type AuthContextProviderProps = {
 };
 
 const defaultValue = {
-  userState: {loggedIn: false},
+  userState: {loggedIn: false, registered: true},
   signIn: () => {},
+  signUp: () => {},
 };
 
 export const AuthContext = createContext<AuthContextType>(defaultValue);
 
-type State = {loggedIn: boolean};
-type Action = {type: 'LOGGED_IN' | 'LOADING_DONE' | 'LOADING'};
+type State = {loggedIn: boolean; registered: boolean};
+type Action = {type: 'LOGGED_IN' | 'LOADING_DONE' | 'LOADING' | 'CREATE_USER'};
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -39,15 +45,46 @@ function reducer(state: State, action: Action): State {
         ...state,
         loggedIn: true,
       };
+    case 'CREATE_USER':
+      return {
+        ...state,
+        loggedIn: false,
+        registered: true,
+      };
   }
 }
 
 export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
   const [userState, dispatch] = useReducer(reducer, {
     loggedIn: false,
+    registered: false,
   });
 
   const authContext = {
+    signUp: async (
+      firstName: string,
+      lastName: string,
+      email: string,
+      password: string,
+    ) => {
+      const response = await fetch(`${API.signUp}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          name: lastName + firstName,
+          email,
+          password,
+          is_doctor: false,
+        }),
+      });
+      const res = await response.json();
+      const message = await res.message;
+      if (message === 'SUCCESS') {
+        Alert.alert('회원가입 되었습니다.');
+        console.log('회원가입 !!!!');
+        console.log('userState : ', userState);
+        dispatch({type: 'CREATE_USER'});
+      }
+    },
     signIn: async (email: string, password: string) => {
       const response = await fetch(`${API.signIn}`, {
         method: 'POST',
