@@ -91,7 +91,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
 
   useEffect(() => {
     if (userState.registered) {
-      userState.registered && navigation.navigate('SignIn');
+      navigation.navigate('SignIn');
     }
   }, [userState.registered]);
 

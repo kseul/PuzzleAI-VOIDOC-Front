@@ -48,7 +48,6 @@ function reducer(state: State, action: Action): State {
     case 'CREATE_USER':
       return {
         ...state,
-        loggedIn: false,
         registered: true,
       };
   }
@@ -80,8 +79,6 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
       const message = await res.message;
       if (message === 'SUCCESS') {
         Alert.alert('회원가입 되었습니다.');
-        console.log('회원가입 !!!!');
-        console.log('userState : ', userState);
         dispatch({type: 'CREATE_USER'});
       }
     },
