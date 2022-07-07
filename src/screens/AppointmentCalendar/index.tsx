@@ -13,68 +13,103 @@ import nextBtnY from 'assets/images/cal_next_y.png';
 import prevBtnM from 'assets/images/cal_prev_m.png';
 import prevBtnY from 'assets/images/cal_prev_y.png';
 
-const AppointmentCalendar = () => {
-  const now = dayjs();
-  const year = now.get('y');
-  const month = now.get('M') + 1;
+const WEEK: string[] = ['일', '월', '화', '수', '목', '금', '토'];
+const TODAY_DATE = dayjs();
 
-  const [selectedYear, setSelectedYear] = useState(year);
-  const [selectedMonth, setSelectedMonth] = useState(month);
+const AppointmentCalendar = () => {
+  const [getDate, setGetDate] = useState({
+    year: TODAY_DATE.get('y'),
+    month: TODAY_DATE.get('M') + 1,
+    date: TODAY_DATE.get('D'),
+    day: TODAY_DATE.get('d'),
+  });
+  const [calendarDate, setCalendarDate] = useState<Number[]>([]);
+  const [thisMonthDateIndex, setThisMonthDateIndex] = useState({
+    thisMonthFirstDateIndex: 0,
+    thisMonthlastDateIndex: 0,
+  });
   const [selectedDayNumber, setSelectedDayNumber] = useState(0);
   const [selectedDayActive, setSelectedDayActive] = useState(false);
 
+  const {year, month, date, day} = getDate;
+  const {thisMonthFirstDateIndex, thisMonthlastDateIndex} = thisMonthDateIndex;
+
   const prevMonth = () => {
-    if (selectedMonth === 1) {
-      setSelectedMonth(12);
-      setSelectedYear(selectedYear - 1);
+    if (month === 1) {
+      setGetDate({
+        ...getDate,
+        year: getDate.year - 1,
+        month: 12,
+      });
     } else {
-      setSelectedMonth(selectedMonth - 1);
+      setGetDate({
+        ...getDate,
+        month: getDate.month - 1,
+      });
     }
   };
 
   const nextMonth = () => {
-    if (selectedMonth === 12) {
-      setSelectedMonth(1);
-      setSelectedYear(selectedYear + 1);
+    if (month === 12) {
+      setGetDate({
+        ...getDate,
+        year: getDate.year + 1,
+        month: 1,
+      });
     } else {
-      setSelectedMonth(selectedMonth + 1);
+      setGetDate({
+        ...getDate,
+        month: getDate.month + 1,
+      });
     }
   };
 
   useEffect(() => {
-    dayjs.locale('ko');
-  }, [setSelectedDayNumber]);
+    const prevMonthLast = dayjs(`${year}-${month}`);
+    const prevMonthLastDay = prevMonthLast
+      .subtract(1, 'month')
+      .endOf('month')
+      .day();
+    const prevMonthLastDate = prevMonthLast
+      .subtract(1, 'month')
+      .endOf('month')
+      .date();
 
-  const prevMonthLast = new Date(selectedYear, selectedMonth - 1, 0);
-  const prevMonthLastDay = prevMonthLast.getDay();
-  const prevMonthLastDate = prevMonthLast.getDate();
+    const thisMonthLastDay = TODAY_DATE.endOf('month').day();
+    const thisMonthLastDate = TODAY_DATE.endOf('month').date();
 
-  const thisMonthLastDay = now.endOf('month').day();
-  const thisMonthLastDate = now.endOf('month').date();
+    const thisMonthDates = [...Array(thisMonthLastDate + 1).keys()].slice(1);
+    const prevMonthDates = [];
+    const nextMonthDates = [];
 
-  const thisMonthDates = [...Array(thisMonthLastDate + 1).keys()].slice(1);
-  const prevMonthDates = [];
-  const nextMonthDates = [];
-
-  if (prevMonthLastDay !== 6) {
-    for (let i = 0; i < prevMonthLastDay + 1; i++) {
-      prevMonthDates.unshift(prevMonthLastDate - i);
+    if (prevMonthLastDay !== 6) {
+      for (let i = 0; i < prevMonthLastDay + 1; i++) {
+        prevMonthDates.unshift(prevMonthLastDate - i);
+      }
     }
-  }
 
-  for (let i = 1; i < 7 - thisMonthLastDay; i++) {
-    nextMonthDates.push(i);
-  }
+    for (let i = 1; i < 7 - thisMonthLastDay; i++) {
+      nextMonthDates.push(i);
+    }
 
-  const dates = prevMonthDates.concat(thisMonthDates, nextMonthDates);
-  const thisMonthFirstDateIndex = dates.indexOf(1);
-  const thisMonthlastDateIndex = dates.lastIndexOf(thisMonthLastDate);
+    const dates = prevMonthDates.concat(thisMonthDates, nextMonthDates);
+    const thisMonthFirstDateIndex = dates.indexOf(1);
+    const thisMonthlastDateIndex = dates.lastIndexOf(thisMonthLastDate);
+
+    setThisMonthDateIndex({
+      ...thisMonthDateIndex,
+      thisMonthFirstDateIndex,
+      thisMonthlastDateIndex,
+    });
+
+    setCalendarDate(dates);
+  }, [month]);
 
   const renderDate = ({item, index}: any): ReactElement => {
     const disabled =
       index < thisMonthFirstDateIndex || index > thisMonthlastDateIndex;
     const isToday =
-      now.isSame(`${year}-${selectedMonth}-${item}`, 'day') && !disabled;
+      TODAY_DATE.isSame(`${year}-${month}-${item}`, 'day') && !disabled;
 
     const buttonActive = () => {
       setSelectedDayNumber(item);
@@ -82,10 +117,7 @@ const AppointmentCalendar = () => {
     };
 
     const selectedDay =
-      selectedDayActive &&
-      selectedDayNumber === item &&
-      selectedMonth === month &&
-      !disabled;
+      selectedDayActive && selectedDayNumber === item && !disabled;
 
     return (
       <Pressable
@@ -153,7 +185,7 @@ const AppointmentCalendar = () => {
         </Pressable>
 
         <Text style={styles.calendarFontSize}>
-          {selectedYear}년 {selectedMonth}월
+          {year}년 {month}월
         </Text>
 
         <Pressable
@@ -174,12 +206,14 @@ const AppointmentCalendar = () => {
       </View>
 
       <View style={styles.marginTopMibble}>
-        <FlatList
-          data={dates}
-          numColumns={7}
-          renderItem={renderDate}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {calendarDate.length > 0 && (
+          <FlatList
+            data={calendarDate}
+            numColumns={7}
+            renderItem={renderDate}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -338,7 +372,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
 });
-
-const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default AppointmentCalendar;
