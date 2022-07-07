@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, Image, Pressable, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native';
@@ -8,19 +8,33 @@ import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
 import API from 'config';
 import useFetch from 'components/useFetch';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainHome = ({navigation}: MainHomeScreenProps) => {
   const {width} = useWindowDimensions();
+  const [name, setName] = useState();
 
   const departmentListUrl = `${API.departmentList}`;
   const departmentListData = useFetch(departmentListUrl).result;
+
+  useEffect(() => {
+    const getUserName = async () => {
+      try {
+        const userName = await AsyncStorage.getItem('user_name');
+        setName(userName);
+      } catch (error) {
+        throw new Error('userName 가져오기 실패');
+      }
+    };
+    getUserName();
+  }, []);
 
   return (
     <SafeAreaView style={[commonStyle.fullscreen, styles.safeArea]}>
       <View style={styles.headerContainer}>
         <View style={[styles.headerText, styles.flexStyle]}>
           <Text style={[styles.nameStyle, styles.textSpace, styles.textColr]}>
-            TEST
+            {name}
           </Text>
           <Text style={styles.nameText}>님 반갑습니다.</Text>
         </View>
