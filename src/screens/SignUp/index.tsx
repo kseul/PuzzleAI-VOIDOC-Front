@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useState, useMemo, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import {AuthContext} from 'AuthContext';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
 import {commonStyle} from 'styles/commonStyle';
@@ -31,6 +32,7 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
   });
   const [uniqueEmailCheck, setUniqueEmailCheck] = useState(true);
 
+  const {signUp, userState} = useContext(AuthContext);
   const {lastName, firstName, email, password, passwordCheck} = inputValue;
 
   const handleInputValue = (name: string, text: string) => {
@@ -87,20 +89,17 @@ const SignUp = ({navigation}: SignUpScreenProps) => {
     );
   }, [validEmail, uniqueEmailCheck, validPassword, validPasswordCheck]);
 
+  useEffect(() => {
+    if (userState.registered) {
+      navigation.navigate('SignIn');
+    }
+  }, [userState.registered]);
+
   const onSubmit = async () => {
-    const postUserData = await fetch(`${API.signUp}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        name: lastName + firstName,
-        email,
-        password,
-        is_doctor: false,
-      }),
-    });
-    const res = await postUserData.json();
-    const message = res.message;
-    if (message === 'SUCCESS') {
-      Alert.alert('회원가입 되었습니다.'), navigation.navigate('SignIn');
+    try {
+      signUp(firstName, lastName, email, password);
+    } catch (error) {
+      throw new Error('API fetch error');
     }
   };
 
