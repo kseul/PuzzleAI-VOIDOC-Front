@@ -4,7 +4,7 @@ import API from 'config';
 import {Alert} from 'react-native';
 
 type AuthContextType = {
-  userState: {loggedIn: boolean; registered: boolean};
+  userState: {loggedIn: boolean; registered: boolean; userName: string};
   signIn: (email: string, password: string) => void;
   signUp: (
     email: string,
@@ -19,18 +19,21 @@ type AuthContextProviderProps = {
 };
 
 const defaultValue = {
-  userState: {loggedIn: false, registered: true},
+  userState: {loggedIn: false, registered: true, userName: null},
   signIn: () => {},
   signUp: () => {},
 };
 
 export const AuthContext = createContext<AuthContextType>(defaultValue);
 
-type State = {loggedIn: boolean; registered: boolean};
-type Action = {type: 'LOGGED_IN' | 'LOADING_DONE' | 'LOADING' | 'CREATE_USER'};
+type State = {loggedIn: boolean; registered: boolean; userName: string};
+type Action = {
+  type: 'LOGGED_IN' | 'LOADING_DONE' | 'LOADING' | 'CREATE_USER';
+  nameData: string;
+};
 
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
+function reducer(state: State, {type, nameData}: Action): State {
+  switch (type) {
     case 'LOADING':
       return {
         ...state,
@@ -44,6 +47,7 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         loggedIn: true,
+        userName: nameData,
       };
     case 'CREATE_USER':
       return {
@@ -57,6 +61,7 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
   const [userState, dispatch] = useReducer(reducer, {
     loggedIn: false,
     registered: false,
+    userName: '',
   });
 
   const authContext = {
@@ -97,8 +102,7 @@ export const AuthContextProvider = ({children}: AuthContextProviderProps) => {
       const message = await res.message;
       if (response.status === 200) {
         setToken('access_token', res.access_token);
-        AsyncStorage.setItem('user_name', res.user_name);
-        dispatch({type: 'LOGGED_IN'});
+        dispatch({type: 'LOGGED_IN', nameData: res.user_name});
       } else if (message === 'WRONG_EMAIL_OR_PASSWORD') {
         return Alert.alert('알림', '잘못된 이메일 또는 비밀번호 입니다!');
       } else if (message === 'DOCTOR_CAN_NOT_LOGIN_ON_APP') {
