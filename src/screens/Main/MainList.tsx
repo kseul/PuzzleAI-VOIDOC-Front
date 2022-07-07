@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -10,33 +10,65 @@ import {
 import {theme} from 'styles/theme';
 import DoctorDataCard from 'components/DoctorDataCard';
 import calendarImg from 'assets/images/calendar_icon_active.png';
+import API from 'config';
 
 const MainList = () => {
+  const [appointmentsData, setAppointmentsData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const 임시토큰 = '';
+
+  const dataListFatch = async () => {
+    const mainData = await fetch(`${API.appointments}?page=${currentPage}`, {
+      method: 'GET',
+      headers: {
+        Authorization: 임시토큰,
+      },
+    });
+    const res = await mainData.json();
+    const data = res.result;
+    setAppointmentsData([...appointmentsData, ...data]);
+  };
+
+  useEffect(() => {
+    dataListFatch();
+  }, [currentPage]);
+
+  const loadMoreList = () => {
+    setCurrentPage(prev => prev + 1);
+  };
+
+  const renderItem = ({item}) => {
+    return (
+      <View style={styles.listContainer}>
+        <View style={[styles.listHeader, styles.flexStyle]}>
+          <View style={[styles.dateBox, styles.flexStyle]}>
+            <Image style={styles.calendarIcon} source={calendarImg} />
+            <Text style={styles.date}>{item.appointment_date}</Text>
+          </View>
+          <Text
+            style={[
+              styles.stateBox,
+              item.state_name === '진료대기' ? styles.waiting : '',
+              item.state_name === '진료취소' ? styles.cancel : '',
+              item.state_name === '진료완료' ? styles.completion : '',
+            ]}>
+            {item.state_name}
+          </Text>
+        </View>
+        <DoctorDataCard item={item} />
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.mainListWrapper}>
       <FlatList
-        data={dataTest}
-        renderItem={({item}) => (
-          <View style={styles.listContainer}>
-            <View style={[styles.listHeader, styles.flexStyle]}>
-              <View style={[styles.dateBox, styles.flexStyle]}>
-                <Image style={styles.calendarIcon} source={calendarImg} />
-                <Text style={styles.date}>{item.appointment_date}</Text>
-              </View>
-              <Text
-                style={[
-                  styles.stateBox,
-                  item.state_name === '진료대기' ? styles.waiting : '',
-                  item.state_name === '진료취소' ? styles.cancel : '',
-                  item.state_name === '진료완료' ? styles.completion : '',
-                ]}>
-                {item.state_name}
-              </Text>
-            </View>
-            <DoctorDataCard item={item} />
-          </View>
-        )}
+        data={appointmentsData}
+        renderItem={renderItem}
         keyExtractor={item => item.appointment_id.toString()}
+        onEndReached={loadMoreList}
+        onEndReachedThreshold={0.6}
       />
     </SafeAreaView>
   );
@@ -125,44 +157,5 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.fontSmall,
   },
 });
-
-const dataTest = [
-  {
-    appointment_id: 1,
-    appointment_date: '2022-07-01(금) 오후 12:00',
-    state_name: '진료대기',
-    doctor_name: '홍정의',
-    doctor_hospital: '퍼즐AI병원',
-    doctor_department: 'COVID-19',
-    doctor_profile_img: 'https://reactjs.org/logo-og.png',
-  },
-  {
-    appointment_id: 6,
-    appointment_date: '2022-07-03(일) 오후 12:00',
-    state_name: '진료취소',
-    doctor_name: '황지욱',
-    doctor_hospital: '퍼즐AI병원',
-    doctor_department: 'COVID-19',
-    doctor_profile_img: 'https://reactjs.org/logo-og.png',
-  },
-  {
-    appointment_id: 50,
-    appointment_date: '2022-07-03(일) 오후 6:00',
-    state_name: '진료취소',
-    doctor_name: '김태웅',
-    doctor_hospital: '퍼즐AI병원',
-    doctor_department: 'COVID-19',
-    doctor_profile_img: 'https://reactjs.org/logo-og.png',
-  },
-  {
-    appointment_id: 7,
-    appointment_date: '2022-07-04(월) 오후 1:00',
-    state_name: '진료완료',
-    doctor_name: '테스트',
-    doctor_hospital: '퍼즐AI병원',
-    doctor_department: 'COVID-19',
-    doctor_profile_img: 'https://reactjs.org/logo-og.png',
-  },
-];
 
 export default MainList;
