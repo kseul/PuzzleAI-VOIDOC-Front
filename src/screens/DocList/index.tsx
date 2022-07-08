@@ -8,31 +8,43 @@ import API from 'config';
 
 const DocList = ({route, navigation}: DocListScreenProps) => {
   const {id, name} = route.params;
-  const [doctorListData, setDoctorListData] = useState();
+  const [doctorListData, setDoctorListData] = useState<DocListProp[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [nextListData, setNextListData] = useState(0);
 
   useEffect(() => {
     navigation.setOptions({title: name});
   }, []);
 
-  useEffect(() => {
-    const dataListFetch = async () => {
-      const token = await getToken();
-      const mainData = await fetch(
-        `${API.departmentList}/${id}?page=${currentPage}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: token,
-          },
+  const dataListFetch = async () => {
+    const token = await getToken();
+    const doctorData = await fetch(
+      `${API.departmentList}/${id}?page=${currentPage}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: token,
         },
-      );
-      const res = await mainData.json();
-      const data = res.result;
-      setDoctorListData(data);
-    };
+      },
+    );
+    const res = await doctorData.json();
+    const data = res.result;
+    setNextListData(data.length);
+    setDoctorListData([...doctorListData, ...data]);
+  };
+
+  useEffect(() => {
     dataListFetch();
-  }, []);
+  }, [currentPage]);
+
+  const loadMoreList = () => {
+    const DATA_SIZE_MAX = 6;
+    if (nextListData < DATA_SIZE_MAX) {
+      return;
+    } else {
+      setCurrentPage(prev => prev + 1);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.mainListWrapper}>
@@ -44,6 +56,8 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
           </View>
         )}
         keyExtractor={item => item.id.toString()}
+        onEndReached={loadMoreList}
+        onEndReachedThreshold={0.6}
       />
     </SafeAreaView>
   );
