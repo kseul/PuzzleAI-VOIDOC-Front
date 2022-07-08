@@ -21,7 +21,6 @@ const MainList = () => {
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [nextListData, setNextListData] = useState(0);
-  const DATA_SIZE_MAX = 4;
 
   const dataListFetch = async () => {
     const token = await getToken();
@@ -42,6 +41,7 @@ const MainList = () => {
   }, [currentPage]);
 
   const loadMoreList = () => {
+    const DATA_SIZE_MAX = 4;
     if (nextListData < DATA_SIZE_MAX) {
       return;
     } else {
