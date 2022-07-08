@@ -13,14 +13,17 @@ import calendarImg from 'assets/images/calendar_icon_active.png';
 import API from 'config';
 import {getToken} from 'AuthContext';
 import {DocListProp} from 'types/type';
+import {appointmentsDataProp} from 'types/type';
 
 const MainList = () => {
-  const [appointmentsData, setAppointmentsData] = useState([]);
+  const [appointmentsData, setAppointmentsData] = useState<
+    appointmentsDataProp[]
+  >([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [nextListData, setNextListData] = useState(0);
   const DATA_SIZE_MAX = 4;
 
-  const dataListFatch = async () => {
+  const dataListFetch = async () => {
     const token = await getToken();
     const mainData = await fetch(`${API.appointments}?page=${currentPage}`, {
       method: 'GET',
@@ -35,7 +38,7 @@ const MainList = () => {
   };
 
   useEffect(() => {
-    dataListFatch();
+    dataListFetch();
   }, [currentPage]);
 
   const loadMoreList = () => {
