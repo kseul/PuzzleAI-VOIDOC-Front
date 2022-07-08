@@ -21,22 +21,18 @@ export type RootStackParamList = {
 export type SignUpScreenProps = StackScreenProps<RootStackParamList, 'SignUp'>;
 
 export type SignInScreenProps = StackScreenProps<RootStackParamList, 'SignIn'>;
-
 export type AppointmentCalendarScreenProps = StackScreenProps<
   RootStackParamList,
   'AppointmentCalendar'
 >;
-
 export type AppointmentDetailScreenProps = StackScreenProps<
   RootStackParamList,
   'AppointmentDetail'
 >;
-
 export type AppointmentSubmitScreenProps = StackScreenProps<
   RootStackParamList,
   'AppointmentSubmit'
 >;
-
 export type DocListScreenProps = StackScreenProps<
   RootStackParamList,
   'DocList'
@@ -48,10 +44,8 @@ export type MainHomeScreenProps = StackScreenProps<
   RootStackParamList,
   'MainHome'
 >;
-
 export type MainListScreenProps = StackScreenProps<
   RootStackParamList,
   'MainList'
 >;
-
 export type SplashScreenProps = StackScreenProps<RootStackParamList, 'Splash'>;
