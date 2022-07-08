@@ -17,6 +17,8 @@ import {DocListProp} from 'types/type';
 const MainList = () => {
   const [appointmentsData, setAppointmentsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [nextListData, setNextListData] = useState(0);
+  const DATA_SIZE_MAX = 4;
 
   const dataListFatch = async () => {
     const token = await getToken();
@@ -28,6 +30,7 @@ const MainList = () => {
     });
     const res = await mainData.json();
     const data = res.result;
+    setNextListData(data.length);
     setAppointmentsData([...appointmentsData, ...data]);
   };
 
@@ -36,7 +39,11 @@ const MainList = () => {
   }, [currentPage]);
 
   const loadMoreList = () => {
-    setCurrentPage(prev => prev + 1);
+    if (nextListData < DATA_SIZE_MAX) {
+      return;
+    } else {
+      setCurrentPage(prev => prev + 1);
+    }
   };
 
   const renderItem = ({item}: {item: DocListProp}) => {
