@@ -18,6 +18,16 @@ export type RootStackParamList = {
   Splash: undefined;
 };
 
+export interface DocListProp {
+  id: number;
+  doctor_name: string;
+  doctor_department: string;
+  doctor_hospital: string;
+  doctor_profile_img: string;
+  appointment_date: string;
+  appointment_id: number;
+}
+
 export type SignUpScreenProps = StackScreenProps<RootStackParamList, 'SignUp'>;
 
 export type SignInScreenProps = StackScreenProps<RootStackParamList, 'SignIn'>;

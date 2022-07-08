@@ -12,6 +12,7 @@ import DoctorDataCard from 'components/DoctorDataCard';
 import calendarImg from 'assets/images/calendar_icon_active.png';
 import API from 'config';
 import {getToken} from 'AuthContext';
+import {DocListProp} from 'types/type';
 
 const MainList = () => {
   const [appointmentsData, setAppointmentsData] = useState([]);
@@ -26,7 +27,6 @@ const MainList = () => {
       },
     });
     const res = await mainData.json();
-    console.log(res);
     const data = res.result;
     setAppointmentsData([...appointmentsData, ...data]);
   };
@@ -39,7 +39,7 @@ const MainList = () => {
     setCurrentPage(prev => prev + 1);
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item}: {item: DocListProp}) => {
     return (
       <View style={styles.listContainer}>
         <View style={[styles.listHeader, styles.flexStyle]}>
