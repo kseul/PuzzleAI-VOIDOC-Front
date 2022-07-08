@@ -4,5 +4,7 @@ const API = {
   signIn: `${BASE_URL}/users/login`,
   emailCheck: `${BASE_URL}/users/check_duplicate`,
   departmentList: `${BASE_URL}/appointments/departments`,
+  WorkingDayView: `${BASE_URL}/appointments/doctor`,
+  WorkingTimeView: `${BASE_URL}/appointments/doctor`,
 };
 export default API;

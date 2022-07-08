@@ -27,7 +27,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Entry">
+        <Stack.Navigator initialRouteName="AppointmentCalendar">
           {userState.loggedIn ? (
             <>
               <Stack.Screen

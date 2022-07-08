@@ -5,6 +5,9 @@ const useFetch = (url: string) => {
   const [fetchData, setFetchData] = useState({});
 
   useEffect(() => {
+    if (!url) {
+      return;
+    }
     const getFatchData = async (url: string) => {
       const token = await getToken();
       const getData = await fetch(url, {
@@ -19,7 +22,6 @@ const useFetch = (url: string) => {
 
     getFatchData(url);
   }, [url]);
-
   return fetchData;
 };
 
