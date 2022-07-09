@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import {theme} from 'styles/theme';
 
-const DoctorDataList = ({item}) => {
+const DoctorDataCard = ({item}) => {
   return (
     <View style={[styles.listContents, styles.flexStyle]}>
       <Image source={{uri: item.doctor_profile_img}} style={styles.doctorImg} />
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     color: theme.colors.docGray,
     marginBottom: 8,
     fontSize: theme.fontSizes.fontRegular,
-    fontWeight: '500',
+    fontWeight: '600',
   },
 
   departments: {
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DoctorDataList;
+export default DoctorDataCard;
