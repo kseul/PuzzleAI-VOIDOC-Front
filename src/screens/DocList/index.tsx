@@ -1,16 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {View, SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet, FlatList, Pressable} from 'react-native';
 import {theme} from 'styles/theme';
 import {DocListScreenProps, DocListProp} from 'types/type';
 import DoctorDataCard from 'components/DoctorDataCard';
 import {getToken} from 'AuthContext';
 import API from 'config';
+import {doctorInfoContext} from 'AppointmentContext';
 
 const DocList = ({route, navigation}: DocListScreenProps) => {
   const {id, name} = route.params;
   const [doctorListData, setDoctorListData] = useState<DocListProp[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [nextListData, setNextListData] = useState(0);
+  const {setDoctorInfo} = useContext(doctorInfoContext);
 
   useEffect(() => {
     navigation.setOptions({title: name});
@@ -46,14 +48,21 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
     }
   };
 
+  const goCalendar = (doctorInfo: DocListProp) => {
+    setDoctorInfo(doctorInfo);
+    navigation.navigate('AppointmentCalendar');
+  };
+
   return (
     <SafeAreaView style={styles.mainListWrapper}>
       <FlatList
         data={doctorListData}
         renderItem={({item}: {item: DocListProp}) => (
-          <View style={styles.listContainer}>
+          <Pressable
+            style={styles.listContainer}
+            onPress={() => goCalendar(item)}>
             <DoctorDataCard item={item} />
-          </View>
+          </Pressable>
         )}
         keyExtractor={item => item.id.toString()}
         onEndReached={loadMoreList}
