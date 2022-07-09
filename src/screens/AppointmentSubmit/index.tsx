@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -20,14 +20,20 @@ const AppointmentSubmit = ({
   route,
   navigation,
 }: AppointmentSubmitScreenProps) => {
+  const [inputValue, setInputValue] = useState('');
+
   const onSubmit = () => {};
+
+  const handleInputValue = (input: string) => {
+    setInputValue(input);
+  };
 
   return (
     <KeyboardAvoidingView style={commonStyle.fullscreen}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
           <DoctorDataCard item={dataTest} />
-          <View style={styles.aubmitContainer}>
+          <View style={styles.submitContainer}>
             <Text style={[styles.title, styles.inputText]}>예약시간</Text>
             <TextInput
               style={[styles.input, styles.inputText]}
@@ -35,7 +41,7 @@ const AppointmentSubmit = ({
             />
           </View>
 
-          <View style={styles.aubmitContainer}>
+          <View style={styles.submitContainer}>
             <Text style={styles.title}>증상입력</Text>
             <TextInput
               style={[
@@ -45,11 +51,12 @@ const AppointmentSubmit = ({
               ]}
               placeholder="증상을 입력해주세요"
               placeholderTextColor={theme.colors.AppointmentInputTextGray}
-              multiline={true}
+              multiline
+              onChangeText={text => handleInputValue(text)}
             />
           </View>
 
-          <View style={styles.aubmitContainer}>
+          <View style={styles.submitContainer}>
             <Text style={styles.title}>환부 사진 업로드 (선택)</Text>
             <ScrollView>
               <FlatList
@@ -69,8 +76,9 @@ const AppointmentSubmit = ({
 
       <View>
         <Pressable
-          style={[commonStyle.btn, styles.submitBtn]}
-          onPress={onSubmit}>
+          style={!!inputValue ? commonStyle.ativeBtn : styles.submitBtn}
+          onPress={onSubmit}
+          disabled={!inputValue}>
           <Text style={commonStyle.btnText}>진료예약</Text>
         </Pressable>
       </View>
@@ -81,7 +89,7 @@ const AppointmentSubmit = ({
 const styles = StyleSheet.create({
   safeArea: {flex: 1},
 
-  aubmitContainer: {
+  submitContainer: {
     marginBottom: 24,
   },
 
@@ -129,6 +137,7 @@ const styles = StyleSheet.create({
   },
 
   submitBtn: {
+    borderRadius: 8,
     backgroundColor: theme.colors.RstvtInnerLightGray,
   },
 });
