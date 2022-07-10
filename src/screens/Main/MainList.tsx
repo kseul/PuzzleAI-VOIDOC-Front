@@ -19,8 +19,9 @@ const MainList = () => {
   const [appointmentsData, setAppointmentsData] = useState<
     appointmentsDataProp[]
   >([]);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [nextListData, setNextListData] = useState(0);
+  const [nextData, setNextData] = useState(true);
 
   const dataListFetch = async () => {
     const token = await getToken();
@@ -32,7 +33,10 @@ const MainList = () => {
     });
     const res = await mainData.json();
     const data = res.result;
-    setNextListData(data.length);
+
+    if (!data) {
+      setNextData(false);
+    }
     setAppointmentsData([...appointmentsData, ...data]);
   };
 
@@ -41,12 +45,8 @@ const MainList = () => {
   }, [currentPage]);
 
   const loadMoreList = () => {
-    const DATA_SIZE_MAX = 4;
-    if (nextListData < DATA_SIZE_MAX) {
-      return;
-    } else {
-      setCurrentPage(prev => prev + 1);
-    }
+    if (!nextData) return;
+    setCurrentPage(prev => prev + 1);
   };
 
   const renderItem = ({item}: {item: DocListProp}) => {
