@@ -11,7 +11,7 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
   const {id, name} = route.params;
   const [doctorListData, setDoctorListData] = useState<DocListProp[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [nextListData, setNextListData] = useState(0);
+  const [nextData, setNextData] = useState(true);
   const {setDoctorInfo} = useContext(doctorInfoContext);
 
   useEffect(() => {
@@ -31,7 +31,10 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
     );
     const res = await doctorData.json();
     const data = res.result;
-    setNextListData(data.length);
+
+    if (!data) {
+      setNextData(false);
+    }
     setDoctorListData([...doctorListData, ...data]);
   };
 
@@ -40,12 +43,10 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
   }, [currentPage]);
 
   const loadMoreList = () => {
-    const DATA_SIZE_MAX = 6;
-    if (nextListData < DATA_SIZE_MAX) {
+    if (!nextData) {
       return;
-    } else {
-      setCurrentPage(prev => prev + 1);
     }
+    setCurrentPage(prev => prev + 1);
   };
 
   const goCalendar = (doctorInfo: DocListProp) => {
