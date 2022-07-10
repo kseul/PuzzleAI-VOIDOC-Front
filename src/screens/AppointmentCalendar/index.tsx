@@ -1,4 +1,10 @@
-import React, {useState, useEffect, ReactElement} from 'react';
+import React, {
+  useState,
+  useEffect,
+  ReactElement,
+  useMemo,
+  useContext,
+} from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
@@ -13,18 +19,20 @@ import nextBtnY from 'assets/images/cal_next_y.png';
 import prevBtnM from 'assets/images/cal_prev_m.png';
 import prevBtnY from 'assets/images/cal_prev_y.png';
 import TimeTable from './TimeTable';
+import {AppointmentCalendarScreenProps} from 'types/type';
+import {SelectContext} from 'AppointmentContext';
 
 const WEEK: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 const TODAY_DATE = dayjs();
 
-const AppointmentCalendar = () => {
+const AppointmentCalendar = ({navigation}: AppointmentCalendarScreenProps) => {
   const [getDate, setGetDate] = useState({
     year: TODAY_DATE.get('y'),
     month: TODAY_DATE.get('M') + 1,
     date: TODAY_DATE.get('D'),
     day: TODAY_DATE.get('d'),
   });
-  const [calendarDate, setCalendarDate] = useState<Number[]>([]);
+  const [calendarDate, setCalendarDate] = useState<number[]>([]);
   const [thisMonthDateIndex, setThisMonthDateIndex] = useState({
     thisMonthFirstDateIndex: 0,
     thisMonthlastDateIndex: 0,
@@ -34,13 +42,13 @@ const AppointmentCalendar = () => {
   const [docWorkingDatas, setDocWorkingDatas] = useState({
     docWorkingDay: [],
     docWorkingTime: [],
+    docAlreadyReservedTime: [],
   });
   const [userSelectedDate, setUserSelectedDate] = useState(0);
-  const [selectedTime, setSelectedTime] = useState(0);
-
   const {docWorkingDay, docWorkingTime} = docWorkingDatas;
   const {year, month, date, day} = getDate;
   const {thisMonthFirstDateIndex, thisMonthlastDateIndex} = thisMonthDateIndex;
+  const {selectDate, setSelectDate} = useContext(SelectContext);
 
   const prevMonth = () => {
     if (month === 1) {
@@ -118,13 +126,14 @@ const AppointmentCalendar = () => {
   const docWorkingTimeUrl = `${API.WorkingTimeView}/1/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`;
   const docWorkingTimeData = useFetch(docWorkingTimeUrl);
 
-  useEffect(() => {
+  const showTimeTable = () => {
     setDocWorkingDatas({
       ...docWorkingDatas,
       docWorkingDay: docWorkingDayData,
       docWorkingTime: docWorkingTimeData.working_time,
+      docAlreadyReservedTime: docWorkingTimeData.docWorkingTime,
     });
-  }, [month, userSelectedDate]);
+  };
 
   useEffect(() => {
     setDocWorkingDatas({
@@ -159,10 +168,12 @@ const AppointmentCalendar = () => {
 
     return (
       <Pressable
+        onPress={() => showTimeTable()}
         style={[styles.flexBetween]}
         disabled={disabled && !docWorkingDay ? true : false}>
         <Text
           onPress={event => {
+            showTimeTable();
             buttonActive();
             onClickDateValue(event._dispatchInstances.memoizedProps.children);
           }}
@@ -177,10 +188,15 @@ const AppointmentCalendar = () => {
           }>
           {item}
         </Text>
-        <View style={isToday && [styles.today]}></View>
+        <View style={isToday && styles.today}></View>
         <View style={selectedDay && docWorkingDay && styles.selectDay}></View>
       </Pressable>
     );
+  };
+
+  const goAppointmentSubmit = (time: any) => {
+    setSelectDate(`${year}-${month}-${selectedDayNumber}(${day}) ${time}`);
+    navigation.navigate('AppointmentSubmit');
   };
 
   return (
@@ -260,14 +276,14 @@ const AppointmentCalendar = () => {
               data={calendarDate}
               numColumns={7}
               renderItem={renderDate}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={index => index.toString()}
             />
           )}
         </View>
       </SafeAreaView>
       {Array.isArray(docWorkingTime) && docWorkingTime.length > 0 && (
         <TimeTable
-          setSelectedTime={setSelectedTime}
+          goAppointmentSubmit={goAppointmentSubmit}
           docWorkingTime={docWorkingTime}
         />
       )}

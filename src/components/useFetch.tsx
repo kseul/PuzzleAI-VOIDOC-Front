@@ -4,6 +4,9 @@ import {getToken} from 'AuthContext';
 const useFetch = (url: string) => {
   const [fetchData, setFetchData] = useState({});
 
+  const 임시토큰 =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjoxNjU3NTU0MjYwfQ.IVOJavaHWg_0MOMtRjMzmSJ6OctejFuSGe3hNdJfwzE';
+
   useEffect(() => {
     if (!url) {
       return;
@@ -13,7 +16,8 @@ const useFetch = (url: string) => {
       const getData = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: token,
+          // Authorization: token,
+          Authorization: 임시토큰,
         },
       });
       const res = await getData.json();

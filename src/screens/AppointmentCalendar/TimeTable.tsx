@@ -1,21 +1,20 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {theme} from 'styles/theme';
+import {TimeTableProp} from 'types/type';
 
-const TimeTable = ({setSelectedTime, docWorkingTime}) => {
-  const timeTable = ({item}: any) => {
-    const onClickDateValue = (e: number) => {
-      setSelectedTime(e);
-    };
-
+const TimeTable = ({docWorkingTime, goAppointmentSubmit}: TimeTableProp) => {
+  const renderItem = ({item}: any) => {
     const alreadyReservedTime = '15:00';
 
     return (
       <View style={[styles.timeTableflexCenter]}>
         <Text
           onPress={event => {
-            onClickDateValue(event._dispatchInstances.memoizedProps.children);
+            goAppointmentSubmit(
+              event._dispatchInstances.memoizedProps.children,
+            );
           }}
           style={
             alreadyReservedTime === item
@@ -33,7 +32,7 @@ const TimeTable = ({setSelectedTime, docWorkingTime}) => {
       <FlatList
         data={docWorkingTime}
         numColumns={3}
-        renderItem={timeTable}
+        renderItem={renderItem}
         keyExtractor={index => index.toString()}
       />
     </View>

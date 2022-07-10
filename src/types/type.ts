@@ -18,6 +18,31 @@ export type RootStackParamList = {
   Splash: undefined;
 };
 
+export type DocListProp = {
+  id: number;
+  doctor_name: string;
+  subject_name: string;
+  hospital_name: string;
+  doctor_image: string;
+};
+
+export type AppointmentListProp = {
+  doctor_image: string;
+  doctor_name: string;
+  hospital_name: string;
+  date: string;
+  reservation_id: number;
+  status_name: string;
+  subject_name: string;
+  time: string;
+};
+
+export type TimeTableProp = {
+  setSelectedTime: any;
+  docWorkingTime: number[];
+  goAppointmentSubmit: any;
+};
+
 export type SignUpScreenProps = StackScreenProps<RootStackParamList, 'SignUp'>;
 
 export type SignInScreenProps = StackScreenProps<RootStackParamList, 'SignIn'>;
