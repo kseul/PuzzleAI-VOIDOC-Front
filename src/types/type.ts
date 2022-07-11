@@ -40,9 +40,8 @@ export type AppointmentListProp = {
 };
 
 export type TimeTableProp = {
-  setSelectedTime: any;
   docWorkingTime: number[];
-  goAppointmentSubmit: any;
+  goAppointmentSubmit: (time: any) => void;
 };
 
 export interface appointmentsDataProp {

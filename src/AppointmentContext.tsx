@@ -23,7 +23,13 @@ type SelectProps = {
 };
 
 export const SelectContext = createContext<SelectProps>({
-  selectDate: '',
+  selectDate: {
+    year: 0,
+    month: 0,
+    selectedDay: 0,
+    selectedDate: '',
+    selectedTime: '',
+  },
 
   setSelectDate: () => {},
 });

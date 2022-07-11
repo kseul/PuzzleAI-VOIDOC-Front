@@ -29,12 +29,6 @@ const AppointmentCalendar = ({
   route,
   navigation,
 }: AppointmentCalendarScreenProps) => {
-  const {id, doctor_name} = route.params;
-
-  useEffect(() => {
-    navigation.setOptions({title: `${doctor_name} 선생님`});
-  }, []);
-
   const [getDate, setGetDate] = useState({
     year: TODAY_DATE.get('y'),
     month: TODAY_DATE.get('M') + 1,
@@ -47,21 +41,26 @@ const AppointmentCalendar = ({
     thisMonthlastDateIndex: 0,
   });
   const [selectedDayNumber, setSelectedDayNumber] = useState(0);
+  const [userSelectedDate, setUserSelectedDate] = useState(0);
   const [selectedDayActive, setSelectedDayActive] = useState(false);
   const [docWorkingDatas, setDocWorkingDatas] = useState({
     docWorkingDay: [],
     docWorkingTime: [],
     docAlreadyReservedTime: [],
   });
-  const [userSelectedDate, setUserSelectedDate] = useState(0);
-
-  const {docWorkingDay, docWorkingTime} = docWorkingDatas;
-  const {year, month, date, day} = getDate;
-  const {thisMonthFirstDateIndex, thisMonthlastDateIndex} = thisMonthDateIndex;
 
   const {selectDate, setSelectDate} = useContext(SelectContext);
   const {doctorInfo} = useContext(doctorInfoContext);
 
+  const {year, month, date, day} = getDate;
+  const {thisMonthFirstDateIndex, thisMonthlastDateIndex} = thisMonthDateIndex;
+  const {docWorkingDay, docWorkingTime} = docWorkingDatas;
+
+  const {id, doctor_name} = route.params;
+
+  useEffect(() => {
+    navigation.setOptions({title: `${doctor_name} 선생님`});
+  }, []);
   const prevMonth = () => {
     if (month === 1) {
       setGetDate({
@@ -94,6 +93,7 @@ const AppointmentCalendar = ({
 
   useEffect(() => {
     const prevMonthLast = dayjs(`${year}-${month}`);
+
     const prevMonthLastDay = prevMonthLast
       .subtract(1, 'month')
       .endOf('month')
@@ -121,7 +121,10 @@ const AppointmentCalendar = ({
     }
 
     const dates = prevMonthDates.concat(thisMonthDates, nextMonthDates);
+    setCalendarDate(dates);
+
     const thisMonthFirstDateIndex = dates.indexOf(1);
+
     const thisMonthlastDateIndex = dates.lastIndexOf(thisMonthLastDate);
 
     setThisMonthDateIndex({
@@ -130,10 +133,17 @@ const AppointmentCalendar = ({
       thisMonthlastDateIndex,
     });
 
-    setCalendarDate(dates);
+    setDocWorkingDatas({
+      ...docWorkingDatas,
+      docWorkingDay: [],
+      docWorkingTime: docWorkingTimeData.working_time,
+      docAlreadyReservedTime: docWorkingTimeData.docWorkingTime,
+    });
   }, [month]);
 
-  const docWorkingDayUrl = `${API.WorkingDayView}/${id}/workingday?year=${year}&month=${month}`;
+  const docWorkingDayUrl = useMemo(() => {
+    return `${API.WorkingDayView}/${id}/workingday?year=${year}&month=${month}`;
+  }, [month]);
   const docWorkingDayData = useFetch(docWorkingDayUrl).result;
   const docWorkingTimeUrl = `${API.WorkingTimeView}/${id}/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`;
   const docWorkingTimeData = useFetch(docWorkingTimeUrl);
@@ -141,7 +151,6 @@ const AppointmentCalendar = ({
   const showTimeTable = () => {
     setDocWorkingDatas({
       ...docWorkingDatas,
-      docWorkingDay: docWorkingDayData,
       docWorkingTime: docWorkingTimeData.working_time,
       docAlreadyReservedTime: docWorkingTimeData.docWorkingTime,
     });
@@ -164,7 +173,7 @@ const AppointmentCalendar = ({
     const selectedDay =
       selectedDayActive && selectedDayNumber === item && !disabled;
 
-    const docWorkingDay =
+    const docWorkingDays =
       Array.isArray(docWorkingDayData) &&
       docWorkingDayData.includes(item) &&
       TODAY_DATE.isBefore(`${year}-${month}-${item}`);
@@ -182,7 +191,7 @@ const AppointmentCalendar = ({
       <Pressable
         onPress={() => showTimeTable()}
         style={[styles.flexBetween]}
-        disabled={disabled && !docWorkingDay ? true : false}>
+        disabled={disabled && !docWorkingDays ? true : false}>
         <Text
           onPress={event => {
             showTimeTable();
@@ -192,7 +201,7 @@ const AppointmentCalendar = ({
           style={
             disabled
               ? [styles.dateItem, styles.opacity]
-              : !docWorkingDay
+              : !docWorkingDays
               ? [styles.dateItem, styles.calendarDisabledDate]
               : selectedDay
               ? [styles.dateItem, styles.selectDayColor]
@@ -201,13 +210,19 @@ const AppointmentCalendar = ({
           {item}
         </Text>
         <View style={isToday && styles.today}></View>
-        <View style={selectedDay && docWorkingDay && styles.selectDay}></View>
+        <View style={selectedDay && docWorkingDays && styles.selectDay}></View>
       </Pressable>
     );
   };
 
   const goAppointmentSubmit = (time: any) => {
-    setSelectDate(`${year}-${month}-${selectedDayNumber}(${day}) ${time}`);
+    setSelectDate({
+      ...selectDate,
+      year,
+      month,
+      selectedDay: selectedDayNumber,
+      selectTime: time,
+    });
     navigation.navigate('AppointmentSubmit');
   };
 
@@ -238,7 +253,7 @@ const AppointmentCalendar = ({
                   styles.profileDocColor,
                   styles.marginRightSmall,
                 ]}>
-                피부과 전문의
+                {doctorInfo.doctor_department} 전문의
               </Text>
               <Text
                 style={[
