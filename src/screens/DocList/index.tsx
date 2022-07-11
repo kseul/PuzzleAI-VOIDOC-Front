@@ -51,7 +51,7 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
 
   const goCalendar = (doctorInfo: DocListProp) => {
     setDoctorInfo(doctorInfo);
-    navigation.navigate('AppointmentCalendar');
+    navigation.navigate('AppointmentCalendar', doctorInfo);
   };
 
   return (

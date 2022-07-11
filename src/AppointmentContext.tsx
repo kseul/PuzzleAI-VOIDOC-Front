@@ -19,7 +19,7 @@ export const doctorInfoContext = createContext<doctorInfoProp>({
 
 type SelectProps = {
   selectDate: any | null;
-  setSelectDate: React.Dispatch<React.SetStateAction<string | null>>;
+  setSelectDate: React.Dispatch<React.SetStateAction<null>>;
 };
 
 export const SelectContext = createContext<SelectProps>({

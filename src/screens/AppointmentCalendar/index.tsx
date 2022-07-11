@@ -14,18 +14,27 @@ import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
 import API from 'config';
 import useFetch from 'components/useFetch';
+import {AppointmentCalendarScreenProps} from 'types/type';
+import {SelectContext, doctorInfoContext} from 'AppointmentContext';
 import nextBtnM from 'assets/images/cal_next_m.png';
 import nextBtnY from 'assets/images/cal_next_y.png';
 import prevBtnM from 'assets/images/cal_prev_m.png';
 import prevBtnY from 'assets/images/cal_prev_y.png';
 import TimeTable from './TimeTable';
-import {AppointmentCalendarScreenProps} from 'types/type';
-import {SelectContext} from 'AppointmentContext';
 
 const WEEK: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 const TODAY_DATE = dayjs();
 
-const AppointmentCalendar = ({navigation}: AppointmentCalendarScreenProps) => {
+const AppointmentCalendar = ({
+  route,
+  navigation,
+}: AppointmentCalendarScreenProps) => {
+  const {id, doctor_name} = route.params;
+
+  useEffect(() => {
+    navigation.setOptions({title: `${doctor_name} 선생님`});
+  }, []);
+
   const [getDate, setGetDate] = useState({
     year: TODAY_DATE.get('y'),
     month: TODAY_DATE.get('M') + 1,
@@ -45,10 +54,13 @@ const AppointmentCalendar = ({navigation}: AppointmentCalendarScreenProps) => {
     docAlreadyReservedTime: [],
   });
   const [userSelectedDate, setUserSelectedDate] = useState(0);
+
   const {docWorkingDay, docWorkingTime} = docWorkingDatas;
   const {year, month, date, day} = getDate;
   const {thisMonthFirstDateIndex, thisMonthlastDateIndex} = thisMonthDateIndex;
+
   const {selectDate, setSelectDate} = useContext(SelectContext);
+  const {doctorInfo} = useContext(doctorInfoContext);
 
   const prevMonth = () => {
     if (month === 1) {
@@ -121,9 +133,9 @@ const AppointmentCalendar = ({navigation}: AppointmentCalendarScreenProps) => {
     setCalendarDate(dates);
   }, [month]);
 
-  const docWorkingDayUrl = `${API.WorkingDayView}/1/workingday?year=${year}&month=${month}`;
+  const docWorkingDayUrl = `${API.WorkingDayView}/${id}/workingday?year=${year}&month=${month}`;
   const docWorkingDayData = useFetch(docWorkingDayUrl).result;
-  const docWorkingTimeUrl = `${API.WorkingTimeView}/1/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`;
+  const docWorkingTimeUrl = `${API.WorkingTimeView}/${id}/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`;
   const docWorkingTimeData = useFetch(docWorkingTimeUrl);
 
   const showTimeTable = () => {
@@ -206,9 +218,10 @@ const AppointmentCalendar = ({navigation}: AppointmentCalendarScreenProps) => {
         style={[commonStyle.fullscreen]}>
         <View
           style={[styles.flexDirectionRow, styles.border, styles.marginTop]}>
-          {/* TODO : 데이터 통신 후 <Image> 로 바꿀 예정 */}
-          {/* <Image source={} /> */}
-          <Text style={[styles.image, styles.marginRight]}>테스트 이미지</Text>
+          <Image
+            style={[styles.image, styles.marginRight]}
+            source={{url: `${doctorInfo.doctor_profile_img}`}}
+          />
           <View>
             <Text
               style={[
@@ -216,7 +229,7 @@ const AppointmentCalendar = ({navigation}: AppointmentCalendarScreenProps) => {
                 styles.profileDocColor,
                 styles.marginBottomSamll,
               ]}>
-              테스트 선생님
+              {doctorInfo.doctor_name} 선생님
             </Text>
             <View style={styles.flexDirectionRow}>
               <Text
@@ -232,7 +245,7 @@ const AppointmentCalendar = ({navigation}: AppointmentCalendarScreenProps) => {
                   styles.profileDescFontSize,
                   styles.profileHospGrayColor,
                 ]}>
-                퍼즐AI병원
+                {doctorInfo.doctor_hospital}
               </Text>
             </View>
           </View>
@@ -362,7 +375,6 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    backgroundColor: 'gold',
     marginBottom: 26,
   },
 

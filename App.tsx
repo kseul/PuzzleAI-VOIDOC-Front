@@ -20,6 +20,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function App() {
   const {userState} = useContext(AuthContext);
+
   const [doctorInfo, setDoctorInfo] = useState<DocListProp>({
     id: 0,
     doctor_department: '',
@@ -27,12 +28,11 @@ function App() {
     doctor_name: '',
     doctor_profile_img: '',
   });
+  const [selectDate, setSelectDate] = useState(null);
 
   function BackBtn() {
     return <Image source={arrowLeft} style={{marginLeft: 21}} />;
   }
-
-  const [selectDate, setSelectDate] = useState(null);
 
   return (
     <doctorInfoContext.Provider value={{doctorInfo, setDoctorInfo}}>
@@ -40,7 +40,7 @@ function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Entry">
-              {userState.loggedIn ? (
+              {!userState.loggedIn ? (
                 <>
                   <Stack.Screen
                     name="Main"
@@ -60,7 +60,6 @@ function App() {
                     name="AppointmentCalendar"
                     component={AppointmentCalendar}
                     options={{
-                      title: '테스트 선생님',
                       headerBackTitleVisible: false,
                       headerTitleAlign: 'center',
                       headerStyle: {shadowColor: 'white'},
