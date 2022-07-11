@@ -21,6 +21,7 @@ import nextBtnY from 'assets/images/cal_next_y.png';
 import prevBtnM from 'assets/images/cal_prev_m.png';
 import prevBtnY from 'assets/images/cal_prev_y.png';
 import TimeTable from './TimeTable';
+import CalendarDoctorData from './CalendarDoctorData';
 
 const WEEK: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 const TODAY_DATE = dayjs();
@@ -50,7 +51,6 @@ const AppointmentCalendar = ({
   });
 
   const {selectDate, setSelectDate} = useContext(SelectContext);
-  const {doctorInfo} = useContext(doctorInfoContext);
 
   const {year, month, date, day} = getDate;
   const {thisMonthFirstDateIndex, thisMonthlastDateIndex} = thisMonthDateIndex;
@@ -231,41 +231,7 @@ const AppointmentCalendar = ({
       <SafeAreaView
         edges={['bottom', 'left', 'right']}
         style={[commonStyle.fullscreen]}>
-        <View
-          style={[styles.flexDirectionRow, styles.border, styles.marginTop]}>
-          <Image
-            style={[styles.image, styles.marginRight]}
-            source={{url: `${doctorInfo.doctor_profile_img}`}}
-          />
-          <View>
-            <Text
-              style={[
-                styles.profileTitleFontSize,
-                styles.profileDocColor,
-                styles.marginBottomSamll,
-              ]}>
-              {doctorInfo.doctor_name} 선생님
-            </Text>
-            <View style={styles.flexDirectionRow}>
-              <Text
-                style={[
-                  styles.profileDescFontSize,
-                  styles.profileDocColor,
-                  styles.marginRightSmall,
-                ]}>
-                {doctorInfo.doctor_department} 전문의
-              </Text>
-              <Text
-                style={[
-                  styles.profileDescFontSize,
-                  styles.profileHospGrayColor,
-                ]}>
-                {doctorInfo.doctor_hospital}
-              </Text>
-            </View>
-          </View>
-        </View>
-
+        <CalendarDoctorData />
         <View style={[styles.flexWarp, styles.flexCenter, styles.marginTop]}>
           <Pressable style={styles.marginTopSmall}>
             <Image source={prevBtnY} />
@@ -381,18 +347,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  border: {
-    width: '100%',
-    borderBottomWidth: 1,
-    borderColor: '#EEEEEE',
-  },
-
-  image: {
-    width: 50,
-    height: 50,
-    marginBottom: 26,
-  },
-
   marginTopLarge: {
     marginTop: 38,
   },
@@ -423,22 +377,6 @@ const styles = StyleSheet.create({
 
   marginBottomSamll: {
     marginBottom: 5,
-  },
-
-  profileTitleFontSize: {
-    fontSize: theme.fontSizes.fontRegular,
-  },
-
-  profileDescFontSize: {
-    fontSize: 13,
-  },
-
-  profileDocColor: {
-    color: theme.colors.docGray,
-  },
-
-  profileHospGrayColor: {
-    color: theme.colors.docHospGray,
   },
 
   calendarFontSize: {
