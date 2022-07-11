@@ -67,6 +67,13 @@ function App() {
                 <Stack.Screen
                   name="AppointmentSubmit"
                   component={AppointmentSubmit}
+                  options={{
+                    title: '진료예약',
+                    headerTitleAlign: 'center',
+                    headerBackTitleVisible: false,
+                    headerStyle: {shadowColor: 'white'},
+                    headerBackImage: () => <BackBtn />,
+                  }}
                 />
                 <Stack.Screen
                   name="AppointmentDetail"
