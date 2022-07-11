@@ -6,5 +6,6 @@ const API = {
   departmentList: `${BASE_URL}/appointments/departments`,
   WorkingDayView: `${BASE_URL}/appointments/doctor`,
   WorkingTimeView: `${BASE_URL}/appointments/doctor`,
+  appointments: `${BASE_URL}/appointments/list`,
 };
 export default API;
