@@ -15,7 +15,7 @@ import {theme} from 'styles/theme';
 import API from 'config';
 import useFetch from 'components/useFetch';
 import {AppointmentCalendarScreenProps} from 'types/type';
-import {SelectContext, doctorInfoContext} from 'AppointmentContext';
+import {SelectContext} from 'AppointmentContext';
 import nextBtnM from 'assets/images/cal_next_m.png';
 import nextBtnY from 'assets/images/cal_next_y.png';
 import prevBtnM from 'assets/images/cal_prev_m.png';
@@ -217,6 +217,11 @@ const AppointmentCalendar = ({
   };
 
   const goAppointmentSubmit = (time: any) => {
+    const dayIndexDeduplication = Math.ceil(
+      (calendarDate.indexOf(selectedDayNumber) + 30) % 7,
+    );
+    const dayIndex = Math.ceil(calendarDate.indexOf(selectedDayNumber) % 7);
+
     const amPmDivision = Number(time.substr(0, 2));
     const pmTime = `오후 ${Math.abs(12 - amPmDivision)}:00`;
     const amTime = `오전 ${time}`;
@@ -225,7 +230,9 @@ const AppointmentCalendar = ({
       ...selectDate,
       year,
       month,
-      selectedDay: selectedDayNumber,
+      selectedDate: selectedDayNumber,
+      selectedDay:
+        selectedDayNumber > 25 ? WEEK[dayIndexDeduplication] : WEEK[dayIndex],
       selectTime: amPmDivision > 12 ? pmTime : amTime,
     });
     navigation.navigate('AppointmentSubmit');

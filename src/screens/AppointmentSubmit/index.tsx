@@ -1,15 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Text, View} from 'react-native';
-import {SelectContext} from 'AppointmentContext';
-const AppointmentSubmit = () => {
-  const {selectDate} = useContext(SelectContext);
 
+const AppointmentSubmit = () => {
   return (
     <View>
-      <Text>{selectDate.year}</Text>
-      <Text>{selectDate.month}</Text>
-      <Text>{selectDate.selectedDay}</Text>
-      <Text>{selectDate.selectTime}</Text>
+      <Text>AppointmentSubmit</Text>
     </View>
   );
 };
