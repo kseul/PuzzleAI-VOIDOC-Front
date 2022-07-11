@@ -61,6 +61,7 @@ const AppointmentCalendar = ({
   useEffect(() => {
     navigation.setOptions({title: `${doctor_name} 선생님`});
   }, []);
+
   const prevMonth = () => {
     if (month === 1) {
       setGetDate({
@@ -216,12 +217,16 @@ const AppointmentCalendar = ({
   };
 
   const goAppointmentSubmit = (time: any) => {
+    const amPmDivision = Number(time.substr(0, 2));
+    const pmTime = `오후 ${Math.abs(12 - amPmDivision)}:00`;
+    const amTime = `오전 ${time}`;
+
     setSelectDate({
       ...selectDate,
       year,
       month,
       selectedDay: selectedDayNumber,
-      selectTime: time,
+      selectTime: amPmDivision > 12 ? pmTime : amTime,
     });
     navigation.navigate('AppointmentSubmit');
   };
