@@ -4,5 +4,6 @@ const API = {
   signIn: `${BASE_URL}/users/login`,
   emailCheck: `${BASE_URL}/users/check_duplicate`,
   departmentList: `${BASE_URL}/appointments/departments`,
+  appointments: `${BASE_URL}/appointments/list`,
 };
 export default API;
