@@ -40,7 +40,7 @@ function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Entry">
-              {!userState.loggedIn ? (
+              {userState.loggedIn ? (
                 <>
                   <Stack.Screen
                     name="Main"
