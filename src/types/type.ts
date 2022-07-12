@@ -40,6 +40,7 @@ export type AppointmentListProp = {
 };
 
 export type TimeTableProp = {
+  docAlreadyReservedTime: any;
   docWorkingTime: number[];
   goAppointmentSubmit: (time: any) => void;
 };

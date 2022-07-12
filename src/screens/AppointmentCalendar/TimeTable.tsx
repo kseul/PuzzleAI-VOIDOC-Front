@@ -1,13 +1,15 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {theme} from 'styles/theme';
 import {TimeTableProp} from 'types/type';
 
-const TimeTable = ({docWorkingTime, goAppointmentSubmit}: TimeTableProp) => {
+const TimeTable = ({
+  docWorkingTime,
+  docAlreadyReservedTime,
+  goAppointmentSubmit,
+}: TimeTableProp) => {
   const renderItem = ({item}: any) => {
-    const alreadyReservedTime = '15:00';
-
     return (
       <View style={[styles.timeTableflexCenter]}>
         <Text
@@ -17,7 +19,7 @@ const TimeTable = ({docWorkingTime, goAppointmentSubmit}: TimeTableProp) => {
             );
           }}
           style={
-            alreadyReservedTime === item
+            `${docAlreadyReservedTime}` === item
               ? [styles.timeTableBtn, styles.textCenter, styles.disabledBtn]
               : [styles.timeTableBtn, styles.textCenter]
           }>

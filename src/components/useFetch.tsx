@@ -5,7 +5,7 @@ const useFetch = (url: string) => {
   const [fetchData, setFetchData] = useState({});
 
   const 임시토큰 =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjoxNjU3NTk0MTc2fQ.ClkhsMyWmudeD9NRHWMBlfUhCoVxDhASfjiI-RsvPb4';
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo4MCwiZXhwIjoxNjU3NjQxNTU5fQ.SQpU9W5MTSrzfXv_Q7_qm3pXm8jN0m_ZBFSarAIa4_4';
 
   useEffect(() => {
     if (!url) {

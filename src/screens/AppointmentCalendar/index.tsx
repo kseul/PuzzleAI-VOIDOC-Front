@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  ReactElement,
-  useMemo,
-  useContext,
-} from 'react';
+import React, {useState, useEffect, ReactElement, useContext} from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
@@ -13,9 +7,9 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
 import API from 'config';
-import useFetch from 'components/useFetch';
 import {AppointmentCalendarScreenProps} from 'types/type';
 import {SelectContext} from 'AppointmentContext';
+import {getToken} from 'AuthContext';
 import nextBtnM from 'assets/images/cal_next_m.png';
 import nextBtnY from 'assets/images/cal_next_y.png';
 import prevBtnM from 'assets/images/cal_prev_m.png';
@@ -49,18 +43,86 @@ const AppointmentCalendar = ({
     docWorkingTime: [],
     docAlreadyReservedTime: [],
   });
+  const [loaded, setLoaded] = useState(true);
 
   const {selectDate, setSelectDate} = useContext(SelectContext);
 
-  const {year, month, date, day} = getDate;
+  const {year, month} = getDate;
   const {thisMonthFirstDateIndex, thisMonthlastDateIndex} = thisMonthDateIndex;
-  const {docWorkingDay, docWorkingTime} = docWorkingDatas;
+  const {docWorkingDay, docWorkingTime, docAlreadyReservedTime} =
+    docWorkingDatas;
 
   const {id, doctor_name} = route.params;
 
   useEffect(() => {
+    console.log('1 effect');
     navigation.setOptions({title: `${doctor_name} 선생님`});
   }, []);
+
+  // TODO : 작업 완료 후 getToken 으로 변경 예정
+  const 임시토큰 =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo4MCwiZXhwIjoxNjU3NjQxNTU5fQ.SQpU9W5MTSrzfXv_Q7_qm3pXm8jN0m_ZBFSarAIa4_4';
+  const doctorWorkingDayFatchData = async () => {
+    // const token = await getToken();
+    const getData = await fetch(
+      `${API.WorkingDayView}/${id}/workingday?year=${year}&month=${month}`,
+      {
+        method: 'GET',
+        headers: {
+          // Authorization: token,
+          Authorization: 임시토큰,
+        },
+      },
+    );
+    const res = await getData.json();
+    const data = res.result;
+    if (!data) {
+      setLoaded(false);
+      return;
+    }
+    setDocWorkingDatas({
+      ...docWorkingDatas,
+      docWorkingDay: data,
+    });
+  };
+
+  const doctorWorkingTimeFatchData = async () => {
+    // const token = await getToken();
+    const getData = await fetch(
+      `${API.WorkingTimeView}/${id}/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`,
+      {
+        method: 'GET',
+        headers: {
+          // Authorization: token,
+          Authorization: 임시토큰,
+        },
+      },
+    );
+    if (getData.status === 200) {
+      const res = await getData.json();
+      const data = res.working_time;
+      const alreadyData = res.appointmented_time;
+      if (!data) {
+        setLoaded(false);
+        return;
+      }
+      setDocWorkingDatas({
+        ...docWorkingDatas,
+        docWorkingTime: data,
+        docAlreadyReservedTime: alreadyData,
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log('2 effect');
+
+    setDocWorkingDatas({
+      ...docWorkingDatas,
+      docWorkingTime: [],
+    });
+    doctorWorkingDayFatchData();
+  }, [month]);
 
   const prevMonth = () => {
     if (month === 1) {
@@ -93,6 +155,8 @@ const AppointmentCalendar = ({
   };
 
   useEffect(() => {
+    console.log('3 effect');
+
     const prevMonthLast = dayjs(`${year}-${month}`);
 
     const prevMonthLastDay = prevMonthLast
@@ -133,36 +197,18 @@ const AppointmentCalendar = ({
       thisMonthFirstDateIndex,
       thisMonthlastDateIndex,
     });
-
-    setDocWorkingDatas({
-      ...docWorkingDatas,
-      docWorkingDay: [],
-      docWorkingTime: docWorkingTimeData.working_time,
-      docAlreadyReservedTime: docWorkingTimeData.docWorkingTime,
-    });
   }, [month]);
-
-  const docWorkingDayUrl = useMemo(() => {
-    return `${API.WorkingDayView}/${id}/workingday?year=${year}&month=${month}`;
-  }, [month]);
-  const docWorkingDayData = useFetch(docWorkingDayUrl).result;
-  const docWorkingTimeUrl = `${API.WorkingTimeView}/${id}/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`;
-  const docWorkingTimeData = useFetch(docWorkingTimeUrl);
 
   const showTimeTable = () => {
-    setDocWorkingDatas({
-      ...docWorkingDatas,
-      docWorkingTime: docWorkingTimeData.working_time,
-      docAlreadyReservedTime: docWorkingTimeData.docWorkingTime,
-    });
+    console.log('showTime');
+    doctorWorkingTimeFatchData();
   };
 
   useEffect(() => {
-    setDocWorkingDatas({
-      ...docWorkingDatas,
-      docWorkingTime: [],
-    });
-  }, [month]);
+    console.log('4 effect');
+
+    showTimeTable();
+  }, [selectedDayNumber]);
 
   const renderDate = ({item, index}: any): ReactElement => {
     const disabled =
@@ -175,22 +221,21 @@ const AppointmentCalendar = ({
       selectedDayActive && selectedDayNumber === item && !disabled;
 
     const docWorkingDays =
-      Array.isArray(docWorkingDayData) &&
-      docWorkingDayData.includes(item) &&
-      TODAY_DATE.isBefore(`${year}-${month}-${item}`);
+      Array.isArray(docWorkingDay) &&
+      docWorkingDay.includes(item) &&
+      TODAY_DATE.isBefore(`${year}-${month}-${item + 1}`);
 
     const buttonActive = () => {
       setSelectedDayNumber(item);
       setSelectedDayActive(true);
     };
-
     const onClickDateValue = (e: number) => {
       setUserSelectedDate(e);
     };
 
     return (
       <Pressable
-        onPress={() => showTimeTable()}
+        // onPress={() => showTimeTable()}
         style={[styles.flexBetween]}
         disabled={disabled && !docWorkingDays ? true : false}>
         <Text
@@ -210,8 +255,8 @@ const AppointmentCalendar = ({
           }>
           {item}
         </Text>
-        <View style={isToday && styles.today}></View>
         <View style={selectedDay && docWorkingDays && styles.selectDay}></View>
+        <View style={isToday && styles.today}></View>
       </Pressable>
     );
   };
@@ -235,6 +280,10 @@ const AppointmentCalendar = ({
         selectedDayNumber > 25 ? WEEK[dayIndexDeduplication] : WEEK[dayIndex],
       selectTime: amPmDivision > 12 ? pmTime : amTime,
     });
+
+    if (time === `${docAlreadyReservedTime}`) {
+      return;
+    }
     navigation.navigate('AppointmentSubmit');
   };
 
@@ -289,8 +338,9 @@ const AppointmentCalendar = ({
       </SafeAreaView>
       {Array.isArray(docWorkingTime) && docWorkingTime.length > 0 && (
         <TimeTable
-          goAppointmentSubmit={goAppointmentSubmit}
           docWorkingTime={docWorkingTime}
+          docAlreadyReservedTime={docAlreadyReservedTime}
+          goAppointmentSubmit={goAppointmentSubmit}
         />
       )}
     </>
@@ -303,6 +353,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  selectDay: {
+    position: 'absolute',
+    top: -1,
+    left: 6,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#D4F3F7',
+    zIndex: -1,
+  },
+
   today: {
     position: 'absolute',
     top: -1,
@@ -313,17 +374,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderRadius: 18,
     borderWidth: 1,
-  },
-
-  selectDay: {
-    position: 'absolute',
-    top: -1,
-    left: 6,
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#D4F3F7',
-    zIndex: -1,
+    zIndex: -10,
   },
 
   selectDayColor: {
