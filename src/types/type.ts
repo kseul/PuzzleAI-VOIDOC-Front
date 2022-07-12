@@ -24,8 +24,8 @@ export interface DocListProp {
   doctor_department: string;
   doctor_hospital: string;
   doctor_profile_img: string;
-  appointment_date: string;
-  appointment_id: number;
+  appointment_date?: string;
+  appointment_id?: number;
 }
 
 export interface appointmentsDataProp {
