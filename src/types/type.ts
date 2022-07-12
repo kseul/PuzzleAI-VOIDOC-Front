@@ -6,6 +6,7 @@ export type RootStackParamList = {
   AppointmentCalendar: undefined;
   AppointmentDetail: undefined;
   AppointmentSubmit: undefined;
+  AppointmentPost: undefined;
   DocList: {
     id: number;
     name: string;
@@ -53,6 +54,10 @@ export type AppointmentDetailScreenProps = StackScreenProps<
 export type AppointmentSubmitScreenProps = StackScreenProps<
   RootStackParamList,
   'AppointmentSubmit'
+>;
+export type AppointmentPostScreenProps = StackScreenProps<
+  RootStackParamList,
+  'AppointmentPost'
 >;
 export type DocListScreenProps = StackScreenProps<
   RootStackParamList,
