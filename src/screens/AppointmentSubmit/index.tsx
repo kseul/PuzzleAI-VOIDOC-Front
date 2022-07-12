@@ -8,19 +8,24 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Image,
+  Platform,
 } from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
 import DoctorDataCard from 'components/DoctorDataCard';
-import {AppointmentSubmitScreenProps} from 'types/type';
-import {FlatList, TextInput} from 'react-native-gesture-handler';
+import {
+  AppointmentSubmitScreenProps,
+  ImageLibraryOptions,
+  AssetObj,
+} from 'types/type';
+import {TextInput} from 'react-native-gesture-handler';
 import cameraLogo from 'assets/images/reservation-photo-icon.png';
+import deleteBtn from 'assets/images/delet-btn.png';
 
-const AppointmentSubmit = ({
-  route,
-  navigation,
-}: AppointmentSubmitScreenProps) => {
+const AppointmentSubmit = ({}: AppointmentSubmitScreenProps) => {
   const [inputValue, setInputValue] = useState('');
+  const [selectImage, setSelectImage] = useState([]);
 
   const onSubmit = () => {};
 
@@ -28,7 +33,31 @@ const AppointmentSubmit = ({
     setInputValue(input);
   };
 
+  const option: ImageLibraryOptions = {
+    mediaType: 'photo',
+    maxWidth: 300,
+    maxHeight: 300,
+    includeBase64: Platform.OS === 'android',
+  };
+
+  const onSelectImage = (): void => {
+    launchImageLibrary(option, res => {
+      if (res.didCancel) {
+        console.log('User cancelled image picker');
+      } else {
+        const selectedImgData = res.assets;
+        setSelectImage([...selectImage, ...selectedImgData]);
+      }
+    });
+  };
+  const deleteImg = (img: string): void => {
+    setSelectImage(
+      selectImage.filter((imgs: AssetObj) => imgs.fileName !== img),
+    );
+  };
+
   return (
+    // TODO : 캘린더 구현 후 doctorInfo, date를 useContext로 받아와서 렌더링 & 컴포넌트 분리
     <KeyboardAvoidingView style={commonStyle.fullscreen}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
@@ -58,18 +87,27 @@ const AppointmentSubmit = ({
 
           <View style={styles.submitContainer}>
             <Text style={styles.title}>환부 사진 업로드 (선택)</Text>
-            <ScrollView>
-              <FlatList
-                data={photoTest}
-                horizontal
-                renderItem={() => (
-                  <Pressable
-                    style={[styles.imageWrapper, styles.inputBackground]}>
-                    <Image style={styles.cameraImage} source={cameraLogo} />
-                  </Pressable>
-                )}
-              />
-            </ScrollView>
+            <View style={styles.imageContainer}>
+              <ScrollView horizontal>
+                {selectImage.map((item: AssetObj) => (
+                  <View key={item.fileName}>
+                    <Pressable
+                      style={styles.deleteBtnWrapper}
+                      onPress={() => deleteImg(item.fileName)}>
+                      <Image source={deleteBtn} style={styles.deleteBtn} />
+                    </Pressable>
+                    <Pressable>
+                      <Image source={item} style={styles.imageWrapper} />
+                    </Pressable>
+                  </View>
+                ))}
+                <Pressable
+                  onPress={onSelectImage}
+                  style={[styles.imageWrapper, styles.inputBackground]}>
+                  <Image style={styles.cameraImage} source={cameraLogo} />
+                </Pressable>
+              </ScrollView>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -87,6 +125,9 @@ const AppointmentSubmit = ({
 };
 
 const styles = StyleSheet.create({
+  imageContainer: {
+    flexDirection: 'row',
+  },
   safeArea: {flex: 1},
 
   submitContainer: {
@@ -140,11 +181,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: theme.colors.RstvtInnerLightGray,
   },
+
+  deleteBtnWrapper: {
+    zIndex: 1,
+  },
+
+  deleteBtn: {
+    position: 'absolute',
+    right: 8,
+    top: 2,
+  },
 });
 
 export default AppointmentSubmit;
 
-const dateData = `2020-07-24(금) 오후 3:00`;
+const dateData = '2020-07-24(금) 오후 3:00';
 const dataTest = {
   appointment_id: 1,
   doctor_name: '홍정의',
@@ -152,5 +203,3 @@ const dataTest = {
   doctor_department: 'COVID-19',
   doctor_profile_img: 'https://reactjs.org/logo-og.png',
 };
-
-const photoTest = [{photo_id: 1, photo_name: 'test1'}];

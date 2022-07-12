@@ -1,4 +1,5 @@
 import {StackScreenProps} from '@react-navigation/stack';
+import {MediaType} from 'react-native-image-picker';
 
 export type RootStackParamList = {
   SignUp: undefined;
@@ -37,6 +38,23 @@ export interface appointmentsDataProp {
   doctor_name: string;
   doctor_profile_img: string;
   state_name: string;
+}
+
+export interface AssetObj {
+  base64?: string;
+  fileName: string;
+  fileSize: number;
+  height: number;
+  width: number;
+  type: string;
+  uri: string;
+}
+
+export interface ImageLibraryOptions {
+  mediaType: MediaType;
+  maxWidth: number;
+  maxHeight: number;
+  includeBase64: boolean;
 }
 
 export type SignUpScreenProps = StackScreenProps<RootStackParamList, 'SignUp'>;

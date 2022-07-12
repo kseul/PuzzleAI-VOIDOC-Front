@@ -34,6 +34,7 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
 
     if (!data) {
       setNextData(false);
+      return;
     }
     setDoctorListData([...doctorListData, ...data]);
   };
