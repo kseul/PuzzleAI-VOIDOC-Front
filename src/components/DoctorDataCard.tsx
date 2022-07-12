@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     color: theme.colors.docGray,
     marginBottom: 8,
     fontSize: theme.fontSizes.fontRegular,
-    fontWeight: '500',
+    fontWeight: '600',
   },
 
   departments: {
