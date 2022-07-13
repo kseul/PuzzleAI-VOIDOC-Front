@@ -14,12 +14,13 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
 import DoctorDataCard from 'components/DoctorDataCard';
+import DateView from './DateView';
+import SymtomView from './SymtomView';
 import {
   AppointmentSubmitScreenProps,
   ImageLibraryOptions,
   AssetObj,
 } from 'types/type';
-import {TextInput} from 'react-native-gesture-handler';
 import cameraLogo from 'assets/images/reservation-photo-icon.png';
 import deleteBtn from 'assets/images/delet-btn.png';
 
@@ -62,28 +63,9 @@ const AppointmentSubmit = ({}: AppointmentSubmitScreenProps) => {
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
           <DoctorDataCard item={dataTest} />
-          <View style={styles.submitContainer}>
-            <Text style={[styles.title, styles.inputText]}>예약시간</Text>
-            <TextInput
-              style={[styles.input, styles.inputText]}
-              value={dateData}
-            />
-          </View>
 
-          <View style={styles.submitContainer}>
-            <Text style={styles.title}>증상입력</Text>
-            <TextInput
-              style={[
-                styles.inputText,
-                styles.textInputArea,
-                styles.inputBackground,
-              ]}
-              placeholder="증상을 입력해주세요"
-              placeholderTextColor={theme.colors.AppointmentInputTextGray}
-              multiline
-              onChangeText={text => handleInputValue(text)}
-            />
-          </View>
+          <DateView />
+          <SymtomView />
 
           <View style={styles.submitContainer}>
             <Text style={styles.title}>환부 사진 업로드 (선택)</Text>
@@ -195,7 +177,6 @@ const styles = StyleSheet.create({
 
 export default AppointmentSubmit;
 
-const dateData = '2020-07-24(금) 오후 3:00';
 const dataTest = {
   appointment_id: 1,
   doctor_name: '홍정의',

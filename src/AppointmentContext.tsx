@@ -6,7 +6,7 @@ type doctorInfoProp = {
   setDoctorInfo: React.Dispatch<DocListProp>;
 };
 
-export const doctorInfoContext = createContext<doctorInfoProp>({
+export const DoctorInfoContext = createContext<doctorInfoProp>({
   doctorInfo: {
     id: 0,
     doctor_department: '',
@@ -15,4 +15,9 @@ export const doctorInfoContext = createContext<doctorInfoProp>({
     doctor_profile_img: '',
   },
   setDoctorInfo: () => {},
+});
+
+export const SymtomInputValueContext = createContext({
+  symtomInputValue: '',
+  setSymtomInputValue: () => {},
 });
