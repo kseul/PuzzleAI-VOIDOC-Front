@@ -15,12 +15,13 @@ import AppointmentPost from 'screens/AppointmentSubmit/AppointmentPost';
 import {DocListProp, RootStackParamList} from 'types/type';
 import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
 import {AuthContext} from 'AuthContext';
-import {doctorInfoContext} from 'AppointmentContext';
+import {doctorInfoContext, SelectContext} from 'AppointmentContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function App() {
   const {userState} = useContext(AuthContext);
+
   const [doctorInfo, setDoctorInfo] = useState<DocListProp>({
     id: 0,
     doctor_department: '',
@@ -28,6 +29,7 @@ function App() {
     doctor_name: '',
     doctor_profile_img: '',
   });
+  const [selectDate, setSelectDate] = useState(null);
 
   function BackBtn() {
     return <Image source={arrowLeft} style={{marginLeft: 21}} />;
@@ -35,6 +37,7 @@ function App() {
 
   return (
     <doctorInfoContext.Provider value={{doctorInfo, setDoctorInfo}}>
+<<<<<<< HEAD
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Entry">
@@ -119,6 +122,81 @@ function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
+=======
+      <SelectContext.Provider value={{selectDate, setSelectDate}}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Entry">
+              {userState.loggedIn ? (
+                <>
+                  <Stack.Screen
+                    name="Main"
+                    component={Main}
+                    options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                    name="DocList"
+                    component={DocList}
+                    options={{
+                      headerBackTitleVisible: false,
+                      headerStyle: {shadowColor: 'white'},
+                      headerBackImage: () => <BackBtn />,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AppointmentCalendar"
+                    component={AppointmentCalendar}
+                    options={{
+                      headerBackTitleVisible: false,
+                      headerTitleAlign: 'center',
+                      headerStyle: {shadowColor: 'white'},
+                      headerBackImage: () => <BackBtn />,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AppointmentSubmit"
+                    component={AppointmentSubmit}
+                  />
+                  <Stack.Screen
+                    name="AppointmentDetail"
+                    component={AppointmentDetail}
+                  />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen
+                    name="Entry"
+                    component={Entry}
+                    options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                    name="SignIn"
+                    component={SignIn}
+                    options={{
+                      title: '',
+                      headerBackTitleVisible: false,
+                      headerStyle: {shadowColor: 'white'},
+                      headerBackImage: () => <BackBtn />,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SignUp"
+                    component={SignUp}
+                    options={{
+                      title: '회원가입',
+                      headerTitleAlign: 'center',
+                      headerBackTitleVisible: false,
+                      headerStyle: {shadowColor: 'white'},
+                      headerBackImage: () => <BackBtn />,
+                    }}
+                  />
+                </>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </SelectContext.Provider>
+>>>>>>> main
     </doctorInfoContext.Provider>
   );
 }
