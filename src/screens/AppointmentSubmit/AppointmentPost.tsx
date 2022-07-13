@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 
   descriptionStyle: {
     fontSize: theme.fontSizes.fontRegular,
-    lineHeight: 27,
+    lineHeight: 22,
     color: theme.colors.RstvtInnerLightGray,
   },
 
