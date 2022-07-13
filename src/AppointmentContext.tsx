@@ -1,5 +1,6 @@
 import React, {createContext} from 'react';
 import {DocListProp} from 'types/type';
+import {AssetObj} from 'types/type';
 
 type DoctorInfoProp = {
   doctorInfo: DocListProp;
@@ -25,6 +26,16 @@ type SymtomInputValueProp = {
 export const SymtomInputValueContext = createContext<SymtomInputValueProp>({
   symtomInputValue: '',
   setSymtomInputValue: () => {},
+});
+
+type SelectImageProp = {
+  selectImage: AssetObj[];
+  setSelectImage: React.Dispatch<React.SetStateAction<AssetObj[]>>;
+};
+
+export const SelectImageContext = createContext<SelectImageProp>({
+  selectImage: [],
+  setSelectImage: () => {},
 });
 
 type SelectProps = {

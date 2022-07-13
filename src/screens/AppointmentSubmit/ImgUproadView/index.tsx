@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   View,
@@ -13,9 +13,10 @@ import {ImageLibraryOptions, AssetObj} from 'types/type';
 import {theme} from 'styles/theme';
 import cameraLogo from 'assets/images/reservation-photo-icon.png';
 import deleteBtn from 'assets/images/delet-btn.png';
+import {SelectImageContext} from 'AppointmentContext';
 
 const ImgUploadView = () => {
-  const [selectImage, setSelectImage] = useState([]);
+  const {selectImage, setSelectImage} = useContext(SelectImageContext);
 
   const option: ImageLibraryOptions = {
     mediaType: 'photo',
