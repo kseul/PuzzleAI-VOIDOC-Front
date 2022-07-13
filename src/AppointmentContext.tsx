@@ -1,4 +1,4 @@
-import {createContext} from 'react';
+import React, {createContext} from 'react';
 import {DocListProp} from 'types/type';
 
 type doctorInfoProp = {
@@ -15,4 +15,21 @@ export const doctorInfoContext = createContext<doctorInfoProp>({
     doctor_profile_img: '',
   },
   setDoctorInfo: () => {},
+});
+
+type SelectProps = {
+  selectDate: any | null;
+  setSelectDate: React.Dispatch<React.SetStateAction<null>>;
+};
+
+export const SelectContext = createContext<SelectProps>({
+  selectDate: {
+    year: 0,
+    month: 0,
+    selectedDay: 0,
+    selectedDate: '',
+    selectedTime: '',
+  },
+
+  setSelectDate: () => {},
 });
