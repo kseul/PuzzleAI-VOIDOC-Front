@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {getToken} from 'AuthContext';
 
 const useFetch = (url: string) => {
   const [fetchData, setFetchData] = useState({});
 
   useEffect(() => {
+    if (!url) {
+      return;
+    }
     const getFatchData = async (url: string) => {
       const token = await getToken();
       const getData = await fetch(url, {

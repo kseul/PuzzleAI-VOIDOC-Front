@@ -29,6 +29,23 @@ export interface DocListProp {
   appointment_id?: number;
 }
 
+export type AppointmentListProp = {
+  doctor_image: string;
+  doctor_name: string;
+  hospital_name: string;
+  date: string;
+  reservation_id: number;
+  status_name: string;
+  subject_name: string;
+  time: string;
+};
+
+export type TimeTableProp = {
+  docAlreadyReservedTime: any;
+  docWorkingTime: number[];
+  goAppointmentSubmit: (time: any) => void;
+};
+
 export interface appointmentsDataProp {
   id: number;
   appointment_id: number;
