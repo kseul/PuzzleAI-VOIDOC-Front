@@ -1,60 +1,27 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {
-  Text,
   View,
+  Pressable,
+  Text,
   SafeAreaView,
   StyleSheet,
-  Pressable,
   ScrollView,
   KeyboardAvoidingView,
-  Image,
-  Platform,
 } from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
 import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
 import DoctorDataCard from 'components/DoctorDataCard';
 import DateView from './DateView';
 import SymtomView from './SymtomView';
-import {
-  AppointmentSubmitScreenProps,
-  ImageLibraryOptions,
-  AssetObj,
-} from 'types/type';
-import cameraLogo from 'assets/images/reservation-photo-icon.png';
-import deleteBtn from 'assets/images/delet-btn.png';
+import {AppointmentSubmitScreenProps} from 'types/type';
+import ImgUploadView from './ImgUproadView';
+import {SymtomInputValueContext} from 'AppointmentContext';
 
-const AppointmentSubmit = ({}: AppointmentSubmitScreenProps) => {
-  const [inputValue, setInputValue] = useState('');
-  const [selectImage, setSelectImage] = useState([]);
+const AppointmentSubmit = ({navigation}: AppointmentSubmitScreenProps) => {
+  const {symtomInputValue} = useContext(SymtomInputValueContext);
 
-  const onSubmit = () => {};
-
-  const handleInputValue = (input: string) => {
-    setInputValue(input);
-  };
-
-  const option: ImageLibraryOptions = {
-    mediaType: 'photo',
-    maxWidth: 300,
-    maxHeight: 300,
-    includeBase64: Platform.OS === 'android',
-  };
-
-  const onSelectImage = (): void => {
-    launchImageLibrary(option, res => {
-      if (res.didCancel) {
-        console.log('User cancelled image picker');
-      } else {
-        const selectedImgData = res.assets;
-        setSelectImage([...selectImage, ...selectedImgData]);
-      }
-    });
-  };
-  const deleteImg = (img: string): void => {
-    setSelectImage(
-      selectImage.filter((imgs: AssetObj) => imgs.fileName !== img),
-    );
+  const onSubmit = () => {
+    navigation.navigate('AppointmentDetail'); // 수정
   };
 
   return (
@@ -63,42 +30,17 @@ const AppointmentSubmit = ({}: AppointmentSubmitScreenProps) => {
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
           <DoctorDataCard item={dataTest} />
-
           <DateView />
           <SymtomView />
-
-          <View style={styles.submitContainer}>
-            <Text style={styles.title}>환부 사진 업로드 (선택)</Text>
-            <View style={styles.imageContainer}>
-              <ScrollView horizontal>
-                {selectImage.map((item: AssetObj) => (
-                  <View key={item.fileName}>
-                    <Pressable
-                      style={styles.deleteBtnWrapper}
-                      onPress={() => deleteImg(item.fileName)}>
-                      <Image source={deleteBtn} style={styles.deleteBtn} />
-                    </Pressable>
-                    <Pressable>
-                      <Image source={item} style={styles.imageWrapper} />
-                    </Pressable>
-                  </View>
-                ))}
-                <Pressable
-                  onPress={onSelectImage}
-                  style={[styles.imageWrapper, styles.inputBackground]}>
-                  <Image style={styles.cameraImage} source={cameraLogo} />
-                </Pressable>
-              </ScrollView>
-            </View>
-          </View>
+          <ImgUploadView />
         </ScrollView>
       </SafeAreaView>
 
       <View>
         <Pressable
-          style={!!inputValue ? commonStyle.ativeBtn : styles.submitBtn}
+          style={!!symtomInputValue ? commonStyle.ativeBtn : styles.submitBtn}
           onPress={onSubmit}
-          disabled={!inputValue}>
+          disabled={!symtomInputValue}>
           <Text style={commonStyle.btnText}>진료예약</Text>
         </Pressable>
       </View>

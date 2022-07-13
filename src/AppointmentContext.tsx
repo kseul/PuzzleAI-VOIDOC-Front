@@ -17,6 +17,11 @@ export const DoctorInfoContext = createContext<doctorInfoProp>({
   setDoctorInfo: () => {},
 });
 
+type SymtomInputValueProp = {
+  symtomInputValue: string;
+  setSymtomInputValue: React.Dispatch<React.SetStateAction<string>>;
+};
+
 export const SymtomInputValueContext = createContext({
   symtomInputValue: '',
   setSymtomInputValue: () => {},
