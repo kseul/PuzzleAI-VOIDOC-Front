@@ -15,21 +15,22 @@ import DateView from './DateView';
 import SymtomView from './SymtomView';
 import {AppointmentSubmitScreenProps} from 'types/type';
 import ImgUploadView from './ImgUproadView';
-import {SymtomInputValueContext} from 'AppointmentContext';
+import {SymtomInputValueContext, DoctorInfoContext} from 'AppointmentContext';
 
 const AppointmentSubmit = ({navigation}: AppointmentSubmitScreenProps) => {
   const {symtomInputValue} = useContext(SymtomInputValueContext);
+  const {doctorInfo} = useContext(DoctorInfoContext);
 
   const onSubmit = () => {
-    navigation.navigate('AppointmentDetail'); // 수정
+    // 진료예약 확정 페이지 merge 후 수정
+    // navigation.navigate('진료예약 확정 페이지');
   };
 
   return (
-    // TODO : 캘린더 구현 후 doctorInfo, date를 useContext로 받아와서 렌더링 & 컴포넌트 분리
     <KeyboardAvoidingView style={commonStyle.fullscreen}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
-          <DoctorDataCard item={dataTest} />
+          <DoctorDataCard item={doctorInfo} />
           <DateView />
           <SymtomView />
           <ImgUploadView />
@@ -118,11 +119,3 @@ const styles = StyleSheet.create({
 });
 
 export default AppointmentSubmit;
-
-const dataTest = {
-  appointment_id: 1,
-  doctor_name: '홍정의',
-  doctor_hospital: '퍼즐AI병원',
-  doctor_department: 'COVID-19',
-  doctor_profile_img: 'https://reactjs.org/logo-og.png',
-};

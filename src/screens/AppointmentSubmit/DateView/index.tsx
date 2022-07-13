@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, TextInput} from 'react-native';
 import {theme} from 'styles/theme';
+import {SelectContext} from 'AppointmentContext';
 
 const DateView = () => {
-  // ToDo : useContext 로 데이터 가져오기
-  const dateData = '2020-07-24(금) 오후 3:00';
+  const {selectDate} = useContext(SelectContext);
+  const dateData = `${selectDate.year}-${selectDate.month}-${selectDate.selectedDate}(${selectDate.selectedDay}) ${selectDate.selectTime}`;
 
   return (
     <View style={styles.submitContainer}>

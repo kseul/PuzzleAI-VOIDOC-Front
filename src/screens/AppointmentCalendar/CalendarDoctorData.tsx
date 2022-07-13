@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
-import {doctorInfoContext} from 'AppointmentContext';
+import {DoctorInfoContext} from 'AppointmentContext';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import {theme} from 'styles/theme';
 
 const CalendarDoctorData = () => {
-  const {doctorInfo} = useContext(doctorInfoContext);
+  const {doctorInfo} = useContext(DoctorInfoContext);
 
   return (
     <View style={[styles.flexDirectionRow, styles.border, styles.marginTop]}>

@@ -1,12 +1,12 @@
 import React, {createContext} from 'react';
 import {DocListProp} from 'types/type';
 
-type doctorInfoProp = {
+type DoctorInfoProp = {
   doctorInfo: DocListProp;
   setDoctorInfo: React.Dispatch<DocListProp>;
 };
 
-export const DoctorInfoContext = createContext<doctorInfoProp>({
+export const DoctorInfoContext = createContext<DoctorInfoProp>({
   doctorInfo: {
     id: 0,
     doctor_department: '',
@@ -22,7 +22,7 @@ type SymtomInputValueProp = {
   setSymtomInputValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const SymtomInputValueContext = createContext({
+export const SymtomInputValueContext = createContext<SymtomInputValueProp>({
   symtomInputValue: '',
   setSymtomInputValue: () => {},
 });

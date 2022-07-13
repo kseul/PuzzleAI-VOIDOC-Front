@@ -27,7 +27,7 @@ const ImgUploadView = () => {
   const onSelectImage = (): void => {
     launchImageLibrary(option, res => {
       if (res.didCancel) {
-        console.log('User cancelled image picker');
+        return;
       } else {
         const selectedImgData = res.assets;
         setSelectImage([...selectImage, ...selectedImgData]);
