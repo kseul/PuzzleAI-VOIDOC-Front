@@ -36,94 +36,8 @@ function App() {
   }
 
   return (
-    <doctorInfoContext.Provider value={{doctorInfo, setDoctorInfo}}>
-<<<<<<< HEAD
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Entry">
-            {userState.loggedIn ? (
-              <>
-                <Stack.Screen
-                  name="Main"
-                  component={Main}
-                  options={{headerShown: false}}
-                />
-                <Stack.Screen
-                  name="DocList"
-                  component={DocList}
-                  options={{
-                    headerBackTitleVisible: false,
-                    headerStyle: {shadowColor: 'white'},
-                    headerBackImage: () => <BackBtn />,
-                  }}
-                />
-                <Stack.Screen
-                  name="AppointmentCalendar"
-                  component={AppointmentCalendar}
-                  options={{
-                    title: '테스트 선생님',
-                    headerBackTitleVisible: false,
-                    headerTitleAlign: 'center',
-                    headerStyle: {shadowColor: 'white'},
-                    headerBackImage: () => <BackBtn />,
-                  }}
-                />
-                <Stack.Screen
-                  name="AppointmentSubmit"
-                  component={AppointmentSubmit}
-                  options={{
-                    title: '진료예약',
-                    headerTitleAlign: 'center',
-                    headerBackTitleVisible: false,
-                    headerStyle: {shadowColor: 'white'},
-                    headerBackImage: () => <BackBtn />,
-                  }}
-                />
-                <Stack.Screen
-                  name="AppointmentPost"
-                  component={AppointmentPost}
-                  options={{headerShown: false}}
-                />
-                <Stack.Screen
-                  name="AppointmentDetail"
-                  component={AppointmentDetail}
-                />
-              </>
-            ) : (
-              <>
-                <Stack.Screen
-                  name="Entry"
-                  component={Entry}
-                  options={{headerShown: false}}
-                />
-                <Stack.Screen
-                  name="SignIn"
-                  component={SignIn}
-                  options={{
-                    title: '',
-                    headerBackTitleVisible: false,
-                    headerStyle: {shadowColor: 'white'},
-                    headerBackImage: () => <BackBtn />,
-                  }}
-                />
-                <Stack.Screen
-                  name="SignUp"
-                  component={SignUp}
-                  options={{
-                    title: '회원가입',
-                    headerTitleAlign: 'center',
-                    headerBackTitleVisible: false,
-                    headerStyle: {shadowColor: 'white'},
-                    headerBackImage: () => <BackBtn />,
-                  }}
-                />
-              </>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
-=======
-      <SelectContext.Provider value={{selectDate, setSelectDate}}>
+    <SelectContext.Provider value={{selectDate, setSelectDate}}>
+      <doctorInfoContext.Provider value={{doctorInfo, setDoctorInfo}}>
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Entry">
@@ -147,6 +61,7 @@ function App() {
                     name="AppointmentCalendar"
                     component={AppointmentCalendar}
                     options={{
+                      title: '테스트 선생님',
                       headerBackTitleVisible: false,
                       headerTitleAlign: 'center',
                       headerStyle: {shadowColor: 'white'},
@@ -156,6 +71,18 @@ function App() {
                   <Stack.Screen
                     name="AppointmentSubmit"
                     component={AppointmentSubmit}
+                    options={{
+                      title: '진료예약',
+                      headerTitleAlign: 'center',
+                      headerBackTitleVisible: false,
+                      headerStyle: {shadowColor: 'white'},
+                      headerBackImage: () => <BackBtn />,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AppointmentPost"
+                    component={AppointmentPost}
+                    options={{headerShown: false}}
                   />
                   <Stack.Screen
                     name="AppointmentDetail"
@@ -195,9 +122,8 @@ function App() {
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
-      </SelectContext.Provider>
->>>>>>> main
-    </doctorInfoContext.Provider>
+      </doctorInfoContext.Provider>
+    </SelectContext.Provider>
   );
 }
 
