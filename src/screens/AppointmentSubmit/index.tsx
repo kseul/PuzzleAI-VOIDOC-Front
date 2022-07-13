@@ -14,7 +14,7 @@ import DoctorDataCard from 'components/DoctorDataCard';
 import DateView from './DateView';
 import SymtomView from './SymtomView';
 import {AppointmentSubmitScreenProps} from 'types/type';
-import ImgUploadView from './ImgUproadView';
+import ImgUploadView from './ImgUploadView';
 import {SymtomInputValueContext, DoctorInfoContext} from 'AppointmentContext';
 
 const AppointmentSubmit = ({navigation}: AppointmentSubmitScreenProps) => {
