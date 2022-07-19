@@ -73,6 +73,13 @@ function App() {
                   <Stack.Screen
                     name="AppointmentDetail"
                     component={AppointmentDetail}
+                    options={{
+                      title: '예약 상세보기',
+                      headerTitleAlign: 'center',
+                      headerBackTitleVisible: false,
+                      headerStyle: {shadowColor: 'white'},
+                      headerBackImage: () => <BackBtn />,
+                    }}
                   />
                 </>
               ) : (
