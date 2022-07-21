@@ -22,8 +22,7 @@ const AppointmentSubmit = ({navigation}: AppointmentSubmitScreenProps) => {
   const {doctorInfo} = useContext(DoctorInfoContext);
 
   const onSubmit = () => {
-    // ToDo : 진료예약 확정 페이지 merge 후 수정
-    // navigation.navigate('진료예약 확정 페이지');
+    navigation.navigate('AppointmentPost');
   };
 
   return (
