@@ -5,14 +5,14 @@ import {DocListScreenProps, DocListProp} from 'types/type';
 import DoctorDataCard from 'components/DoctorDataCard';
 import {getToken} from 'AuthContext';
 import API from 'config';
-import {doctorInfoContext} from 'AppointmentContext';
+import {DoctorInfoContext} from 'AppointmentContext';
 
 const DocList = ({route, navigation}: DocListScreenProps) => {
   const {id, name} = route.params;
   const [doctorListData, setDoctorListData] = useState<DocListProp[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [nextData, setNextData] = useState(true);
-  const {setDoctorInfo} = useContext(doctorInfoContext);
+  const {setDoctorInfo} = useContext(DoctorInfoContext);
 
   useEffect(() => {
     navigation.setOptions({title: name});
@@ -34,6 +34,7 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
 
     if (!data) {
       setNextData(false);
+      return;
     }
     setDoctorListData([...doctorListData, ...data]);
   };
