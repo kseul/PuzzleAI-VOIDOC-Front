@@ -50,6 +50,7 @@ export const SelectContext = createContext<SelectProps>({
     selectedDay: 0,
     selectedDate: '',
     selectedTime: '',
+    selectedPostTime: '',
   },
 
   setSelectDate: () => {},

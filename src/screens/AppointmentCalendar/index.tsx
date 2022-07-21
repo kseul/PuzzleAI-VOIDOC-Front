@@ -264,6 +264,7 @@ const AppointmentCalendar = ({
       selectedDay:
         selectedDayNumber > 25 ? WEEK[dayIndexDeduplication] : WEEK[dayIndex],
       selectTime: amPmDivision > 12 ? pmTime : amTime,
+      selectedPostTime: amPmDivision,
     });
 
     if (time === `${docAlreadyReservedTime}`) {

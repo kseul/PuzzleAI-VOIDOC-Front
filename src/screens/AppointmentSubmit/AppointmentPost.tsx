@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {theme} from 'styles/theme';
 import completeIcon from 'assets/images/complete_icon.png';
@@ -7,16 +7,22 @@ import {AppointmentPostScreenProps} from 'types/type';
 import {
   DoctorInfoContext,
   SelectContext,
+  SelectImageContext,
   SymtomInputValueContext,
 } from 'AppointmentContext';
+import API from 'config';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+import {getToken} from 'AuthContext';
 
 const AppointmentPost = ({navigation}: AppointmentPostScreenProps) => {
   const {doctorInfo} = useContext(DoctorInfoContext);
   const {selectDate} = useContext(SelectContext);
-  const {symtomInputValue} = useContext(SymtomInputValueContext);
+  const {symtomInputValue, setSymtomInputValue} = useContext(
+    SymtomInputValueContext,
+  );
+  const {setSelectImage} = useContext(SelectImageContext);
 
   const [currentTime, setCurrentTime] = useState('');
   const [currentM, setCurrentM] = useState('');
@@ -37,6 +43,37 @@ const AppointmentPost = ({navigation}: AppointmentPostScreenProps) => {
       setCurrentTime(`오전 ${getCurrentTime}:${getCurrentMonth}`);
     }
   }, []);
+
+  const postAppointmentData = async () => {
+    const formData = new FormData();
+    formData.append('year', `${selectDate.year}`);
+    formData.append('month', `${selectDate.month}`);
+    formData.append('day', `${selectDate.selectedDate}`);
+    formData.append('time', `${selectDate.selectedPostTime}`);
+    formData.append('symptom', `${symtomInputValue}`);
+    formData.append('doctor_id', `${doctorInfo.id}`);
+    formData.append(
+      'image',
+      'image=@"/Users/hwangjaeseung/Desktop/스크린샷 2022-06-29 오후 5.13.15.png"',
+    );
+
+    const res = await fetch(`${API.appointmentPost}`, {
+      method: 'POST',
+      headers: {
+        Authorization: await getToken(),
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    });
+    const data = res.json();
+
+    if (res.status === 201) {
+      Alert.alert('예약이 확정되었습니다.');
+      navigation.navigate('Main');
+      setSymtomInputValue('');
+      setSelectImage([]);
+    }
+  };
 
   const submitData = [
     {
@@ -84,11 +121,7 @@ const AppointmentPost = ({navigation}: AppointmentPostScreenProps) => {
         </Text>
       </View>
       <View style={styles.btnContainer}>
-        <Pressable
-          onPress={() => {
-            navigation.navigate('Main');
-          }}
-          style={styles.submitBtn}>
+        <Pressable onPress={postAppointmentData} style={styles.submitBtn}>
           <Text style={styles.btnFont}>예약확정</Text>
         </Pressable>
         <Pressable
