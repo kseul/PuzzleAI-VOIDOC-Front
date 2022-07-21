@@ -1,4 +1,5 @@
 import {StackScreenProps} from '@react-navigation/stack';
+import {MediaType} from 'react-native-image-picker';
 
 export type RootStackParamList = {
   SignUp: undefined;
@@ -6,6 +7,7 @@ export type RootStackParamList = {
   AppointmentCalendar: undefined;
   AppointmentDetail: undefined;
   AppointmentSubmit: undefined;
+  AppointmentPost: undefined;
   DocList: {
     id: number;
     name: string;
@@ -56,6 +58,23 @@ export interface appointmentsDataProp {
   state_name: string;
 }
 
+export interface AssetObj {
+  base64?: string;
+  fileName: string;
+  fileSize: number;
+  height: number;
+  width: number;
+  type: string;
+  uri: string;
+}
+
+export interface ImageLibraryOptions {
+  mediaType: MediaType;
+  maxWidth: number;
+  maxHeight: number;
+  includeBase64: boolean;
+}
+
 export type SignUpScreenProps = StackScreenProps<RootStackParamList, 'SignUp'>;
 
 export type SignInScreenProps = StackScreenProps<RootStackParamList, 'SignIn'>;
@@ -70,6 +89,10 @@ export type AppointmentDetailScreenProps = StackScreenProps<
 export type AppointmentSubmitScreenProps = StackScreenProps<
   RootStackParamList,
   'AppointmentSubmit'
+>;
+export type AppointmentPostScreenProps = StackScreenProps<
+  RootStackParamList,
+  'AppointmentPost'
 >;
 export type DocListScreenProps = StackScreenProps<
   RootStackParamList,
