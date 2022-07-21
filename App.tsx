@@ -11,6 +11,7 @@ import DocList from 'screens/DocList';
 import AppointmentCalendar from 'screens/AppointmentCalendar';
 import AppointmentSubmit from 'screens/AppointmentSubmit';
 import AppointmentDetail from 'screens/AppointmentDetail';
+import AppointmentPost from 'screens/AppointmentSubmit/AppointmentPost';
 import {DocListProp, RootStackParamList, AssetObj} from 'types/type';
 import arrowLeft from 'assets/images/icon_feather_arrow_left.png';
 import {AuthContext} from 'AuthContext';
@@ -86,6 +87,11 @@ function App() {
                           headerStyle: {shadowColor: 'white'},
                           headerBackImage: () => <BackBtn />,
                         }}
+                      />
+                      <Stack.Screen
+                        name="AppointmentPost"
+                        component={AppointmentPost}
+                        options={{headerShown: false}}
                       />
                       <Stack.Screen
                         name="AppointmentDetail"
