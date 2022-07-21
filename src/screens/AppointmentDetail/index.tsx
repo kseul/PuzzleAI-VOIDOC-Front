@@ -40,7 +40,7 @@ const AppointmentDetail = ({
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={commonStyle.fullscreen}>
+      <View style={styles.fullscreen}>
         <DoctorDataCard item={doctorInfo} />
         <View style={styles.listLine} />
         <View style={styles.textContainer}>
@@ -54,7 +54,6 @@ const AppointmentDetail = ({
           <FlatList
             data={appointmentDetailData.Wound_img}
             keyExtractor={index => index.toString()}
-            style={styles.imgContainer}
             numColumns={2}
             renderItem={({item}) => (
               <Image
@@ -78,7 +77,7 @@ const AppointmentDetail = ({
             {appointmentDetailData.doctor_opinion}
           </Text>
         </View>
-      </ScrollView>
+      </View>
 
       <View style={styles.btnContainer}>
         <Pressable
@@ -98,6 +97,14 @@ const AppointmentDetail = ({
 
 const styles = StyleSheet.create({
   safeArea: {flex: 1, backgroundColor: 'white'},
+  fullscreen: {
+    flex: 1,
+    width: '100%',
+    paddingRight: 18,
+    paddingBottom: 60,
+    paddingLeft: 18,
+    backgroundColor: 'white',
+  },
 
   listLine: {
     marginBottom: 24,
