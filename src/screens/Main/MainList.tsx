@@ -36,6 +36,7 @@ const MainList = () => {
 
     if (!data) {
       setNextData(false);
+      return;
     }
     setAppointmentsData([...appointmentsData, ...data]);
   };
