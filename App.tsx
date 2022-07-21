@@ -27,7 +27,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function App() {
   const {userState} = useContext(AuthContext);
   const [doctorInfo, setDoctorInfo] = useState<DocListProp>({
-    id: 0,
+    doctor_id: 0,
     doctor_department: '',
     doctor_hospital: '',
     doctor_name: '',

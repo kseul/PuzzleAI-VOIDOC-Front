@@ -31,7 +31,6 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
     );
     const res = await doctorData.json();
     const data = res.result;
-
     if (!data) {
       setNextData(false);
       return;
@@ -66,7 +65,7 @@ const DocList = ({route, navigation}: DocListScreenProps) => {
             <DoctorDataCard item={item} />
           </Pressable>
         )}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.doctor_id.toString()}
         onEndReached={loadMoreList}
         onEndReachedThreshold={0.6}
       />

@@ -51,7 +51,7 @@ const AppointmentPost = ({navigation}: AppointmentPostScreenProps) => {
     formData.append('day', `${selectDate.selectedDate}`);
     formData.append('time', `${selectDate.selectedPostTime}`);
     formData.append('symptom', `${symtomInputValue}`);
-    formData.append('doctor_id', `${doctorInfo.id}`);
+    formData.append('doctor_id', `${doctorInfo.doctor_id}`);
     formData.append(
       'image',
       'image=@"/Users/hwangjaeseung/Desktop/스크린샷 2022-06-29 오후 5.13.15.png"',
@@ -65,7 +65,6 @@ const AppointmentPost = ({navigation}: AppointmentPostScreenProps) => {
       },
       body: formData,
     });
-    const data = res.json();
 
     if (res.status === 201) {
       Alert.alert('예약이 확정되었습니다.');

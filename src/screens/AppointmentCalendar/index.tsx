@@ -52,7 +52,7 @@ const AppointmentCalendar = ({
   const {docWorkingDay, docWorkingTime, docAlreadyReservedTime} =
     docWorkingDatas;
 
-  const {id, doctor_name} = route.params;
+  const {doctor_id, doctor_name} = route.params;
 
   useEffect(() => {
     navigation.setOptions({title: `${doctor_name} 선생님`});
@@ -61,7 +61,7 @@ const AppointmentCalendar = ({
   const doctorWorkingDayFatchData = async () => {
     const token = await getToken();
     const getData = await fetch(
-      `${API.WorkingDayView}/${id}/workingday?year=${year}&month=${month}`,
+      `${API.WorkingDayView}/${doctor_id}/workingday?year=${year}&month=${month}`,
       {
         method: 'GET',
         headers: {
@@ -85,7 +85,7 @@ const AppointmentCalendar = ({
   const doctorWorkingTimeFatchData = async () => {
     const token = await getToken();
     const getData = await fetch(
-      `${API.WorkingTimeView}/${id}/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`,
+      `${API.WorkingTimeView}/${doctor_id}/workingtime?year=${year}&month=${month}&day=${userSelectedDate}`,
       {
         method: 'GET',
         headers: {
