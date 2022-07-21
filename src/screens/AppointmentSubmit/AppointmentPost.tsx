@@ -91,7 +91,11 @@ const AppointmentPost = ({navigation}: AppointmentPostScreenProps) => {
           style={styles.submitBtn}>
           <Text style={styles.btnFont}>예약확정</Text>
         </Pressable>
-        <Pressable style={styles.correctionBtn}>
+        <Pressable
+          style={styles.correctionBtn}
+          onPress={() => {
+            navigation.navigate('AppointmentSubmit');
+          }}>
           <Text style={styles.btnFont}>예약수정</Text>
         </Pressable>
       </View>
