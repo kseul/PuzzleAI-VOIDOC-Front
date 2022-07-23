@@ -21,7 +21,7 @@ export type RootStackParamList = {
 };
 
 export interface DocListProp {
-  id: number;
+  doctor_id: number;
   doctor_name: string;
   doctor_department: string;
   doctor_hospital: string;

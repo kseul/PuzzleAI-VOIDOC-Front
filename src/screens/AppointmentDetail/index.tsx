@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   Text,
   View,
@@ -6,43 +6,84 @@ import {
   SafeAreaView,
   ScrollView,
   Pressable,
+  Image,
 } from 'react-native';
 import DoctorDataCard from 'components/DoctorDataCard';
 import {commonStyle} from 'styles/commonStyle';
 import {theme} from 'styles/theme';
 import {AppointmentDetailScreenProps} from 'types/type';
+import API from 'config';
+import useFetch from 'components/useFetch';
+import Splash from 'screens/Splash';
+import {DoctorInfoContext} from 'AppointmentContext';
+import {FlatList} from 'react-native-gesture-handler';
 
-const AppointmentDetail = ({navigation}: AppointmentDetailScreenProps) => {
-  const goCalendar = () => {
-    navigation.navigate('AppointmentCalendar');
+const AppointmentDetail = ({
+  navigation,
+  route,
+}: AppointmentDetailScreenProps) => {
+  const {appointment_id} = route.params;
+  const {doctorInfo} = useContext(DoctorInfoContext);
+
+  const appointmentDetailUrl = `${API.appointmentDetail}${appointment_id}`;
+  const appointmentDetailData = useFetch(appointmentDetailUrl).result;
+
+  const isDataEmpty = appointmentDetailData === undefined;
+
+  const goCalendar = doctorInfo => {
+    navigation.navigate('AppointmentCalendar', doctorInfo);
   };
+
+  if (isDataEmpty) {
+    return <Splash />;
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={commonStyle.fullscreen}>
-        <DoctorDataCard item={dataTest} />
+      <View style={styles.fullscreen}>
+        <DoctorDataCard item={doctorInfo} />
         <View style={styles.listLine} />
         <View style={styles.textContainer}>
           <Text style={styles.title}>예약 날짜 및 시간</Text>
-          <Text style={styles.innerText}>2020-07-24(금) 오후 3:00</Text>
+          <Text style={styles.innerText}>
+            {appointmentDetailData.appointment_date}
+          </Text>
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>환부 사진</Text>
-          <Text style={styles.innerText}>사진/사진</Text>
+          <FlatList
+            data={appointmentDetailData.Wound_img}
+            keyExtractor={index => index.toString()}
+            numColumns={2}
+            renderItem={({item}) => (
+              <Image
+                style={styles.innerImg}
+                source={{
+                  uri: item,
+                }}
+              />
+            )}
+          />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>환자 증상</Text>
-          <Text style={styles.innerText}>증상 입력 가져오기</Text>
+          <Text style={styles.innerText}>
+            {appointmentDetailData.patient_symptom}
+          </Text>
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>의사 소견</Text>
-          <Text style={styles.innerText}>의사 소견 가져오기</Text>
+          <Text style={styles.innerText}>
+            {appointmentDetailData.doctor_opinion}
+          </Text>
         </View>
-      </ScrollView>
+      </View>
 
       <View style={styles.btnContainer}>
         <Pressable
-          onPress={goCalendar}
+          onPress={() => {
+            goCalendar(doctorInfo);
+          }}
           style={[commonStyle.ativeBtn, styles.leftBtn]}>
           <Text style={commonStyle.btnText}>다시 예약하기</Text>
         </Pressable>
@@ -56,6 +97,14 @@ const AppointmentDetail = ({navigation}: AppointmentDetailScreenProps) => {
 
 const styles = StyleSheet.create({
   safeArea: {flex: 1, backgroundColor: 'white'},
+  fullscreen: {
+    flex: 1,
+    width: '100%',
+    paddingRight: 18,
+    paddingBottom: 60,
+    paddingLeft: 18,
+    backgroundColor: 'white',
+  },
 
   listLine: {
     marginBottom: 24,
@@ -93,14 +142,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: theme.colors.RstvtInnerLightGray,
   },
+
+  innerImg: {
+    height: 106,
+    width: 106,
+    marginRight: 3,
+    backgroundColor: 'red',
+  },
 });
 
 export default AppointmentDetail;
-
-const dataTest = {
-  appointment_id: 1,
-  doctor_name: '홍정의',
-  doctor_hospital: '퍼즐AI병원',
-  doctor_department: 'COVID-19',
-  doctor_profile_img: 'https://reactjs.org/logo-og.png',
-};

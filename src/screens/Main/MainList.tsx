@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -6,19 +6,22 @@ import {
   StyleSheet,
   Image,
   FlatList,
+  Pressable,
 } from 'react-native';
 import {theme} from 'styles/theme';
 import DoctorDataCard from 'components/DoctorDataCard';
 import calendarImg from 'assets/images/calendar_icon_active.png';
 import API from 'config';
 import {getToken} from 'AuthContext';
-import {DocListProp} from 'types/type';
+import {DocListProp, MainListScreenProps} from 'types/type';
 import {appointmentsDataProp} from 'types/type';
+import {DoctorInfoContext} from 'AppointmentContext';
 
-const MainList = () => {
+const MainList = ({navigation}: MainListScreenProps) => {
   const [appointmentsData, setAppointmentsData] = useState<
     appointmentsDataProp[]
   >([]);
+  const {setDoctorInfo} = useContext(DoctorInfoContext);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [nextData, setNextData] = useState(true);
@@ -50,9 +53,18 @@ const MainList = () => {
     setCurrentPage(prev => prev + 1);
   };
 
+  const goAppointmentDetail = item => {
+    setDoctorInfo(item);
+    navigation.navigate('AppointmentDetail', item);
+  };
+
   const renderItem = ({item}: {item: DocListProp}) => {
     return (
-      <View style={styles.listContainer}>
+      <Pressable
+        style={styles.listContainer}
+        onPress={() => {
+          goAppointmentDetail(item);
+        }}>
         <View style={[styles.listHeader, styles.flexStyle]}>
           <View style={[styles.dateBox, styles.flexStyle]}>
             <Image style={styles.calendarIcon} source={calendarImg} />
@@ -69,7 +81,7 @@ const MainList = () => {
           </Text>
         </View>
         <DoctorDataCard item={item} />
-      </View>
+      </Pressable>
     );
   };
 
